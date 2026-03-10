@@ -88,21 +88,55 @@
       </div>
     </section>
 
-    <!-- Getting Started Banner -->
+    <!-- Quick Nav -->
     <section class="section">
-      <div class="container text-center fade-in">
-        <h2>Ready to Get Started?</h2>
-        <p class="section-subtitle" style="margin-bottom: 1.5rem;">Head to our Join page for step-by-step registration instructions, then come back here for everything else you need to know.</p>
-        <a href="join.html" class="btn btn-primary">How to Join</a>
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Jump to a Topic</h2>
+          <p class="section-subtitle">Click any topic to jump straight to it, or scroll through at your own pace</p>
+        </div>
+        <div class="icon-cards stagger-children" style="max-width: 900px; margin: 0 auto;">
+          <a href="#getting-started" class="card icon-card fade-in" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            </div>
+            <h3>Getting Started</h3>
+            <p>Band app, uniforms, costs</p>
+          </a>
+          <a href="#the-program" class="card icon-card fade-in" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+            </div>
+            <h3>The Program</h3>
+            <p>Patrols, ranks, merit badges</p>
+          </a>
+          <a href="#adventures" class="card icon-card fade-in" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 22h20L12 2z"/><path d="M12 22V14"/><path d="M8 22l4-8 4 8"/></svg>
+            </div>
+            <h3>Adventures</h3>
+            <p>Camping, Order of the Arrow</p>
+          </a>
+          <a href="#safety-policies" class="card icon-card fade-in" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Safety &amp; Policies</h3>
+            <p>Youth protection, family troop</p>
+          </a>
+        </div>
+        <div class="fade-in" style="text-align: center; margin-top: 2rem;">
+          <a href="join.html" class="btn btn-outline" style="font-size: 0.9rem;">Looking for registration steps? Visit the Join page</a>
+        </div>
       </div>
     </section>
 
-    <!-- Guide Sections (Accordion) -->
-    <section class="section section-alt">
+    <!-- SECTION 1: Getting Started -->
+    <section id="getting-started" class="section section-alt" style="scroll-margin-top: 80px;">
       <div class="container">
         <div class="section-header fade-in">
-          <h2>Your Guide to Troop 54</h2>
-          <p class="section-subtitle">Click any topic below to expand it</p>
+          <h2>Getting Started</h2>
+          <p class="section-subtitle">The practical stuff for your first few weeks</p>
         </div>
         <div class="faq-list fade-in">
 
@@ -115,19 +149,6 @@
                 <p><strong>How to join:</strong> Download Band (free on iOS and Android), then <a href="https://band.us/n/a4acAcV39f61C" target="_blank" rel="noopener noreferrer">join Troop 54 directly</a> or search for "Troop 54" in the app. A leader will approve your request.</p>
                 <p><strong>What you'll find on Band:</strong> Weekly meeting agendas, campout details and packing lists, permission slips, photos and recaps, direct messaging with leaders, and the calendar of upcoming activities.</p>
                 <p><strong>Important:</strong> Band is our primary communication channel. If you're not on Band, you may miss time-sensitive updates. At least one parent and (if possible) your Scout should be members.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Safety -->
-          <div class="faq-item">
-            <button class="faq-question" aria-expanded="false">Safety - Two-Deep Leadership &amp; Youth Protection</button>
-            <div class="faq-answer" role="region">
-              <div class="faq-answer-inner">
-                <p>The safety of every Scout is our highest priority. Scouting America has clear policies that all adults and youth must follow.</p>
-                <p><strong>Two-Deep Leadership:</strong> At every Scout activity - meetings, campouts, service projects, transportation - at least two registered adult leaders must be present. No adult should ever be alone with a youth who is not their own child.</p>
-                <p><strong>Safeguarding Youth Training (SYT):</strong> As of May 2025, SYT replaced the older Youth Protection Training. All registered adult leaders must complete SYT before participating in any Scout activity. It's free at <a href="https://my.scouting.org" target="_blank" rel="noopener noreferrer">my.scouting.org</a>, takes ~90 minutes, and can be paused and resumed. SYT is now required annually.</p>
-                <p><strong>Family Troop requirement:</strong> At least one registered female adult leader (21+) must be present whenever female Scouts participate.</p>
               </div>
             </div>
           </div>
@@ -145,6 +166,37 @@
               </div>
             </div>
           </div>
+
+          <!-- Finances -->
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">Finances &amp; Fundraising</button>
+            <div class="faq-answer" role="region">
+              <div class="faq-answer-inner">
+                <p><strong>Typical costs:</strong></p>
+                <ul style="list-style: disc; padding-left: 1.5rem; margin: 0.5rem 0;">
+                  <li>Annual registration and troop dues: ~$150/year</li>
+                  <li>Campout fees: Vary by event (typically cover food and campsite)</li>
+                  <li>Summer camp: Week-long fees (deposits may be required)</li>
+                  <li>Uniform and gear: Purchased by each family</li>
+                </ul>
+                <p>The troop conducts fundraisers throughout the year to offset costs - our annual popcorn sale is the biggest. All fundraisers are announced on Band.</p>
+                <p><strong>Financial assistance:</strong> No Scout should miss out because of cost. If your family needs help with registration, camp fees, or gear, please speak with a troop leader privately. We will work with you.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: The Program -->
+    <section id="the-program" class="section" style="scroll-margin-top: 80px;">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>How Scouting Works</h2>
+          <p class="section-subtitle">The patrol method, ranks, and merit badges</p>
+        </div>
+        <div class="faq-list fade-in">
 
           <!-- Patrol Method -->
           <div class="faq-item">
@@ -195,6 +247,19 @@
             </div>
           </div>
 
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Adventures -->
+    <section id="adventures" class="section section-alt" style="scroll-margin-top: 80px;">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Adventures &amp; Beyond</h2>
+          <p class="section-subtitle">Camping, summer camp, and the Order of the Arrow</p>
+        </div>
+        <div class="faq-list fade-in">
+
           <!-- Camping -->
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">Camping &amp; Outdoor Adventures</button>
@@ -223,20 +288,28 @@
             </div>
           </div>
 
-          <!-- Finances -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Safety & Policies -->
+    <section id="safety-policies" class="section" style="scroll-margin-top: 80px;">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Safety &amp; Policies</h2>
+          <p class="section-subtitle">Youth protection, family troop guidelines, and what every parent should know</p>
+        </div>
+        <div class="faq-list fade-in">
+
+          <!-- Safety -->
           <div class="faq-item">
-            <button class="faq-question" aria-expanded="false">Finances &amp; Fundraising</button>
+            <button class="faq-question" aria-expanded="false">Safety - Two-Deep Leadership &amp; Youth Protection</button>
             <div class="faq-answer" role="region">
               <div class="faq-answer-inner">
-                <p><strong>Typical costs:</strong></p>
-                <ul style="list-style: disc; padding-left: 1.5rem; margin: 0.5rem 0;">
-                  <li>Annual registration and troop dues: ~$150/year</li>
-                  <li>Campout fees: Vary by event (typically cover food and campsite)</li>
-                  <li>Summer camp: Week-long fees (deposits may be required)</li>
-                  <li>Uniform and gear: Purchased by each family</li>
-                </ul>
-                <p>The troop conducts fundraisers throughout the year to offset costs - our annual popcorn sale is the biggest. All fundraisers are announced on Band.</p>
-                <p><strong>Financial assistance:</strong> No Scout should miss out because of cost. If your family needs help with registration, camp fees, or gear, please speak with a troop leader privately. We will work with you.</p>
+                <p>The safety of every Scout is our highest priority. Scouting America has clear policies that all adults and youth must follow.</p>
+                <p><strong>Two-Deep Leadership:</strong> At every Scout activity - meetings, campouts, service projects, transportation - at least two registered adult leaders must be present. No adult should ever be alone with a youth who is not their own child.</p>
+                <p><strong>Safeguarding Youth Training (SYT):</strong> As of May 2025, SYT replaced the older Youth Protection Training. All registered adult leaders must complete SYT before participating in any Scout activity. It's free at <a href="https://my.scouting.org" target="_blank" rel="noopener noreferrer">my.scouting.org</a>, takes ~90 minutes, and can be paused and resumed. SYT is now required annually.</p>
+                <p><strong>Family Troop requirement:</strong> At least one registered female adult leader (21+) must be present whenever female Scouts participate.</p>
               </div>
             </div>
           </div>
