@@ -67,6 +67,39 @@
         "addressRegion": "NY",
         "postalCode": "12306",
         "addressCountry": "US"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Monday",
+        "opens": "18:15",
+        "closes": "20:00",
+        "description": "Weekly troop meeting"
+      }
+    },
+    "event": {
+      "@type": "Event",
+      "name": "Weekly Troop Meeting",
+      "description": "BSA Troop 54 meets every Monday at 6:15 PM. New families welcome — no uniform needed for your first visit.",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "eventSchedule": {
+        "@type": "Schedule",
+        "byDay": "https://schema.org/Monday",
+        "startTime": "18:15",
+        "endTime": "20:00",
+        "repeatFrequency": "P1W"
+      },
+      "location": {
+        "@type": "Place",
+        "name": "Jefferson Elementary School",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "100 Princetown Rd",
+          "addressLocality": "Schenectady",
+          "addressRegion": "NY",
+          "postalCode": "12306",
+          "addressCountry": "US"
+        }
       }
     },
     "contactPoint": {
@@ -132,8 +165,8 @@
         <h1 class="fade-in">Adventure Starts Here</h1>
         <p class="fade-in">Troop 54 - Rotterdam's Family Scout Troop.<br>Building character, leadership, and lifelong friendships.</p>
         <div class="hero-buttons fade-in">
-          <a href="https://my.scouting.org/online-registration/658c377d-63c4-48c3-9862-2643d1c01745/applicant-type" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Join Our Troop</a>
-          <a href="contact.html" class="btn btn-secondary">Visit a Meeting</a>
+          <a href="join.html" class="btn btn-primary">Join Our Troop</a>
+          <a href="join.html#how-to-join" class="btn btn-secondary">Visit a Meeting</a>
         </div>
       </div>
       <!-- Fleur-de-lis watermark -->
@@ -279,7 +312,7 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
           </span>
           <div>
-            <h3>We meet every Monday evening at Jefferson Elementary School</h3>
+            <h3>We meet every Monday at 6:15 PM at Jefferson Elementary School</h3>
             <p>100 Princetown Rd, Schenectady, NY 12306. Families from Rotterdam, Schenectady, Scotia, Glenville, Niskayuna, and across the Capital Region are welcome. No uniform needed for your first visit!</p>
           </div>
         </div>
