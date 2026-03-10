@@ -1956,3 +1956,256 @@ button:focus-visible,
   outline: 3px solid var(--color-secondary);
   outline-offset: 2px;
 }
+
+/* ---------- Guide Page – Handbook Layout ---------- */
+
+.guide-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 3rem;
+  align-items: start;
+  max-width: var(--max-width);
+  width: 90%;
+  margin: 0 auto;
+  padding: 3rem 0 5rem;
+}
+
+/* Sidebar */
+.guide-sidebar {
+  position: sticky;
+  top: 90px;
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+  padding: 1.25rem 0;
+}
+
+.guide-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.guide-sidebar .sidebar-label {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-secondary);
+  padding: 1rem 0.75rem 0.35rem;
+  margin: 0;
+}
+
+.guide-sidebar .sidebar-label:first-child {
+  padding-top: 0;
+}
+
+.guide-sidebar a {
+  display: block;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.88rem;
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+  line-height: 1.35;
+}
+
+.guide-sidebar a:hover {
+  background: var(--color-bg-card);
+  color: var(--color-primary);
+}
+
+.guide-sidebar a.active {
+  background: var(--color-bg-card);
+  color: var(--color-primary);
+  border-left-color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Main content */
+.guide-content {
+  min-width: 0;
+}
+
+.guide-section {
+  scroll-margin-top: 90px;
+  padding-bottom: 2.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.guide-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.guide-section h2 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin-bottom: 0.35rem;
+}
+
+.guide-section h3 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 1.75rem 0 0.5rem;
+}
+
+.guide-section h3:first-of-type {
+  margin-top: 1rem;
+}
+
+.guide-section .section-lead {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+.guide-section p {
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+
+.guide-section ul,
+.guide-section ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0 1rem;
+  line-height: 1.7;
+}
+
+.guide-section li {
+  margin-bottom: 0.3rem;
+}
+
+.guide-section .callout {
+  background: var(--color-bg-card);
+  border-left: 4px solid var(--color-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+  font-size: 0.92rem;
+}
+
+.guide-section .callout.tip {
+  border-left-color: var(--color-green);
+}
+
+.guide-section .callout.important {
+  border-left-color: var(--color-accent);
+}
+
+.guide-section .rank-path {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 1rem 0;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.guide-section .rank-path span {
+  background: var(--color-bg-card);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+}
+
+.guide-section .rank-path .arrow {
+  background: none;
+  padding: 0;
+  color: var(--color-secondary);
+  font-size: 1rem;
+}
+
+.guide-section .rank-path .eagle {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* Mobile sidebar */
+.guide-mobile-nav {
+  display: none;
+  position: sticky;
+  top: 60px;
+  z-index: 50;
+  background: var(--color-bg-light);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.75rem 0;
+}
+
+.guide-mobile-nav select {
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: block;
+  padding: 0.6rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: white;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .guide-layout {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 0 3rem;
+  }
+
+  .guide-sidebar {
+    display: none;
+  }
+
+  .guide-mobile-nav {
+    display: block;
+  }
+
+  .guide-section h2 {
+    font-size: 1.35rem;
+  }
+}
+
+/* Scout Oath / Law in guide */
+.guide-section .oath-law-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin: 1rem 0;
+}
+
+.guide-section .oath-law-block blockquote {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin: 0;
+  font-style: italic;
+  line-height: 1.7;
+  border-left: 4px solid var(--color-primary);
+}
+
+.guide-section .oath-law-block blockquote strong {
+  display: block;
+  font-style: normal;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .guide-section .oath-law-block {
+    grid-template-columns: 1fr;
+  }
+}
