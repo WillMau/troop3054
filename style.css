@@ -1847,6 +1847,41 @@ p {
   }
 }
 
+/* ---------- Eagle Scout Table ---------- */
+.eagle-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.eagle-table th,
+.eagle-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.eagle-table th {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.eagle-table tbody tr:hover {
+  background: rgba(0, 63, 135, 0.04);
+}
+
+@media (max-width: 600px) {
+  .eagle-table th,
+  .eagle-table td {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
 /* Closing CTA section */
 .closing-cta {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
