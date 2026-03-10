@@ -1847,39 +1847,94 @@ p {
   }
 }
 
-/* ---------- Eagle Scout Table ---------- */
-.eagle-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
+/* ---------- Eagle Scout Roster ---------- */
+.eagle-decade { margin-bottom: 2.5rem; }
+.eagle-decade:last-child { margin-bottom: 0; }
+
+.eagle-decade-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-.eagle-table th,
-.eagle-table td {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.eagle-table th {
+.eagle-decade-header h3 {
   font-family: var(--font-heading);
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-primary);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  white-space: nowrap;
+  margin: 0;
 }
 
-.eagle-table tbody tr:hover {
-  background: rgba(0, 63, 135, 0.04);
+.eagle-decade-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
 }
 
-@media (max-width: 600px) {
-  .eagle-table th,
-  .eagle-table td {
-    padding: 0.5rem 0.5rem;
-    font-size: 0.9rem;
-  }
+.eagle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.eagle-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background: var(--color-bg-light);
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.eagle-card:hover {
+  border-color: var(--color-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.eagle-card-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--color-text);
+}
+
+.eagle-card-year {
+  font-size: 0.8rem;
+  color: var(--color-secondary-light);
+  font-weight: 600;
+  font-family: var(--font-heading);
+}
+
+.eagle-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-primary);
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.eagle-stat-num {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+@media (max-width: 900px) {
+  .eagle-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 500px) {
+  .eagle-grid { grid-template-columns: 1fr; }
+  .eagle-card { padding: 0.5rem 0.75rem; }
 }
 
 /* Closing CTA section */
