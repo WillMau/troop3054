@@ -1816,7 +1816,6 @@ p {
 
 /* Family troop photo variant */
 .family-troop-photo {
-  max-height: 360px;
   border-radius: var(--radius-lg);
 }
 
@@ -1830,11 +1829,12 @@ p {
 .photo-banner .section-photo {
   border-radius: 0;
   box-shadow: none;
-  max-height: 240px;
+  aspect-ratio: 4 / 3;
 }
 
 .photo-banner .section-photo img {
-  height: 240px;
+  height: 100%;
+  object-position: center center;
 }
 
 @media (max-width: 768px) {
@@ -1842,10 +1842,8 @@ p {
     grid-template-columns: 1fr;
   }
 
-  .photo-banner .section-photo,
-  .photo-banner .section-photo img {
-    max-height: 200px;
-    height: 200px;
+  .photo-banner .section-photo {
+    aspect-ratio: 16 / 9;
   }
 }
 
