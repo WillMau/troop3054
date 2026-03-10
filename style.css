@@ -2209,3 +2209,86 @@ button:focus-visible,
     grid-template-columns: 1fr;
   }
 }
+
+/* Guide section images */
+.guide-section .guide-img {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  margin: 1.25rem 0;
+}
+
+.guide-section .guide-img-float {
+  float: right;
+  margin: 0 0 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.guide-section .guide-img-inline {
+  border-radius: var(--radius-sm);
+}
+
+.guide-section::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Rank badges visual path */
+.rank-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.25rem 0;
+  padding: 1.25rem;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+}
+
+.rank-badges .rank-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-align: center;
+}
+
+.rank-badges .rank-badge img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.rank-badges .rank-badge span {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.rank-badges .rank-arrow {
+  color: var(--color-secondary);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0.15rem;
+  align-self: center;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .guide-section .guide-img-float {
+    float: none;
+    display: block;
+    margin: 1rem auto;
+  }
+
+  .rank-badges .rank-badge img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .rank-badges .rank-badge span {
+    font-size: 0.6rem;
+  }
+}
