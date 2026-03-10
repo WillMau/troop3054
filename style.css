@@ -1977,6 +1977,14 @@ button:focus-visible,
   max-height: calc(100vh - 110px);
   overflow-y: auto;
   padding: 1.25rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-sidebar .sidebar-cta {
+  margin-top: auto;
+  padding: 1.25rem 0.75rem 0;
+  border-top: 1px solid var(--color-border);
 }
 
 .guide-sidebar nav {
@@ -2099,6 +2107,64 @@ button:focus-visible,
 
 .guide-section .callout.important {
   border-left-color: var(--color-accent);
+}
+
+/* Guide timeline */
+.guide-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 1rem 0;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.guide-timeline::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--color-border);
+}
+
+.guide-timeline .timeline-step {
+  position: relative;
+  padding: 0.5rem 0 1.25rem;
+}
+
+.guide-timeline .timeline-step:last-child {
+  padding-bottom: 0;
+}
+
+.guide-timeline .timeline-step::before {
+  content: "";
+  position: absolute;
+  left: -2rem;
+  top: 0.6rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 3px solid var(--color-bg-light);
+  z-index: 1;
+}
+
+.guide-timeline .timeline-step strong {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-primary);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.guide-timeline .timeline-step p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
 .guide-section .rank-path {
