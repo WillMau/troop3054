@@ -1819,6 +1819,10 @@ p {
   border-radius: var(--radius-lg);
 }
 
+.family-troop-photo img {
+  filter: none;
+}
+
 /* Photo banner responsive */
 .photo-banner {
   display: grid;
