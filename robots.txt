@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://troop3054.org/sitemap.xml
+Sitemap: https://www.troop3054.org/sitemap.xml
