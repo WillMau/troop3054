@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5V1GSC01VW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5V1GSC01VW');
+    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troop 54 Calendar | Meetings, Campouts & Events | Rotterdam, NY</title>
+  <meta name="description" content="View the Troop 54 event calendar — weekly meetings, campouts, service projects, and special events in Rotterdam, NY and Schenectady County.">
+  <meta name="keywords" content="Troop 54 calendar, scout meetings Rotterdam NY, scout campouts Schenectady, BSA events Capital Region, youth activities Rotterdam">
+  <link rel="canonical" href="https://www.troop3054.org/calendar.html">
+
+  <!-- Geo / Local SEO -->
+  <meta name="geo.region" content="US-NY">
+  <meta name="geo.placename" content="Rotterdam, NY">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Troop 54 Calendar | Meetings, Campouts & Events">
+  <meta property="og:description" content="View the Troop 54 event calendar — weekly meetings, campouts, service projects, and special events.">
+  <meta property="og:image" content="https://www.troop3054.org/images/troop.jpg">
+  <meta property="og:url" content="https://www.troop3054.org/calendar.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BSA Troop 54 — Rotterdam, NY">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Troop 54 Calendar | Meetings, Campouts & Events">
+  <meta name="twitter:description" content="View the Troop 54 event calendar — weekly meetings, campouts, service projects, and special events.">
+  <meta name="twitter:image" content="https://www.troop3054.org/images/troop.jpg">
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.troop3054.org/" },
+      { "@type": "ListItem", "position": 2, "name": "Calendar", "item": "https://www.troop3054.org/calendar.html" }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="48x48" href="Troop3054.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Calendar Styles */
+    .calendar-wrapper {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .calendar-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .calendar-controls h2 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      margin: 0;
+    }
+
+    .calendar-controls h2::after {
+      display: none;
+    }
+
+    .cal-nav {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .cal-nav button {
+      background: var(--color-bg-light);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.8rem;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .cal-nav button:hover {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .cal-day-header {
+      background: var(--color-primary);
+      color: white;
+      padding: 0.6rem 0.25rem;
+      text-align: center;
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cal-day {
+      min-height: 90px;
+      padding: 0.35rem;
+      border: 1px solid var(--color-border);
+      border-width: 0 1px 1px 0;
+      background: white;
+      position: relative;
+      transition: background var(--transition);
+    }
+
+    .cal-day:hover {
+      background: var(--color-bg-light);
+    }
+
+    .cal-day.other-month {
+      background: #fafaf8;
+      opacity: 0.4;
+    }
+
+    .cal-day.today {
+      background: rgba(0, 63, 135, 0.05);
+    }
+
+    .cal-day .day-number {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 0.2rem;
+    }
+
+    .cal-day.today .day-number {
+      background: var(--color-primary);
+      color: white;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+    }
+
+    .cal-event {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 2px 4px;
+      margin-bottom: 2px;
+      border-radius: 3px;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: opacity var(--transition);
+    }
+
+    .cal-event:hover {
+      opacity: 0.8;
+    }
+
+    .cal-event.type-meeting {
+      background: rgba(0, 63, 135, 0.12);
+      color: var(--color-primary);
+    }
+
+    .cal-event.type-camping {
+      background: rgba(36, 62, 44, 0.12);
+      color: var(--color-green);
+    }
+
+    .cal-event.type-service {
+      background: rgba(173, 157, 123, 0.2);
+      color: #6b5d3e;
+    }
+
+    .cal-event.type-special {
+      background: rgba(206, 17, 38, 0.1);
+      color: var(--color-accent);
+    }
+
+    /* Event Detail Modal */
+    .event-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .event-modal-overlay.active {
+      display: flex;
+    }
+
+    .event-modal {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    .event-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--color-text);
+      line-height: 1;
+    }
+
+    .event-modal h3 {
+      font-family: var(--font-heading);
+      color: var(--color-primary);
+      margin: 0 0 1rem;
+      font-size: 1.2rem;
+    }
+
+    .event-modal-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--color-text);
+    }
+
+    .event-modal-detail svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--color-secondary);
+    }
+
+    /* Upcoming Events List */
+    .upcoming-list {
+      margin-top: 2rem;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .upcoming-list h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--color-primary);
+      margin-bottom: 1rem;
+    }
+
+    .upcoming-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1rem;
+      background: white;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      margin-bottom: 0.5rem;
+      transition: box-shadow var(--transition);
+      cursor: pointer;
+    }
+
+    .upcoming-item:hover {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .upcoming-date-badge {
+      text-align: center;
+      min-width: 48px;
+      flex-shrink: 0;
+    }
+
+    .upcoming-date-badge .month {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      letter-spacing: 0.5px;
+    }
+
+    .upcoming-date-badge .day {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1;
+    }
+
+    .upcoming-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .upcoming-info .event-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--color-text);
+    }
+
+    .upcoming-info .event-meta {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 0.15rem;
+    }
+
+    .calendar-legend {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      font-size: 0.8rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.meeting { background: rgba(0, 63, 135, 0.5); }
+    .legend-dot.camping { background: rgba(36, 62, 44, 0.5); }
+    .legend-dot.service { background: rgba(173, 157, 123, 0.6); }
+    .legend-dot.special { background: rgba(206, 17, 38, 0.4); }
+
+    /* View toggle */
+    .view-toggle {
+      display: flex;
+      gap: 0.25rem;
+      background: var(--color-bg-light);
+      border-radius: var(--radius-sm);
+      padding: 3px;
+      border: 1px solid var(--color-border);
+    }
+
+    .view-toggle button {
+      background: none;
+      border: none;
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .view-toggle button.active {
+      background: white;
+      color: var(--color-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .list-view { display: none; }
+    .list-view.active { display: block; }
+    .grid-view { display: block; }
+    .grid-view.active-list { display: none; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .cal-day {
+        min-height: 60px;
+        padding: 0.2rem;
+      }
+      .cal-day .day-number {
+        font-size: 0.7rem;
+      }
+      .cal-event {
+        font-size: 0.55rem;
+        padding: 1px 2px;
+      }
+      .cal-day-header {
+        font-size: 0.6rem;
+        padding: 0.4rem 0.15rem;
+      }
+      .calendar-controls {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      .calendar-controls h2 {
+        font-size: 1.1rem;
+      }
+      .upcoming-item {
+        padding: 0.6rem 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cal-day-header {
+        font-size: 0.5rem;
+        letter-spacing: 0;
+      }
+      .cal-event {
+        font-size: 0;
+        height: 4px;
+        padding: 0;
+        border-radius: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Navigation -->
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Troop 54 Home">
+        <img src="Troop3054.png" alt="Troop 54 logo" width="44" height="44">
+        <span>Troop 54</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="join.html">Join</a>
+        <a href="eagles.html">Eagles</a>
+        <a href="calendar.html" class="active">Calendar</a>
+        <a href="guide.html">Guide</a>
+        <a href="sponsors.html">Sponsors</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="nav-overlay" aria-hidden="true"></div>
+  </nav>
+
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="fade-in">Troop Calendar</h1>
+        <p class="fade-in">Meetings, campouts, service projects, and everything in between.</p>
+      </div>
+      <svg class="hero-watermark" width="160" height="165" viewBox="-0.864 -0.333 350 359" fill="white" aria-hidden="true">
+        <path d="M174.465 4.793c1.675 4.16 2.773 8.783 3.293 12.946l-3.898 18.363c-0.327 1.535-0.49 3.107-0.49 4.685l0 1.016 3.58-10.1c1.66-4.69 3.32-9.386 4.97-14.085 4.08-7.023 8.038-10.293 12.27-12.42 4.72-2.377 10.33-3.226 17.76-4.05-7.22 2.32-12.62 4.65-16.39 8.12-3.46 3.18-5.61 7.35-7.28 13.39 7.05-8.51 16.38-11.62 25.67-13.95-8.7 4.07-15.57 8.44-20.11 15.34l-0.05 0.09c7.5-6.35 15.98-9.87 24.14-12.54-14.73 9.36-19.49 17.74-26.91 29.94l-0.09 0.15c-1.01 1.68-2.06 3.42-3.17 5.25-1.56 2.56-3.13 5.2-4.7 7.88-5.88 10.05-11.86 20.58-16.62 30.21l12.89-18.01 0.01-0.01c14.48-19.77 25.3-28.8 40.98-38.88l0.1-0.06c-12 10.39-23.12 22.1-32.18 39.62l-0.1 0.19c12.81-17.61 25.76-28.77 44.07-39.39-16.68 13.09-28.57 26.57-38.35 44.29l-0.1 0.18c19.92-25.21 38.78-38.66 56.44-49.84-21.98 17.44-36.37 32.95-48.92 55.62 0 0 37.7-44.33 72.97-57.75-31.03 19.15-53.28 41.64-67.25 64.27l13.58-14.59c11.77-12.65 23.56-25.32 41.62-39.79-14.63 14.94-28 30.52-38.39 52.05l-0.12 0.24c11.88-17.99 25.28-31.34 44.73-45.11-16.76 15.38-29.13 31.19-38.37 50.58 12.29-14.86 26.53-27.66 43.91-39.47-20.71 20.51-33.27 36.87-43.87 60.97 0 0 30.49-40.75 64.62-55.78-29.12 20.27-46.95 41.82-57.62 63.14 15.08-18.22 32.96-33.98 54.93-47.63-24.21 18.48-39.63 36.82-51.91 60.57 14.28-17.69 31.33-32.17 52.95-43.73-19.97 13.58-36.38 30.34-48.91 53.08 10.68-14.22 26.93-27.87 44.83-39.94-14.36 11.46-28.29 25.75-39.3 44.3 0 0 20.09-22.63 38.6-35.96-11.56 11.04-22.61 24.71-32.12 42.06 13.39-17.05 26.42-26.41 35.7-33.19l1.48-1.08c-9.91 10.89-18.64 24.14-26.24 40.14 8.6-13.12 18.13-22.67 27.45-30.38-8.17 10.16-15.37 22.43-21.32 37.39 4.51-7.65 12.07-16.57 20.08-23.96-4.95 8.21-10.62 19.26-14.22 30.52 3.67-8.65 9.78-17.52 15.88-23.74-3.43 8.03-6.67 18.06-8.75 27.94 2.42-7.87 6.49-15.19 10.89-20.36-1.8 7.45-3.07 14.72-3.85 23.35 1.77-7.58 4.57-13.38 7.82-18.12-0.21 5.37 0 10.53 0.5 16.81 0.7-4.83 2.78-10.74 5.38-14.93 0.49 3.75 1.16 7.48 2.35 12.26 0.52-4.78 1.88-8.79 3.83-12.75 0.93 3.15 1.9 6.09 3.53 10.18 0.17-4.06 1.13-8.12 2.73-11.53 1.43 3.07 2.73 5.57 3.91 7.6l0.02-0.06 0.05-0.15c0.14-0.38 3.35-9.39 4.99-22.69 2.32-2.8 4.27-4.78 5.17-5.63-3.88 12.88-3.8 22.09-3.36 27.54 2.16-5.76 4.36-10.19 6.58-13.77-1.96 10.1-1.81 18.06-0.97 23.36 2.05-5.58 4.44-10.22 7.27-14.14-2.45 9.87-2.33 18.41-1.39 24.77 1.56-4.95 3.83-9.78 6.66-14.08-2.36 8.64-2.97 17.17-2.43 24.56 1.42-4.53 3.42-9.3 6.44-13.47-2.06 8.78-2.37 16.37-1.34 23.31 1.45-5.72 4.2-10.95 7.12-14.69-2.25 9.5-2.06 17.02-0.46 22.81 1.75-5.94 4.15-10.62 6.77-13.58-2.37 7.23-2.59 14.55-0.82 20.42 2.38-6.24 4.89-10.86 7.79-13.66-3.06 7.42-3.65 14.14-2.12 20.09 2-4.19 4.1-7.57 6.42-9.96-1.89 5.4-2.85 10.62-2.07 15.63 1.82-3.68 3.73-6.73 5.78-9.12-1.12 3.96-1.87 8.43-1.11 12.56 1.51-3.1 3.42-5.63 5.46-7.65-0.8 3.12-0.74 6.43-0.25 9.23 1.17-2.31 3.11-5.01 5.15-6.58 0 0-0.2 3.09 0.36 6.32 1.6-2.14 3.22-3.91 5.03-5.2 0 0-0.01 2.62 0.45 4.87 1.71-1.94 3.62-3.3 5.3-4.18 0 0-0.3 1.73 0.56 4.45 1.17-1.44 3.46-3.11 5.03-3.5 0 0-0.55 2.14 0.22 3.67 1.26-1.06 3.56-2.11 5.22-2.48-0.02 0-0.73 1.59-0.14 2.95 1.27-0.7 3.36-1.35 5.28-1.48-0.57 0.85-0.79 1.31-0.79 1.31s1.57 0.22 4.95-0.62l-0.38 0.97s1.68 0.44 5.54-1.05c0 0-0.43 0.7-0.6 0.92 2.36-0.32 4.2-1.41 5.13-1.98-0.31 0.61-0.4 0.77-0.4 0.77s1.8-0.36 4.88-1.99c0 0-0.28 0.65-0.38 0.88 1.97-0.7 3.89-1.87 4.96-2.6 0 0-0.48 0.74-0.53 0.9 2.07-0.97 3.84-2.02 5.27-3.21 0 0-0.56 1-0.69 1.17 2.38-1.35 4.58-2.96 5.77-4.02-0.33 0.54-0.95 1.54-0.95 1.54 1.95-1.12 3.62-2.47 5.35-4.16-0.5 0.68-0.82 1.33-0.82 1.33 1.85-1.23 3.54-2.74 5.67-5.1-0.52 1.05-0.71 1.52-0.71 1.52 1.66-1.2 3.61-3.23 5.58-5.86-0.23 0.77-0.8 1.65-0.8 1.65 1.72-1.54 3.63-3.84 5.4-6.74-0.55 1.02-0.65 1.51-0.65 1.51 1.57-1.63 3.39-4.06 5.2-7.44-0.36 1.15-0.73 2.11-0.73 2.11 1.46-2.41 2.71-4.73 4.17-8.18l-0.47 1.73c1.55-3.01 2.75-5.86 3.72-9.73 0 0-0.21 1.35-0.59 2.65 1.15-2.54 1.97-6 2.75-9.38l-0.49 2.23c0.69-2.99 1.32-6.71 1.72-10.17l-0.35 2.09c0.39-3.31 0.52-6.4 0.55-10.16l-0.34 2.65c0.02-2.96-0.06-5.96-0.33-9.63 0 0 0.08 1.73 0.04 2.6-0.63-4.36-1.16-7.3-2.34-11.17l0.44 2.39c-1.26-4.36-3.26-9.41-6.35-14.35l0.71 2.34c-2.64-4.42-7.65-10.62-13.24-14.99l-1.55 0.86c-12.6 7.27-18.43 20.96-18.43 20.96 4.32-4.26 8.68-6.67 12.94-8.05-1.47 0.61-14.4 6.77-20.42 25.13 4.59-7.66 9.64-12.24 14.79-15.11-12.32 6.92-17.89 20.28-19.12 23.05 5.07-6.68 10.22-10.97 15.69-13.78-6.76 4.25-14.7 13.04-18.57 22.29 5.42-6.72 10.42-10.56 15.48-13.23-6.04 4.12-13.01 12.96-16.86 22.03 5.3-6.86 10.32-10.86 16.64-14.16-6.8 4.31-13.33 13.52-16.63 22.47 5.3-7.85 11.43-12.33 16.51-14.94-6.87 4.33-14.21 14.53-17.27 23.77 5.38-7.25 11.22-12.12 16.69-14.52-7.27 3.95-14.7 14.01-17.73 23.54 5.56-8.01 12.39-13.3 17.08-15.24-9.15 5.5-15.34 14.99-18.32 23.19 6.42-8.35 12.37-12.53 16.76-14.51-7.8 3.83-15.29 13.37-18.53 24 7.76-10.42 14.32-14.87 18.23-16.44-8.37 4.29-16.27 14.54-19.34 24.39 7.71-10.31 14.66-14.62 19.03-16.26-8.13 3.62-17.2 14.61-20.14 25.05 8.26-11.3 15.72-16.12 19.62-17.5-6.22 2.4-17.68 13.62-21 25.56 8.47-11.83 16.82-17.43 20.64-18.91-6.62 2.78-18.06 14.05-21.3 25.14 7.38-9.17 14.42-14.7 20.33-17.44-5.93 2.75-14.46 10.15-20.49 22.07 3.97-5.94 10.73-12.76 18.85-17.02-6.21 3.56-13.21 11.26-18.61 21.38 4.73-6.4 10.4-11.51 16.47-15.33-7.47 5.94-13.05 13.56-17.19 21.39 3.73-4.93 9.07-10.38 15.09-14.5-5.62 4.42-11.36 11.04-16.41 20.8l12.91-13.71c-5.29 5.41-10.09 11.65-14.09 19.51 3.65-4.99 8.76-10.72 14.29-15.22-6.36 6.15-11.01 13.13-14.5 20.43 3.56-5.12 8.33-10.24 13.45-14.55-5.74 5.86-10.42 12.79-13.84 20.13 2.92-3.64 7.43-8.83 12.47-13.27-5.58 5.77-9.88 12.39-13.12 19.19 4.16-5.46 8.88-10.35 13.21-13.94-6.43 7.1-10.69 13.93-13.6 20.23 4.25-6.15 8.83-10.77 12.72-14.13-5.8 6.48-9.96 13.66-12.47 19.36l11.42-13.18c-5.53 6.36-9.28 12.81-11.62 18.68 3.58-4.38 7.9-8.94 11.65-12.33-4.48 5.33-8.56 12.08-10.77 17.5l10.12-11.16c-4.52 5.28-7.79 11.04-9.99 16.34 3.34-4.52 6.94-8.41 10.12-11.52-4.07 5.37-7.03 10.69-9.11 15.81l8.64-10.23c-3.27 4.27-5.95 8.77-7.92 13.48 2.5-3.35 5.52-6.88 8.57-9.82-3.22 4.33-5.83 8.94-7.67 13.64 2.64-3.3 5.55-6.54 8.15-9.03-3.06 4.06-5.42 8.32-7.18 12.88 2.28-3.38 5.11-6.51 7.67-8.78-2.16 3.23-4.49 7.42-6.24 11.82 2.43-3.2 5.27-6.37 7.6-8.61-1.85 3.34-4.11 7.67-5.42 11.76l6.26-7.2c-2.38 3.36-4.09 7.03-5.26 11.03 1.79-2.44 3.76-4.66 5.86-6.59-1.93 3.52-3.21 6.54-4.36 10.29l4.75-5.63c-1.17 2.19-2.58 5.39-3.53 8.67l3.99-4.68c-0.89 2.25-1.78 5.14-2.49 7.58l3.12-3.67c-0.49 1.73-1.49 4.49-2.01 6.63l2.69-2.89c-0.47 1.55-0.94 3.49-1.52 5.93 0.75-1.06 1.51-2.04 2.31-2.89-0.31 1.32-0.86 3.74-1.23 5.43l1.69-1.85c-0.22 1.47-0.62 3.31-0.88 5.05l1.42-1.27c0 0-0.35 2.18-0.61 4.29l1.15-1.14c-0.02 1.37-0.23 2.97-0.37 4.2l0.88-0.81c0.03 1.07-0.07 2.59-0.14 3.71l0.78-0.68c0 0 0.04 1.72 0.1 3.09l0.61-0.55c0.16 1.43 0.25 2.57 0.4 3.81l0.48-0.43 0.26 3.2 0.59-0.25c0.14 0.88 0.31 1.47 0.49 2.77l0.38-0.29c0.27 1.18 0.33 1.79 0.72 3.41l0.28-0.04c0 0 0.26 1.06 0.71 2.76l0.37-0.02 0.43 2.27 0.21 0.06 0.64 2.26h0.02l-0.02-0.01c0.26-2.23 0.54-4.44 0.82-6.62l0.29 0.04c0 0 0.12-1.83 0.58-3.49l0.29 0.19c0 0 0.22-1.92 0.74-3.78l0.36 0.33c0.23-1.5 0.43-2.53 0.9-4.1l0.47 0.43c0 0 0.29-2.13 0.87-3.73l0.6 0.53c0.32-1.51 0.64-2.54 1.09-3.94l0.69 0.62c0 0 0.45-2.06 1.23-4.04l0.72 0.78c0.41-1.47 0.75-2.55 1.38-4.12l0.91 0.85c0.52-1.49 0.97-2.7 1.62-4.12l0.92 0.91c0.82-2 1.39-3.16 2.15-4.82 0 0 0.75 0.99 1.22 1.36 0.83-1.92 1.51-3.41 2.42-5.06 0.48 0.56 1.18 1.33 1.66 1.83 0.87-2.14 1.82-3.73 2.76-5.53l1.67 1.94c0.91-2.04 1.91-3.62 3.1-5.66l2.02 2.06c1.19-2.13 2.14-3.71 3.52-5.98l2.12 2.31c1.11-1.82 2.39-3.56 3.79-5.43l2.51 2.38c1.74-2.37 3.22-4.21 5-6.17l2.53 2.65c1.34-1.89 3.35-4.04 5.42-6.12l2.85 2.59c1.82-2.21 3.93-4.25 5.88-6.16l2.93 2.65c2.13-2.13 4.28-4.22 6.52-6.14l3.56 2.88c2.23-2.42 5.13-4.54 7.56-6.64l3.06 3.15c2.57-2.38 5.71-4.7 8.51-6.57l3.48 3.19c2.32-1.86 5.07-3.73 8.04-5.45l3.54 2.57c3.14-2.03 6.74-4.01 9.85-5.35l3.08 2.65c3.06-1.69 7.53-3.41 10.86-4.43 0 0 1.67 1.53 2.88 2.49 3.17-1.02 5.51-1.82 10.56-2.97l3.29 2.38c3.77-0.57 7.93-0.98 11.72-0.85-5.65-3.64-11.61-5.67-17.71-7.31l2.05-1.79c-7.15-1.22-12.9-2.14-19.34-1.14l2.08-2.05c-7.11 0.22-12.69 1.08-18.4 3.05l2.17-2.72c-6.36 1.35-11.22 3.21-16.15 5.72l1.91-2.72c-5.8 2.16-10.3 4.62-14.68 7.57l2.45-3.28c-5.96 3.2-9.32 5.56-13.69 9.12l2.01-3.19c-5.54 3.64-9.48 7.04-12.75 10.34l2.37-3.28c-5.47 3.97-8.97 7.9-12.73 12.47l1.73-3.02c-4.22 4.42-8.32 8.47-12.36 13.83 0 0 1.1-1.77 1.83-3.3-3.44 3.78-6.93 7.91-10.31 13.31l1.46-2.99c-3.71 4.89-6.8 9.29-9.58 14.29 0 0 0.54-1.97 1.13-3.15-3.14 4.29-5.66 8.84-8.2 14.34 0 0 0.75-2.19 1.08-3.28-2.39 4.23-4.82 9.42-6.67 14.04l0.71-3.02c-2.07 4.08-3.81 8.75-5.53 13.65l0.79-3.08c-1.9 4.6-3.24 9.08-4.48 13.72l0.59-3.08c-1.28 4.14-2.33 8.45-3.12 12.93l0.36-2.73c-0.71 3.35-1.21 6.74-1.5 10.17l0.37-2.59c-0.43 4.02-0.66 7.73-0.48 12.05 0 0 0.02-1.99 0.21-2.8 0.18 3.4 0.57 6.49 1.14 9.29 0 0-0.11-1.37-0.13-2.5 0.49 2.91 1.28 5.77 2.48 8.74l-0.38-2.2c1.14 2.98 2.57 5.64 4.33 8.02l-0.6-2.46c3.33 4.12 6.49 7.47 13.29 14.36 2.96-0.65 6.68-1.55 6.68-1.55-3.88-3.72-6.19-6.68-8.39-10.4 2.79 1.72 6.56 3.62 6.56 3.62-3.54-4.5-5.92-8.71-7.55-12.68 2.58 2.47 5.63 5.2 8.96 5.88-3.49-3.11-7.08-9.25-8.78-14.62 3.26 3.81 6.97 6.48 9.19 7.59-2.98-4.24-5.48-9.18-7.15-14.09 2.71 3.63 5.81 6.5 8.22 8.3-3.23-5.26-5.12-9.58-6.72-15.01 2.77 3.72 6.3 7.24 8.92 9.07-3.51-5.36-5.55-10.25-6.91-15.43 2.85 4.38 6.23 7.96 8.67 9.52-3.11-5.6-5.81-11.79-6.57-15.23 2.92 4.26 5.57 7.18 8.98 9.85-3.7-5.86-5.87-11.54-6.55-14.38 2.36 3.3 5.69 6.67 9.12 9.29-3.8-5.64-5.86-11.03-6.45-14.27 3.04 3.94 6.02 7.02 9.72 9.78-4.18-6.08-6.27-10.59-6.89-13.89 2.13 2.49 5.59 5.88 9.99 9.61-4.58-6.24-6.73-10.7-7.31-13.8 3.11 3.6 6.66 6.91 10.04 9.22-4.49-6.47-6.57-11.01-7.23-13.64 3.45 3.87 6.85 6.53 10.16 8.96-3.73-5.49-6.74-10.66-7.79-14.26 3.37 4.25 7.47 7.62 10.69 9.37-3.46-5.17-6.71-10.44-8.02-14.42 3.42 4.05 6.67 6.93 10.96 9.81-4.39-5.92-7.1-10.56-8.61-15.05l10.69 9.9c-4.22-5.51-7.24-11.33-8.88-15.77 4.17 4.53 8.18 7.71 11.39 10.07-4.1-5.08-7.42-11.16-9.17-16.33 4.12 5.04 8.03 8.51 11.5 10.69-4.17-5.58-7.56-11.87-9.42-17.21 4.07 5.08 7.59 8.37 11.83 11.06-4.48-5.82-7.84-12.38-9.78-17.51l11.6 11.18c-4.15-5.72-7.78-12.28-9.94-18.15l11.6 11.72c-4.42-6.02-7.87-12.36-10.03-18.34 3.48 3.96 7.39 7.86 11.7 11.38-4.19-5.99-7.7-12.43-9.72-18.01l11.43 10.94c-4.02-5.79-7.49-12.29-9.52-17.65l11.41 10.93c-3.87-5.89-7.31-12.47-9.55-18.3 3.56 3.49 7.31 7.3 11.33 10.69-4.63-7.65-7.98-13.97-9.64-18.34l10.88 10.66c-4.18-6.53-7.24-12.58-9.13-17.79 3.11 3.22 6.75 6.97 10.71 10.25-3.5-6.38-6.84-13.25-9-18.77 3.33 3.6 6.87 7.08 10.51 10.08-3.69-6.4-7.04-13.48-8.95-19.2 3.45 4.02 7.4 8.08 10.78 10.64-3.45-6.26-6.95-13.84-8.73-19.19l0.09-0.14c5.58 7.38 14.12 14.08 21.08 18.29-8.22-8.85-13.66-17.72-17-24.38 3.38 3.72 9.46 9.42 16.43 14.12-8.51-10.23-12.83-17.21-15.93-23.37 3.75 3.95 9.23 9.05 16.18 14.29-8.08-9.6-12.97-17.77-16.05-24.17 5.57 5.27 11.89 10.87 17.07 14.31-7.36-8.44-13.26-18.35-16.36-25.37 4.84 4.69 11.93 11.17 17.99 14.97-6.4-8.15-12.66-18.62-16.25-26.78 3.58 3.37 9.83 9.52 17.3 14.93-6.23-8.69-11.67-18.7-14.33-25.32 3.14 3.27 9.66 9.14 16.52 14.34-5.61-8.08-10.8-17.51-13.65-25.15l14.74 13.37c-4.71-7.79-9-16.07-12.14-24.5l14.59 13.91c-5.06-8.14-8.97-16.22-11.78-24.82l14.86 14.58c-5.1-8.11-9.19-17.27-11.99-25.72 4.28 4.72 9.63 9.83 15.13 14.16-5.17-8.65-9.4-18.19-12.14-26.92 4.09 4.47 9.85 10.69 14.99 14.98-5.14-8.5-9.2-17.49-11.76-26.41l14.06 14.67c-4.59-8.13-8.53-17.33-11.17-26.36l14.28 14.42c-5.23-9.38-8.86-17.38-11.05-25.63l12.43 13.83c-4.54-8.93-7.53-16.35-9.8-24.67l11.44 13.38c-3.36-7.43-6.55-16.09-8.67-24.13l10.54 13.28c-3.18-7.81-5.84-15.67-7.88-23.36l9.32 12.43c-2.9-7.73-5.08-14.6-6.82-22.07l8.3 12.45c-2.39-7.36-4.27-14.23-5.91-21.7l7.32 11.74c-1.75-6.43-3.3-13.1-4.52-19.92l6.09 10.35c-1.3-5.89-2.26-11.08-3.11-16.98l5.19 9.91c-0.88-5.46-1.7-10.78-2.24-16.28l4.1 8.56c-0.54-5.01-0.86-9.46-1.11-14.35l3.27 7.53c-0.16-4.38-0.1-8.82-0.11-12.8l2.46 6.73c0.11-3.89 0.48-8.05 0.96-11.89l1.39 4.95c0.45-3.67 1.14-7.37 2.09-10.92l0.89 3.85c0.91-3.7 2.11-7.15 3.41-9.99l0.31 2.12c1.43-3.47 3.34-6.62 5.5-8.64-1.68 4.15-2.77 8.75-3.3 12.88z"/>
+      </svg>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="section">
+      <div class="container">
+        <div class="calendar-wrapper">
+
+          <!-- Legend & View Toggle -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
+            <div class="calendar-legend">
+              <div class="legend-item"><span class="legend-dot meeting"></span> Meeting</div>
+              <div class="legend-item"><span class="legend-dot camping"></span> Camping</div>
+              <div class="legend-item"><span class="legend-dot service"></span> Service</div>
+              <div class="legend-item"><span class="legend-dot special"></span> Special Event</div>
+            </div>
+            <div class="view-toggle">
+              <button class="active" onclick="setView('calendar')">Calendar</button>
+              <button onclick="setView('list')">List</button>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="calendar-controls">
+            <div class="cal-nav">
+              <button onclick="changeMonth(-1)">&larr; Prev</button>
+              <button onclick="goToday()">Today</button>
+              <button onclick="changeMonth(1)">Next &rarr;</button>
+            </div>
+            <h2 id="cal-month-label"></h2>
+          </div>
+
+          <!-- Calendar Grid -->
+          <div class="grid-view" id="calendar-grid-view">
+            <div class="cal-grid" id="cal-grid"></div>
+          </div>
+
+          <!-- List View -->
+          <div class="list-view" id="calendar-list-view">
+            <div class="upcoming-list" id="upcoming-events" style="margin-top: 0;"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="container" style="text-align: center;">
+        <h2>Ready to Join the Adventure?</h2>
+        <p style="max-width: 600px; margin: 1rem auto 2rem;">Drop in any Monday at 6:15 PM at Jefferson Elementary School — no commitment, no pressure.</p>
+        <div class="cta-buttons">
+          <a href="join.html" class="btn btn-primary">How to Join</a>
+          <a href="contact.html" class="btn btn-secondary">Contact Us</a>
+        </div>
+        <p style="margin-top: 1.5rem; margin-bottom: 0; font-size: 0.9rem; opacity: 0.7;">Part of <a href="https://trcscouting.org" target="_blank" rel="noopener noreferrer" style="color: var(--color-secondary);">Twin Rivers Council</a>, Scouting America</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-brand">
+            <img src="Troop3054.png" alt="Troop 54 logo" width="50" height="50">
+            <span>Troop 54</span>
+          </div>
+          <p>Sponsored by <a href="https://schalmontpto.com" target="_blank" rel="noopener noreferrer">Schalmont PTO</a>. Part of Twin Rivers Council, Scouting America. Proudly serving Rotterdam and the Capital Region.</p>
+          <a href="https://trcscouting.org" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 0.75rem;">
+            <img src="images/twinrivers.webp" alt="Twin Rivers Council, Scouting America" width="120" loading="lazy" style="opacity: 0.8;">
+          </a>
+        </div>
+        <div class="footer-col">
+          <h4>Pages</h4>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="join.html">Join Our Troop</a>
+          <a href="eagles.html">Eagle Scouts</a>
+          <a href="calendar.html">Calendar</a>
+          <a href="guide.html">Welcome Guide</a>
+          <a href="sponsors.html">Sponsors</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="https://www.scouting.org" target="_blank" rel="noopener noreferrer">Scouting America</a>
+          <a href="https://trcscouting.org" target="_blank" rel="noopener noreferrer">Twin Rivers Council</a>
+          <a href="https://my.scouting.org/online-registration/658c377d-63c4-48c3-9862-2643d1c01745/applicant-type" target="_blank" rel="noopener noreferrer">Register Online</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="contact.html">Contact Us</a>
+          <div class="social-links" style="margin-top: 0.75rem;">
+            <a href="https://www.facebook.com/profile.php?id=61561353564653" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Troop 54, Twin Rivers Council, Scouting America. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Website by <a href="https://mauops.com" target="_blank" rel="noopener noreferrer">Mau Consulting</a> &middot; <a href="privacy.html">Privacy Policy</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- Event Modal -->
+  <div class="event-modal-overlay" id="event-modal" onclick="if(event.target===this)closeModal()">
+    <div class="event-modal">
+      <button class="event-modal-close" onclick="closeModal()">&times;</button>
+      <h3 id="modal-title"></h3>
+      <div class="event-modal-detail" id="modal-date-row">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span id="modal-date"></span>
+      </div>
+      <div class="event-modal-detail" id="modal-time-row">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span id="modal-time"></span>
+      </div>
+      <div class="event-modal-detail" id="modal-location-row">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="modal-location"></span>
+      </div>
+      <div class="event-modal-detail" id="modal-desc-row" style="display:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
+        <span id="modal-desc"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // Calendar state
+  let currentDate = new Date();
+  let currentView = 'calendar';
+  let events = [];
+
+  // Fetch and parse ICS
+  async function loadEvents() {
+    try {
+      const res = await fetch('https://calendar-proxy.troop3054.org/calendar');
+      const text = await res.text();
+      events = parseICS(text);
+      render();
+    } catch (e) {
+      console.error('Failed to load calendar:', e);
+      document.getElementById('cal-grid').innerHTML = '<p style="grid-column:1/-1;padding:2rem;text-align:center;color:#888;">Unable to load events. Please try again later.</p>';
+    }
+  }
+
+  function parseICS(text) {
+    const parsed = [];
+    const blocks = text.split('BEGIN:VEVENT');
+    for (let i = 1; i < blocks.length; i++) {
+      const block = blocks[i].split('END:VEVENT')[0];
+      const get = (key) => {
+        const match = block.match(new RegExp('^' + key + ':(.+)$', 'm'));
+        return match ? match[1].trim().replace(/\\,/g, ',').replace(/&amp;/g, '&') : '';
+      };
+      const dtstart = get('DTSTART');
+      const dtend = get('DTEND');
+      if (!dtstart) continue;
+
+      const start = parseICSDate(dtstart);
+      const end = dtend ? parseICSDate(dtend) : null;
+
+      parsed.push({
+        summary: get('SUMMARY'),
+        description: get('DESCRIPTION'),
+        location: get('LOCATION').replace('Location was not specified', ''),
+        start: start,
+        end: end,
+        url: get('URL'),
+        type: categorizeEvent(get('SUMMARY'))
+      });
+    }
+    return parsed.sort((a, b) => a.start - b.start);
+  }
+
+  function parseICSDate(str) {
+    // Format: 20260309T221500Z
+    const y = parseInt(str.substr(0, 4));
+    const m = parseInt(str.substr(4, 2)) - 1;
+    const d = parseInt(str.substr(6, 2));
+    const h = parseInt(str.substr(9, 2));
+    const min = parseInt(str.substr(11, 2));
+    return new Date(Date.UTC(y, m, d, h, min));
+  }
+
+  function categorizeEvent(summary) {
+    const s = summary.toLowerCase();
+    if (s.includes('meeting') || s.includes('troop meeting')) return 'meeting';
+    if (s.includes('camp') || s.includes('hike') || s.includes('klondike') || s.includes('derby')) return 'camping';
+    if (s.includes('food bank') || s.includes('service') || s.includes('cleanup')) return 'service';
+    return 'special';
+  }
+
+  function render() {
+    renderCalendar();
+    renderList();
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    document.getElementById('cal-month-label').textContent = months[currentDate.getMonth()] + ' ' + currentDate.getFullYear();
+  }
+
+  function renderCalendar() {
+    const grid = document.getElementById('cal-grid');
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysInPrevMonth = new Date(year, month, 0).getDate();
+    const today = new Date();
+
+    let html = '';
+    const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    dayNames.forEach(d => { html += `<div class="cal-day-header">${d}</div>`; });
+
+    // Previous month days
+    for (let i = firstDay - 1; i >= 0; i--) {
+      const day = daysInPrevMonth - i;
+      html += `<div class="cal-day other-month"><span class="day-number">${day}</span></div>`;
+    }
+
+    // Current month days
+    for (let d = 1; d <= daysInMonth; d++) {
+      const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+      const dayEvents = getEventsForDay(year, month, d);
+      html += `<div class="cal-day${isToday ? ' today' : ''}">`;
+      html += `<span class="day-number">${d}</span>`;
+      dayEvents.forEach(ev => {
+        html += `<div class="cal-event type-${ev.type}" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)})'>${ev.summary}</div>`;
+      });
+      html += '</div>';
+    }
+
+    // Next month fill
+    const totalCells = firstDay + daysInMonth;
+    const remaining = (7 - (totalCells % 7)) % 7;
+    for (let i = 1; i <= remaining; i++) {
+      html += `<div class="cal-day other-month"><span class="day-number">${i}</span></div>`;
+    }
+
+    grid.innerHTML = html;
+  }
+
+  function renderList() {
+    const container = document.getElementById('upcoming-events');
+    const now = new Date();
+    const upcoming = events.filter(e => e.start >= now).slice(0, 15);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    if (upcoming.length === 0) {
+      container.innerHTML = '<p style="color:#888;text-align:center;padding:2rem;">No upcoming events.</p>';
+      return;
+    }
+
+    let html = '';
+    upcoming.forEach(ev => {
+      const d = ev.start;
+      html += `<div class="upcoming-item" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)})'>
+        <div class="upcoming-date-badge">
+          <span class="month">${months[d.getMonth()]}</span>
+          <span class="day">${d.getDate()}</span>
+        </div>
+        <div class="upcoming-info">
+          <div class="event-name">${ev.summary}</div>
+          <div class="event-meta">${formatEventTime(ev.start, ev.end)}${ev.location ? ' &middot; ' + ev.location : ''}</div>
+        </div>
+      </div>`;
+    });
+    container.innerHTML = html;
+  }
+
+  function getEventsForDay(year, month, day) {
+    return events.filter(ev => {
+      const s = ev.start;
+      // Check if event starts on this day
+      if (s.getFullYear() === year && s.getMonth() === month && s.getDate() === day) return true;
+      // Multi-day events
+      if (ev.end) {
+        const start = new Date(ev.start.getFullYear(), ev.start.getMonth(), ev.start.getDate());
+        const end = new Date(ev.end.getFullYear(), ev.end.getMonth(), ev.end.getDate());
+        const check = new Date(year, month, day);
+        if (check >= start && check <= end) return true;
+      }
+      return false;
+    });
+  }
+
+  function formatEventDate(start, end) {
+    const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    let str = start.toLocaleDateString('en-US', opts);
+    if (end && end.toDateString() !== start.toDateString()) {
+      str += ' — ' + end.toLocaleDateString('en-US', opts);
+    }
+    return str;
+  }
+
+  function formatEventTime(start, end) {
+    const opts = { hour: 'numeric', minute: '2-digit', hour12: true };
+    let str = start.toLocaleTimeString('en-US', opts);
+    if (end && end.toDateString() === start.toDateString()) {
+      str += ' – ' + end.toLocaleTimeString('en-US', opts);
+    }
+    return str;
+  }
+
+  function changeMonth(delta) {
+    currentDate.setMonth(currentDate.getMonth() + delta);
+    render();
+  }
+
+  function goToday() {
+    currentDate = new Date();
+    render();
+  }
+
+  function setView(view) {
+    currentView = view;
+    const btns = document.querySelectorAll('.view-toggle button');
+    btns.forEach(b => b.classList.remove('active'));
+    if (view === 'calendar') {
+      btns[0].classList.add('active');
+      document.getElementById('calendar-grid-view').classList.remove('active-list');
+      document.getElementById('calendar-list-view').classList.remove('active');
+    } else {
+      btns[1].classList.add('active');
+      document.getElementById('calendar-grid-view').classList.add('active-list');
+      document.getElementById('calendar-list-view').classList.add('active');
+    }
+  }
+
+  function showEvent(title, date, time, location, description) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-date').textContent = date;
+    document.getElementById('modal-time').textContent = time;
+    document.getElementById('modal-location').textContent = location || 'TBD';
+    document.getElementById('modal-location-row').style.display = location ? 'flex' : 'none';
+
+    const descRow = document.getElementById('modal-desc-row');
+    const descEl = document.getElementById('modal-desc');
+    if (description && description !== title) {
+      descEl.textContent = description;
+      descRow.style.display = 'flex';
+    } else {
+      descRow.style.display = 'none';
+    }
+
+    document.getElementById('event-modal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('event-modal').classList.remove('active');
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // Init
+  loadEvents();
+  </script>
+
+</body>
+</html>
