@@ -1,0 +1,30 @@
+name: Update Calendar
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch calendar
+        run: |
+          curl -sSfL -o calendar.ics \
+            "https://api.scouting.org/advancements/events/calendar/65867"
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet calendar.ics; then
+            git add calendar.ics
+            git commit -m "Update calendar.ics [skip ci]"
+            git push
+          fi
