@@ -624,7 +624,7 @@
   // Fetch and parse ICS
   async function loadEvents() {
     try {
-      const res = await fetch('https://calendar-proxy.troop3054.org/calendar');
+      const res = await fetch('calendar.ics?t=' + Date.now());
       const text = await res.text();
       events = parseICS(text);
       render();
