@@ -10,6 +10,7 @@
 
   function init() {
     initNavigation();
+    initDropdowns();
     initScrollEffects();
     initFAQ();
     initFadeAnimations();
@@ -56,7 +57,31 @@
       if (overlay) overlay.classList.remove('active');
       hamburger.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
+
+      // Collapse any open dropdowns when the mobile menu closes
+      document.querySelectorAll('.nav-dropdown.open').forEach(function (dd) {
+        dd.classList.remove('open');
+        var t = dd.querySelector('.nav-dropdown-toggle');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      });
     }
+  }
+
+  /* ---------- Resources Dropdown ---------- */
+  function initDropdowns() {
+    var toggles = document.querySelectorAll('.nav-dropdown-toggle');
+    if (!toggles.length) return;
+
+    toggles.forEach(function (toggle) {
+      // On mobile the menu is an accordion driven by the .open class.
+      // On desktop the menu opens on hover/focus, so this just adds tap support.
+      toggle.addEventListener('click', function (e) {
+        e.preventDefault();
+        var dropdown = toggle.closest('.nav-dropdown');
+        var isOpen = dropdown.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    });
   }
 
   /* ---------- Scroll Effects ---------- */
@@ -230,6 +255,10 @@
       var href = link.getAttribute('href');
       if (href === currentPage || (currentPage === '' && href === 'index.html')) {
         link.classList.add('active');
+
+        // If the active page lives in the Resources dropdown, highlight the toggle too
+        var dropdown = link.closest('.nav-dropdown');
+        if (dropdown) dropdown.classList.add('active-parent');
       }
     });
   }
