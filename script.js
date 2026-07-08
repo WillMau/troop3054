@@ -256,7 +256,7 @@
       if (href === currentPage || (currentPage === '' && href === 'index.html')) {
         link.classList.add('active');
 
-        // If the active page lives in the Resources dropdown, highlight the toggle too
+        // If the active page lives in a dropdown (About/Resources), highlight the toggle too
         var dropdown = link.closest('.nav-dropdown');
         if (dropdown) dropdown.classList.add('active-parent');
       }
