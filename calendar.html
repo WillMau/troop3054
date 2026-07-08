@@ -737,7 +737,7 @@
   // Fetch and parse ICS
   async function loadEvents() {
     try {
-      const res = await fetch('calendar.ics?t=' + Date.now());
+      const res = await fetch('https://my.troop3054.org/calendar.ics?t=' + Date.now());
       const text = await res.text();
       events = parseICS(text);
       render();
@@ -753,15 +753,19 @@
     for (let i = 1; i < blocks.length; i++) {
       const block = blocks[i].split('END:VEVENT')[0];
       const get = (key) => {
-        const match = block.match(new RegExp('^' + key + ':(.+)$', 'm'));
+        // Match "KEY:value" and parameterized "KEY;VALUE=DATE:value" lines
+        const match = block.match(new RegExp('^' + key + '(?:;[^:\\r\\n]*)?:(.+)$', 'm'));
         return match ? match[1].trim().replace(/\\,/g, ',').replace(/&amp;/g, '&') : '';
       };
       const dtstart = get('DTSTART');
       const dtend = get('DTEND');
       if (!dtstart) continue;
 
+      const allDay = /^\d{8}$/.test(dtstart);
       const start = parseICSDate(dtstart);
-      const end = dtend ? parseICSDate(dtend) : null;
+      let end = dtend ? parseICSDate(dtend) : null;
+      // All-day DTEND is exclusive per RFC 5545 — pull back one day
+      if (allDay && end) end = new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1);
 
       parsed.push({
         summary: get('SUMMARY'),
@@ -769,6 +773,7 @@
         location: get('LOCATION').replace('Location was not specified', ''),
         start: start,
         end: end,
+        allDay: allDay,
         url: get('URL'),
         type: categorizeEvent(get('SUMMARY'))
       });
@@ -777,10 +782,12 @@
   }
 
   function parseICSDate(str) {
-    // Format: 20260309T221500Z
     const y = parseInt(str.substr(0, 4));
     const m = parseInt(str.substr(4, 2)) - 1;
     const d = parseInt(str.substr(6, 2));
+    // All-day format: 20260705 (local midnight so the day doesn't shift)
+    if (str.length === 8) return new Date(y, m, d);
+    // Timed format: 20260309T221500Z
     const h = parseInt(str.substr(9, 2));
     const min = parseInt(str.substr(11, 2));
     return new Date(Date.UTC(y, m, d, h, min));
@@ -827,7 +834,7 @@
       html += `<div class="cal-day${isToday ? ' today' : ''}">`;
       html += `<span class="day-number">${d}</span>`;
       dayEvents.forEach(ev => {
-        html += `<div class="cal-event type-${ev.type}" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)})'>${ev.summary}</div>`;
+        html += `<div class="cal-event type-${ev.type}" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)})'>${ev.summary}</div>`;
       });
       html += '</div>';
     }
@@ -856,14 +863,14 @@
     let html = '';
     upcoming.forEach(ev => {
       const d = ev.start;
-      html += `<div class="upcoming-item" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)})'>
+      html += `<div class="upcoming-item" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)})'>
         <div class="upcoming-date-badge">
           <span class="month">${months[d.getMonth()]}</span>
           <span class="day">${d.getDate()}</span>
         </div>
         <div class="upcoming-info">
           <div class="event-name">${ev.summary}</div>
-          <div class="event-meta">${formatEventTime(ev.start, ev.end)}${ev.location ? ' &middot; ' + ev.location : ''}</div>
+          <div class="event-meta">${formatEventTime(ev.start, ev.end, ev.allDay)}${ev.location ? ' &middot; ' + ev.location : ''}</div>
         </div>
       </div>`;
     });
@@ -895,7 +902,8 @@
     return str;
   }
 
-  function formatEventTime(start, end) {
+  function formatEventTime(start, end, allDay) {
+    if (allDay) return 'All day';
     const opts = { hour: 'numeric', minute: '2-digit', hour12: true };
     let str = start.toLocaleTimeString('en-US', opts);
     if (end && end.toDateString() === start.toDateString()) {
