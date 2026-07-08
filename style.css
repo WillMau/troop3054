@@ -417,6 +417,23 @@ p {
   display: none !important;
 }
 
+/* Member login button (outlined, sits beside Join) */
+.nav-member-btn {
+  border: 2px solid rgba(250, 246, 240, 0.55);
+  font-weight: 600;
+  padding: calc(0.5rem - 2px) 1.1rem;
+}
+
+.nav-member-btn:hover {
+  border-color: var(--color-text-light);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-text-light);
+}
+
+.nav-member-btn.active::after {
+  display: none !important;
+}
+
 /* Hamburger */
 .hamburger {
   display: none;
@@ -534,7 +551,8 @@ p {
     padding-left: 1.75rem;
   }
 
-  .nav-join-btn {
+  .nav-join-btn,
+  .nav-member-btn {
     text-align: center;
     margin-top: 0.25rem;
   }
