@@ -1034,13 +1034,26 @@ p {
 }
 
 .tier-badge {
-  margin-bottom: 1rem;
+  margin-bottom: -0.75rem; /* pull the title up so it sits into the faded patch */
   text-align: center;
+  position: relative;
+  z-index: 0;
+}
+.tier-badge img {
+  width: 92px; /* hero size, overrides the small inline width */
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  /* fade the bottom of the patch up into the card */
+  -webkit-mask-image: linear-gradient(to bottom, #000 56%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to bottom, #000 56%, rgba(0, 0, 0, 0) 100%);
 }
 
 .tier-card h3 {
   font-size: 1.15rem;
   margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1; /* title reads above the faded patch bottom */
 }
 
 .tier-price {
