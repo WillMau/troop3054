@@ -39,8 +39,9 @@
   <link rel="stylesheet" href="style.css">
   <style>
     .a85-logo {
-      display: block; max-width: 380px; width: 100%; height: auto;
-      margin: 0 auto 2rem; border-radius: 16px; box-shadow: 0 10px 34px rgba(0,0,0,0.28);
+      display: block; width: 340px; max-width: 82%; height: auto; aspect-ratio: 1 / 1;
+      margin: 0 auto 1.75rem; border-radius: 50%;
+      box-shadow: 0 12px 38px rgba(0,0,0,0.32);
     }
     .a85-body { max-width: 680px; margin: 0 auto; }
     .a85-body p { font-size: 1.08rem; line-height: 1.75; }
@@ -118,7 +119,7 @@
     <section class="section">
       <div class="container">
         <div class="a85-body">
-          <img class="a85-logo" src="images/3054-85-web.webp" alt="Troop 54 85th Anniversary emblem, 1941 to 2026">
+          <img class="a85-logo" src="images/3054-85-circle.webp" alt="Troop 54 85th Anniversary emblem, 1941 to 2026">
           <p>Were you a Scout in Troop 54 (now Troop 3054)? A parent, a leader, an Eagle? We'd love:</p>
           <div class="a85-list">
             📸 Old photos (campouts, Courts of Honor, that haircut from 1987)<br>
@@ -157,7 +158,7 @@
               </div>
               <div class="form-group">
                 <label for="a85mem">Your memory, or names/photos we should track down</label>
-                <textarea id="a85mem" name="memory" placeholder="A campout, a Scoutmaster, an Eagle year, anything you remember"></textarea>
+                <textarea id="a85mem" name="memory" maxlength="8000" placeholder="A campout, a Scoutmaster, an Eagle year, anything you remember"></textarea>
               </div>
               <div class="form-group">
                 <label class="a85-check"><input type="checkbox" name="subscribe" checked> Sign me up for the Troop 54 newsletter and 85th-anniversary news</label>
