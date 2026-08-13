@@ -48,6 +48,9 @@
     .a85-hp { position: absolute; left: -9999px; }
     .a85-check { display: flex; align-items: flex-start; gap: 0.6rem; font-weight: 400; }
     .a85-check input { width: auto; margin-top: 0.25rem; }
+    .a85-conns { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin-top: 0.35rem; }
+    .a85-conns .a85-check { align-items: center; }
+    .a85-conns .a85-check input { margin-top: 0; }
     .a85-msg { margin-top: 1rem; font-weight: 600; min-height: 1.2em; }
     .a85-ok { color: #2E5D34; }
     .a85-err { color: #CE1126; }
@@ -145,15 +148,14 @@
                 <input id="a85years" name="years" placeholder="e.g. 1998-2003">
               </div>
               <div class="form-group">
-                <label for="a85conn">Your connection</label>
-                <select id="a85conn" name="connection">
-                  <option value="">—</option>
-                  <option>Former Scout</option>
-                  <option>Eagle Scout</option>
-                  <option>Parent</option>
-                  <option>Leader</option>
-                  <option>Community member</option>
-                </select>
+                <label>Your connection <span style="opacity:0.5;font-weight:400">(check all that apply)</span></label>
+                <div class="a85-conns">
+                  <label class="a85-check"><input type="checkbox" name="connection" value="Former Scout"> Former Scout</label>
+                  <label class="a85-check"><input type="checkbox" name="connection" value="Eagle Scout"> Eagle Scout</label>
+                  <label class="a85-check"><input type="checkbox" name="connection" value="Parent"> Parent</label>
+                  <label class="a85-check"><input type="checkbox" name="connection" value="Leader"> Leader</label>
+                  <label class="a85-check"><input type="checkbox" name="connection" value="Community member"> Community member</label>
+                </div>
               </div>
               <div class="form-group">
                 <label for="a85mem">Your memory, or names/photos we should track down</label>
@@ -229,7 +231,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               name: fd.get('name'), email: fd.get('email'), years: fd.get('years'),
-              connection: fd.get('connection'), memory: fd.get('memory'),
+              connection: fd.getAll('connection'), memory: fd.get('memory'),
               subscribe: fd.get('subscribe') === 'on', website: fd.get('website')
             })
           });
