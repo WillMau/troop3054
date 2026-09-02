@@ -2645,3 +2645,11 @@ button:focus-visible,
     font-size: 0.6rem;
   }
 }
+
+/* Governance / committee meeting records */
+.gov-record { border: 1px solid #d9d2c4; border-radius: 10px; margin-bottom: 0.75rem; background: #fff; }
+.gov-record > summary { cursor: pointer; padding: 0.9rem 1.1rem; font-family: 'Montserrat', sans-serif; font-weight: 600; color: #003F87; }
+.gov-record[open] > summary { border-bottom: 1px solid #d9d2c4; }
+.gov-body { padding: 0.75rem 1.25rem 1rem; }
+.gov-body ol { padding-left: 1.2rem; }
+.gov-body li { margin-bottom: 0.5rem; }
