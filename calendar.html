@@ -190,7 +190,7 @@
     .cal-more {
       display: block;
       font-size: 0.6rem;
-      color: #888;
+      color: #6b6b6b;
       padding: 1px 5px;
       cursor: pointer;
     }
@@ -219,6 +219,33 @@
       color: var(--color-accent);
     }
 
+    .cal-event.type-committee {
+      background: rgba(106, 76, 147, 0.14);
+      color: #5a3d86;
+    }
+    .legend-dot.committee { background: #6a4c93; }
+
+    /* Chips and list rows are real buttons so keyboards can open them;
+       strip the browser's button chrome and keep the existing look. */
+    button.cal-event { display: block; width: 100%; border: 0; font: inherit; text-align: left; }
+    button.cal-more { border: 0; background: none; font: inherit; width: 100%; text-align: left; }
+    button.upcoming-item { width: 100%; font: inherit; text-align: left; }
+    .cal-event .t { font-weight: 700; margin-right: 2px; }
+    .cal-note { color: #6b6b6b; text-align: center; padding: 2rem; }
+    #modal-desc { white-space: pre-line; }
+
+    .subscribe-link {
+      margin-left: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--color-primary);
+      text-decoration: none;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 0.35rem 0.7rem;
+      white-space: nowrap;
+    }
+    .subscribe-link:hover { background: #eef3f9; }
+
     /* Event Detail Modal */
     .event-modal-overlay {
       display: none;
@@ -241,6 +268,8 @@
       padding: 2rem;
       max-width: 480px;
       width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
       box-shadow: var(--shadow-lg);
       position: relative;
     }
@@ -290,20 +319,6 @@
     .modal-link:hover { background: #e0eaf6; }
 
     /* Upcoming Events List */
-    .upcoming-list {
-      margin-top: 2rem;
-      max-width: 960px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .upcoming-list h3 {
-      font-family: var(--font-heading);
-      font-size: 1.1rem;
-      color: var(--color-primary);
-      margin-bottom: 1rem;
-    }
-
     .upcoming-item {
       display: flex;
       align-items: center;
@@ -370,7 +385,7 @@
 
     .upcoming-info .event-meta {
       font-size: 0.8rem;
-      color: #888;
+      color: #6b6b6b;
       margin-top: 0.15rem;
     }
 
@@ -473,6 +488,7 @@
       white-space: nowrap;
     }
 
+    /* Mobile */
     @media (max-width: 768px) {
       .council-callout {
         grid-template-columns: 1fr;
@@ -483,10 +499,6 @@
       .council-callout-icon {
         margin: 0 auto;
       }
-    }
-
-    /* Mobile */
-    @media (max-width: 768px) {
       .cal-day {
         min-height: 60px;
         padding: 0.2rem;
@@ -574,6 +586,7 @@
           <a href="join.html" class="nav-join-btn">Join</a>
         </div>
       </div>
+    </div>
     <div class="nav-overlay" aria-hidden="true"></div>
   </nav>
 
@@ -601,11 +614,13 @@
               <div class="legend-item"><span class="legend-dot meeting"></span> Meeting</div>
               <div class="legend-item"><span class="legend-dot camping"></span> Camping</div>
               <div class="legend-item"><span class="legend-dot service"></span> Service</div>
+              <div class="legend-item"><span class="legend-dot committee"></span> Committee</div>
               <div class="legend-item"><span class="legend-dot special"></span> Special Event</div>
             </div>
             <div class="view-toggle">
               <button class="active" onclick="setView('calendar')">Calendar</button>
               <button onclick="setView('list')">List</button>
+              <a class="subscribe-link" href="webcal://my.troop3054.org/calendar.ics" title="Add the troop calendar to Apple Calendar or Outlook. On Google Calendar, use Other calendars → From URL and paste https://my.troop3054.org/calendar.ics">Subscribe</a>
             </div>
           </div>
 
@@ -714,6 +729,7 @@
           <a href="join.html">Join Our Troop</a>
           <a href="eagles.html">Eagle Scouts</a>
           <a href="calendar.html">Calendar</a>
+          <a href="governance.html">Committee</a>
           <a href="guide.html">Welcome Guide</a>
           <a href="sponsors.html">Sponsors</a>
           <a href="contact.html">Contact</a>
@@ -746,8 +762,8 @@
 
   <!-- Event Modal -->
   <div class="event-modal-overlay" id="event-modal" onclick="if(event.target===this)closeModal()">
-    <div class="event-modal">
-      <button class="event-modal-close" onclick="closeModal()">&times;</button>
+    <div class="event-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="event-modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
       <h3 id="modal-title"></h3>
       <img id="modal-flyer" alt="" style="display:none;max-width:100%;max-height:60vh;border-radius:8px;margin:0.25rem auto 1rem;">
 
@@ -774,56 +790,83 @@
   <script>
   // Calendar state
   let currentDate = new Date();
-  let currentView = 'calendar';
   let events = [];
+  let expandedDay = null; // "y-m-d" of a grid cell showing all its events
+  let lastFocus = null;   // element to return focus to when the modal closes
 
-  // Fetch and parse ICS
+  // Feed text is troop-controlled but treated as untrusted: everything that
+  // lands in innerHTML goes through esc(); the modal uses textContent.
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+  const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const fmtTime = (d) => d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
+  // Draw the month at once so the page isn't blank while the feed loads.
   async function loadEvents() {
+    const list = document.getElementById('upcoming-events');
+    renderCalendar();
+    list.innerHTML = '<p class="cal-note">Loading events…</p>';
     try {
       const res = await fetch('https://my.troop3054.org/calendar.ics?t=' + Date.now());
-      const text = await res.text();
-      events = parseICS(text);
-      render();
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      events = parseICS(await res.text());
+      renderCalendar();
+      renderList();
     } catch (e) {
       console.error('Failed to load calendar:', e);
-      document.getElementById('cal-grid').innerHTML = '<p style="grid-column:1/-1;padding:2rem;text-align:center;color:#888;">Unable to load events. Please try again later.</p>';
+      const note = 'Unable to load events right now. Please try again in a few minutes.';
+      document.getElementById('cal-grid').insertAdjacentHTML('beforeend',
+        `<p class="cal-note" style="grid-column:1/-1">${note}</p>`);
+      list.innerHTML = `<p class="cal-note">${note}</p>`;
     }
+  }
+
+  // RFC 5545 text escapes: \\ \; \, \n \N
+  const unesc = (s) => s.replace(/\\([\\;,nN])/g, (m, c) => (c === 'n' || c === 'N' ? '\n' : c));
+
+  // Feed CATEGORIES decide the color; keyword sniffing is only a fallback for
+  // a feed line without one.
+  const CAT_TYPE = { meeting: 'meeting', committee: 'committee', campout: 'camping', service: 'service', other: 'special' };
+  function typeFor(cat, summary) {
+    if (CAT_TYPE[cat]) return CAT_TYPE[cat];
+    const s = summary.toLowerCase();
+    if (s.includes('meeting')) return 'meeting';
+    if (s.includes('camp') || s.includes('hike') || s.includes('klondike') || s.includes('derby')) return 'camping';
+    if (s.includes('food bank') || s.includes('service') || s.includes('cleanup')) return 'service';
+    return 'special';
   }
 
   function parseICS(text) {
     const parsed = [];
-    const blocks = text.split('BEGIN:VEVENT');
+    // Unfold continuation lines (CRLF + one space/tab) before splitting
+    const blocks = text.replace(/\r?\n[ \t]/g, '').split('BEGIN:VEVENT');
     for (let i = 1; i < blocks.length; i++) {
       const block = blocks[i].split('END:VEVENT')[0];
       const get = (key) => {
-        // Match "KEY:value" and parameterized "KEY;VALUE=DATE:value" lines
+        // "KEY:value" and parameterized "KEY;VALUE=DATE:value"
         const match = block.match(new RegExp('^' + key + '(?:;[^:\\r\\n]*)?:(.+)$', 'm'));
-        return match ? match[1].trim().replace(/\\,/g, ',').replace(/&amp;/g, '&') : '';
+        return match ? unesc(match[1].trim()) : '';
       };
       const dtstart = get('DTSTART');
       const dtend = get('DTEND');
       if (!dtstart) continue;
-
       const allDay = /^\d{8}$/.test(dtstart);
       const start = parseICSDate(dtstart);
       let end = dtend ? parseICSDate(dtend) : null;
       // All-day DTEND is exclusive per RFC 5545 — pull back one day
       if (allDay && end) end = new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1);
-
+      const summary = get('SUMMARY');
+      const cat = get('CATEGORIES').toLowerCase();
       parsed.push({
-        summary: get('SUMMARY'),
-        description: get('DESCRIPTION'),
-        location: get('LOCATION').replace('Location was not specified', ''),
-        links: get('X-LINKS'),
-        cat: get('CATEGORIES').toLowerCase(),
-        start: start,
-        end: end,
-        allDay: allDay,
-        url: get('URL'),
-        type: categorizeEvent(get('SUMMARY'))
+        summary, description: get('DESCRIPTION'), location: get('LOCATION'),
+        links: get('X-LINKS'), cat, start, end, allDay, type: typeFor(cat, summary),
       });
     }
-    return parsed.sort((a, b) => a.start - b.start);
+    parsed.sort((a, b) => a.start - b.start);
+    parsed.forEach((e, i) => { e.i = i; });
+    return parsed;
   }
 
   function parseICSDate(str) {
@@ -839,112 +882,82 @@
     return /Z$/.test(str) ? new Date(Date.UTC(y, m, d, h, min)) : new Date(y, m, d, h, min);
   }
 
-  function categorizeEvent(summary) {
-    const s = summary.toLowerCase();
-    if (s.includes('meeting') || s.includes('troop meeting')) return 'meeting';
-    if (s.includes('camp') || s.includes('hike') || s.includes('klondike') || s.includes('derby')) return 'camping';
-    if (s.includes('food bank') || s.includes('service') || s.includes('cleanup')) return 'service';
-    return 'special';
-  }
-
-  function render() {
-    renderCalendar();
-    renderList();
-    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    document.getElementById('cal-month-label').textContent = months[currentDate.getMonth()] + ' ' + currentDate.getFullYear();
-  }
-
   function renderCalendar() {
     const grid = document.getElementById('cal-grid');
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
+    document.getElementById('cal-month-label').textContent =
+      currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const daysInPrevMonth = new Date(year, month, 0).getDate();
     const today = new Date();
 
     let html = '';
-    const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    dayNames.forEach(d => { html += `<div class="cal-day-header">${d}</div>`; });
-
-    // Previous month days
+    ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => { html += `<div class="cal-day-header">${d}</div>`; });
     for (let i = firstDay - 1; i >= 0; i--) {
-      const day = daysInPrevMonth - i;
-      html += `<div class="cal-day other-month"><span class="day-number">${day}</span></div>`;
+      html += `<div class="cal-day other-month"><span class="day-number">${daysInPrevMonth - i}</span></div>`;
     }
-
-    // Current month days
     for (let d = 1; d <= daysInMonth; d++) {
       const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
       const dayEvents = getEventsForDay(year, month, d);
-      html += `<div class="cal-day${isToday ? ' today' : ''}">`;
-      html += `<span class="day-number">${d}</span>`;
-      // Cells never exceed 3 event lines, so every row stays the same height
-      const shown = dayEvents.length > 3 ? dayEvents.slice(0, 2) : dayEvents;
+      const key = `${year}-${month}-${d}`;
+      html += `<div class="cal-day${isToday ? ' today' : ''}"><span class="day-number">${d}</span>`;
+      // Cells show at most 3 lines so rows stay even — unless this cell was
+      // expanded with "+N more", which lists that day in full.
+      const expanded = expandedDay === key;
+      const shown = dayEvents.length > 3 && !expanded ? dayEvents.slice(0, 2) : dayEvents;
       shown.forEach(ev => {
-        html += `<div class="cal-event type-${ev.type}" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)}, ${JSON.stringify(ev.links||'').replace(/'/g,"&#39;")}, ${JSON.stringify(ev.cat||'')})'>${ev.summary}</div>`;
+        const t = ev.allDay ? '' : `<span class="t">${fmtTime(ev.start).replace(/ ?[AP]M$/, '')}</span> `;
+        html += `<button type="button" class="cal-event type-${ev.type}" data-i="${ev.i}" title="${esc(ev.summary)}">${t}${esc(ev.summary)}</button>`;
       });
       if (dayEvents.length > 3) {
-        html += `<div class="cal-more" onclick="setView('list')">+${dayEvents.length - 2} more</div>`;
+        html += `<button type="button" class="cal-more" data-day="${key}">${expanded ? 'show less' : `+${dayEvents.length - 2} more`}</button>`;
       }
       html += '</div>';
     }
-
-    // Next month fill
-    const totalCells = firstDay + daysInMonth;
-    const remaining = (7 - (totalCells % 7)) % 7;
+    const remaining = (7 - ((firstDay + daysInMonth) % 7)) % 7;
     for (let i = 1; i <= remaining; i++) {
       html += `<div class="cal-day other-month"><span class="day-number">${i}</span></div>`;
     }
-
     grid.innerHTML = html;
   }
 
   function renderList() {
     const container = document.getElementById('upcoming-events');
-    const now = new Date();
-    const upcoming = events.filter(e => e.start >= now).slice(0, 15);
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-    if (upcoming.length === 0) {
-      container.innerHTML = '<p style="color:#888;text-align:center;padding:2rem;">No upcoming events.</p>';
+    const cutoff = startOfDay(new Date());
+    // Today's events stay listed all day, and a multi-day event stays until it ends
+    const upcoming = events.filter(e => (e.end || e.start) >= cutoff).slice(0, 15);
+    if (!upcoming.length) {
+      container.innerHTML = '<p class="cal-note">No upcoming events.</p>';
       return;
     }
-
     let html = '';
     upcoming.forEach(ev => {
       const d = ev.start;
-      html += `<div class="upcoming-item" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)}, ${JSON.stringify(ev.links||'').replace(/'/g,"&#39;")}, ${JSON.stringify(ev.cat||'')})'>
+      const tries = flyerCandidates(ev.summary, ev.cat);
+      html += `<button type="button" class="upcoming-item" data-i="${ev.i}">
         <div class="upcoming-date-badge">
-          <span class="month">${months[d.getMonth()]}</span>
+          <span class="month">${MONTH_SHORT[d.getMonth()]}</span>
           <span class="day">${d.getDate()}</span>
         </div>
-        <img class="upcoming-thumb" alt="" loading="lazy"
-             src="${flyerCandidates(ev.summary, ev.cat)[0]}"
-             data-tries="${flyerCandidates(ev.summary, ev.cat).join('|')}"
-             data-i="0" onerror="flyerFallback(this)">
+        <img class="upcoming-thumb" alt="" loading="lazy" src="${tries[0]}"
+             data-tries="${tries.join('|')}" data-try="0" onerror="flyerFallback(this)">
         <div class="upcoming-info">
-          <div class="event-name">${ev.summary}</div>
-          <div class="event-meta">${formatEventTime(ev.start, ev.end, ev.allDay)}${ev.location ? ' &middot; ' + ev.location : ''}</div>
+          <div class="event-name">${esc(ev.summary)}</div>
+          <div class="event-meta">${esc(formatEventTime(ev))}${ev.location ? ' &middot; ' + esc(ev.location) : ''}</div>
         </div>
-      </div>`;
+      </button>`;
     });
     container.innerHTML = html;
   }
 
   function getEventsForDay(year, month, day) {
+    const check = new Date(year, month, day);
     return events.filter(ev => {
-      const s = ev.start;
-      // Check if event starts on this day
-      if (s.getFullYear() === year && s.getMonth() === month && s.getDate() === day) return true;
-      // Multi-day events
-      if (ev.end) {
-        const start = new Date(ev.start.getFullYear(), ev.start.getMonth(), ev.start.getDate());
-        const end = new Date(ev.end.getFullYear(), ev.end.getMonth(), ev.end.getDate());
-        const check = new Date(year, month, day);
-        if (check >= start && check <= end) return true;
-      }
-      return false;
+      const s = startOfDay(ev.start);
+      if (s.getTime() === check.getTime()) return true;
+      return ev.end ? check >= s && check <= startOfDay(ev.end) : false;
     });
   }
 
@@ -957,43 +970,48 @@
     return str;
   }
 
-  function formatEventTime(start, end, allDay) {
-    if (allDay) return 'All day';
-    const opts = { hour: 'numeric', minute: '2-digit', hour12: true };
-    let str = start.toLocaleTimeString('en-US', opts);
-    if (end && end.toDateString() === start.toDateString()) {
-      str += ' – ' + end.toLocaleTimeString('en-US', opts);
-    }
-    return str;
+  // "All day" | "6:15 PM – 7:45 PM" | "Fri 5:00 PM – Sun 12:00 PM" (a timed
+  // multi-day event names each day so the times can't be misread).
+  function formatEventTime(ev) {
+    if (ev.allDay) return 'All day';
+    if (!ev.end) return fmtTime(ev.start);
+    if (ev.end.toDateString() === ev.start.toDateString()) return `${fmtTime(ev.start)} – ${fmtTime(ev.end)}`;
+    const wd = (d) => d.toLocaleDateString('en-US', { weekday: 'short' });
+    return `${wd(ev.start)} ${fmtTime(ev.start)} – ${wd(ev.end)} ${fmtTime(ev.end)}`;
   }
 
+  // Always navigate from the 1st so the 29th–31st can't skip or repeat a month
   function changeMonth(delta) {
-    currentDate.setMonth(currentDate.getMonth() + delta);
-    render();
+    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + delta, 1);
+    expandedDay = null;
+    renderCalendar();
   }
 
   function goToday() {
     currentDate = new Date();
-    render();
+    expandedDay = null;
+    renderCalendar();
   }
 
   function setView(view) {
-    currentView = view;
     const btns = document.querySelectorAll('.view-toggle button');
     btns.forEach(b => b.classList.remove('active'));
+    const grid = document.getElementById('calendar-grid-view');
+    const list = document.getElementById('calendar-list-view');
     if (view === 'calendar') {
       btns[0].classList.add('active');
-      document.getElementById('calendar-grid-view').classList.remove('active-list');
-      document.getElementById('calendar-list-view').classList.remove('active');
+      grid.classList.remove('active-list');
+      list.classList.remove('active');
     } else {
       btns[1].classList.add('active');
-      document.getElementById('calendar-grid-view').classList.add('active-list');
-      document.getElementById('calendar-list-view').classList.add('active');
+      grid.classList.add('active-list');
+      list.classList.add('active');
     }
   }
 
-  // Image candidates for an event, best first: its own flyer, then a branded
-  // emblem, then the troop crest so nothing is ever blank.
+  // Image candidates for an event, best first: its own flyer
+  // (images/events/<slug>.webp), then a branded emblem, then the troop crest
+  // so no event is ever blank.
   function flyerCandidates(title, cat) {
     const slug = String(title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     const list = ['images/events/' + slug + '.webp'];
@@ -1006,41 +1024,38 @@
   // Walks an <img> down its candidate list as each one 404s.
   function flyerFallback(img) {
     const tries = (img.dataset.tries || '').split('|');
-    const i = parseInt(img.dataset.i || '0', 10) + 1;
-    img.dataset.i = i;
+    const i = parseInt(img.dataset.try || '0', 10) + 1;
+    img.dataset.try = i;
     if (i < tries.length) img.src = tries[i];
     else img.style.visibility = 'hidden';
   }
 
-  function showEvent(title, date, time, location, description, links, cat) {
+  function showEvent(ev) {
+    if (!ev) return;
+    const title = ev.summary;
     document.getElementById('modal-title').textContent = title;
 
-    // Resource links (registration, leader guide, etc.) from the X-LINKS
-    // feed property: "label1|url1|label2|url2".
+    // Resource links from the X-LINKS property: "label1|url1|label2|url2".
+    // Only http(s) targets become links.
     const linksEl = document.getElementById('modal-links');
     linksEl.innerHTML = '';
-    if (links) {
-      const parts = String(links).split('|');
-      for (let i = 0; i + 1 < parts.length; i += 2) {
-        const label = parts[i].trim();
-        const url = parts[i + 1].trim();
-        if (!label || !/^https?:\/\//i.test(url)) continue;
-        const a = document.createElement('a');
-        a.href = url; a.target = '_blank'; a.rel = 'noopener';
-        a.className = 'modal-link';
-        a.textContent = '🔗 ' + label;
-        linksEl.appendChild(a);
-      }
+    const parts = String(ev.links || '').split('|');
+    for (let i = 0; i + 1 < parts.length; i += 2) {
+      const label = parts[i].trim();
+      const url = parts[i + 1].trim();
+      if (!label || !/^https?:\/\//i.test(url)) continue;
+      const a = document.createElement('a');
+      a.href = url; a.target = '_blank'; a.rel = 'noopener';
+      a.className = 'modal-link';
+      a.textContent = '🔗 ' + label;
+      linksEl.appendChild(a);
     }
     linksEl.style.display = linksEl.children.length ? 'flex' : 'none';
 
-
-    // Show the event's own flyer (images/events/<slug>.webp) if there is one,
-    // else fall back to a branded emblem for meetings/committee/food bank.
-    // Events with neither show no image rather than generic filler.
     const flyer = document.getElementById('modal-flyer');
-    const tries = flyerCandidates(title, cat);
+    const tries = flyerCandidates(title, ev.cat);
     let attempt = 0;
+    flyer.alt = title + ' flyer';
     flyer.style.display = 'none';
     flyer.onload = () => { flyer.style.display = 'block'; };
     flyer.onerror = () => {
@@ -1050,32 +1065,54 @@
     };
     flyer.src = tries[0];
 
-    document.getElementById('modal-date').textContent = date;
-    document.getElementById('modal-time').textContent = time;
-    document.getElementById('modal-location').textContent = location || 'TBD';
-    document.getElementById('modal-location-row').style.display = location ? 'flex' : 'none';
+    document.getElementById('modal-date').textContent = formatEventDate(ev.start, ev.end);
+    document.getElementById('modal-time').textContent = formatEventTime(ev);
+    document.getElementById('modal-location').textContent = ev.location || '';
+    document.getElementById('modal-location-row').style.display = ev.location ? 'flex' : 'none';
 
     const descRow = document.getElementById('modal-desc-row');
     const descEl = document.getElementById('modal-desc');
-    if (description && description !== title) {
-      descEl.textContent = description;
+    if (ev.description && ev.description !== title) {
+      descEl.textContent = ev.description;
       descRow.style.display = 'flex';
     } else {
       descRow.style.display = 'none';
     }
 
-    document.getElementById('event-modal').classList.add('active');
+    lastFocus = document.activeElement;
+    const modal = document.getElementById('event-modal');
+    modal.classList.add('active');
+    const close = modal.querySelector('.event-modal-close');
+    if (close) close.focus();
   }
 
   function closeModal() {
     document.getElementById('event-modal').classList.remove('active');
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    lastFocus = null;
   }
 
+  // One delegated listener per view: chips/rows carry the event's index.
+  document.getElementById('cal-grid').addEventListener('click', (e) => {
+    const more = e.target.closest('.cal-more');
+    if (more) {
+      expandedDay = expandedDay === more.dataset.day ? null : more.dataset.day;
+      renderCalendar();
+      return;
+    }
+    const chip = e.target.closest('.cal-event');
+    if (chip) showEvent(events[Number(chip.dataset.i)]);
+  });
+  document.getElementById('upcoming-events').addEventListener('click', (e) => {
+    const row = e.target.closest('.upcoming-item');
+    if (row) showEvent(events[Number(row.dataset.i)]);
+  });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
   });
 
-  // Init
+  // Init: phones get the list first (the month grid is unreadable at that width)
+  if (window.matchMedia && window.matchMedia('(max-width: 480px)').matches) setView('list');
   loadEvents();
   </script>
 
