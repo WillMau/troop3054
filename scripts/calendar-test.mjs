@@ -41,6 +41,15 @@ const fixture = [
   'BEGIN:VEVENT', 'UID:6',
   `DTSTART;VALUE=DATE:${ymd(addD(0))}`, `DTEND;VALUE=DATE:${ymd(addD(1))}`,
   'SUMMARY:Today All Day', 'CATEGORIES:OTHER', 'END:VEVENT',
+  // Flyer shared by the app (X-IMAGE), and one with a non-https value
+  'BEGIN:VEVENT', 'UID:7',
+  `DTSTART;VALUE=DATE:${ymd(addD(4))}`, `DTEND;VALUE=DATE:${ymd(addD(5))}`,
+  'SUMMARY:Shared Flyer Event', 'CATEGORIES:CAMPOUT',
+  'X-IMAGE:https://my.troop3054.org/api/flyer/92', 'END:VEVENT',
+  'BEGIN:VEVENT', 'UID:8',
+  `DTSTART;VALUE=DATE:${ymd(addD(6))}`, `DTEND;VALUE=DATE:${ymd(addD(7))}`,
+  'SUMMARY:Bad Image Event', 'CATEGORIES:CAMPOUT',
+  'X-IMAGE:javascript:alert(1)', 'END:VEVENT',
   'END:VCALENDAR', '',
 ].join('\r\n');
 
@@ -85,7 +94,7 @@ const grid = els['cal-grid'].innerHTML;
 const checks = [];
 const ok = (name, cond, info = '') => checks.push([cond ? 'PASS' : 'FAIL', name, cond ? '' : info]);
 
-ok('6 events parsed', ev.length === 6, `got ${ev.length}`);
+ok('8 events parsed', ev.length === 8, `got ${ev.length}`);
 const meet = ev.find((e) => e.summary.startsWith('Troop Meeting'));
 ok('unfolded X-LINKS reassembled', meet.links.includes('2026_Harvest_Festival_Leader_Guide_.pdf|Bad'), meet.links);
 ok('\\, and \\; unescaped', meet.location === 'Jefferson Elementary; 100 Princetown Rd, Schenectady' && meet.summary.endsWith("O'Brien, Jr."), meet.location);
@@ -114,6 +123,15 @@ const hrefs = els['modal-links'].children.map((a) => a.href);
 ok('javascript: link dropped, 2 https links kept', hrefs.length === 2 && hrefs.every((h) => h.startsWith('https://')), JSON.stringify(hrefs));
 ok('modal uses textContent for title', els['modal-title'].textContent === meet.summary, '');
 ok('flyer alt set', els['modal-flyer'].alt.endsWith(' flyer'), '');
+// Shared flyer (X-IMAGE) and small thumbnails in list rows
+const shared = ev.find((e) => e.summary === 'Shared Flyer Event');
+ok('X-IMAGE parsed', shared.image === 'https://my.troop3054.org/api/flyer/92', shared.image);
+ok('non-https X-IMAGE rejected', ev.find((e) => e.summary === 'Bad Image Event').image === '', '');
+ok('list uses shared flyer first', list.includes('src="https://my.troop3054.org/api/flyer/92"'), '');
+const thumbRow = /data-tries="images\/events\/troop-meeting[^"]*-thumb\.webp\|/.test(list)
+  || /src="images\/events\/[a-z0-9-]+-thumb\.webp"/.test(list);
+ok('list rows request -thumb variants', thumbRow, '');
+ok('modal uses full-size images', /images\/events\/[a-z0-9-]+\.webp$/.test(els['modal-flyer'].src) && !els['modal-flyer'].src.includes('-thumb'), els['modal-flyer'].src);
 
 for (const [s, n, i] of checks) console.log(`  ${s}  ${n}${i ? '  -> ' + i : ''}`);
 const fails = checks.filter((c) => c[0] === 'FAIL').length;

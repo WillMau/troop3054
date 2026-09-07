@@ -859,9 +859,12 @@
       if (allDay && end) end = new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1);
       const summary = get('SUMMARY');
       const cat = get('CATEGORIES').toLowerCase();
+      // X-IMAGE: a flyer the troop app is sharing publicly for this event.
+      const image = get('X-IMAGE');
       parsed.push({
         summary, description: get('DESCRIPTION'), location: get('LOCATION'),
         links: get('X-LINKS'), cat, start, end, allDay, type: typeFor(cat, summary),
+        image: /^https:\/\//i.test(image) ? image : '',
       });
     }
     parsed.sort((a, b) => a.start - b.start);
@@ -935,7 +938,7 @@
     let html = '';
     upcoming.forEach(ev => {
       const d = ev.start;
-      const tries = flyerCandidates(ev.summary, ev.cat);
+      const tries = flyerCandidates(ev, true);
       html += `<button type="button" class="upcoming-item" data-i="${ev.i}">
         <div class="upcoming-date-badge">
           <span class="month">${MONTH_SHORT[d.getMonth()]}</span>
@@ -1009,15 +1012,22 @@
     }
   }
 
-  // Image candidates for an event, best first: its own flyer
+  // Image candidates for an event, best first: a flyer the app is sharing
+  // (X-IMAGE), then a local file named after the event
   // (images/events/<slug>.webp), then a branded emblem, then the troop crest
-  // so no event is ever blank.
-  function flyerCandidates(title, cat) {
-    const slug = String(title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-    const list = ['images/events/' + slug + '.webp'];
-    if (/food ?bank/i.test(title)) list.push('images/events/default-foodbank.webp');
-    else if (cat === 'committee') list.push('images/events/default-committee.webp');
-    list.push('images/events/default-troop.webp');
+  // so no event is ever blank. `thumb` prefers the small variant of each
+  // local file, falling back to the full one when no thumb exists.
+  function flyerCandidates(ev, thumb) {
+    const slug = String(ev.summary).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    const names = [slug];
+    if (/food ?bank/i.test(ev.summary)) names.push('default-foodbank');
+    else if (ev.cat === 'committee') names.push('default-committee');
+    names.push('default-troop');
+    const list = ev.image ? [ev.image] : [];
+    for (const n of names) {
+      if (thumb) list.push(`images/events/${n}-thumb.webp`);
+      list.push(`images/events/${n}.webp`);
+    }
     return list;
   }
 
@@ -1053,7 +1063,7 @@
     linksEl.style.display = linksEl.children.length ? 'flex' : 'none';
 
     const flyer = document.getElementById('modal-flyer');
-    const tries = flyerCandidates(title, ev.cat);
+    const tries = flyerCandidates(ev, false);
     let attempt = 0;
     flyer.alt = title + ' flyer';
     flyer.style.display = 'none';
