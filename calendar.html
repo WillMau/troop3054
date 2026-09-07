@@ -1007,9 +1007,10 @@
     const flyer = document.getElementById('modal-flyer');
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     const tries = ['images/events/' + slug + '.webp'];
-    if (/food ?bank/i.test(title)) tries.push('images/events/_default-foodbank.webp');
-    else if (cat === 'committee') tries.push('images/events/_default-committee.webp');
-    else if (cat === 'meeting') tries.push('images/events/_default-meeting.webp');
+    if (/food ?bank/i.test(title)) tries.push('images/events/default-foodbank.webp');
+    else if (cat === 'committee') tries.push('images/events/default-committee.webp');
+    // Troop crest is the last resort so every event gets an identity
+    tries.push('images/events/default-troop.webp');
     let attempt = 0;
     flyer.style.display = 'none';
     flyer.onload = () => { flyer.style.display = 'block'; };
