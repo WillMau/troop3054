@@ -127,7 +127,14 @@ ok('flyer alt set', els['modal-flyer'].alt.endsWith(' flyer'), '');
 const shared = ev.find((e) => e.summary === 'Shared Flyer Event');
 ok('X-IMAGE parsed', shared.image === 'https://my.troop3054.org/api/flyer/92', shared.image);
 ok('non-https X-IMAGE rejected', ev.find((e) => e.summary === 'Bad Image Event').image === '', '');
-ok('list uses shared flyer first', list.includes('src="https://my.troop3054.org/api/flyer/92"'), '');
+// In the list a local thumbnail is tried first (cheap), then the shared
+// flyer; the modal goes straight to the shared flyer at full size.
+ok('list offers shared flyer after local thumb',
+  /data-tries="images\/events\/shared-flyer-event-thumb\.webp\|https:\/\/my\.troop3054\.org\/api\/flyer\/92\|/.test(list), '');
+ok('list starts with a local thumb', list.includes('src="images/events/shared-flyer-event-thumb.webp"'), '');
+api.showEvent(shared);
+ok('modal uses the shared flyer first', els['modal-flyer'].src === 'https://my.troop3054.org/api/flyer/92', els['modal-flyer'].src);
+api.showEvent(meet);
 const thumbRow = /data-tries="images\/events\/troop-meeting[^"]*-thumb\.webp\|/.test(list)
   || /src="images\/events\/[a-z0-9-]+-thumb\.webp"/.test(list);
 ok('list rows request -thumb variants', thumbRow, '');

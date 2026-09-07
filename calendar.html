@@ -1023,11 +1023,16 @@
     if (/food ?bank/i.test(ev.summary)) names.push('default-foodbank');
     else if (ev.cat === 'committee') names.push('default-committee');
     names.push('default-troop');
-    const list = ev.image ? [ev.image] : [];
-    for (const n of names) {
-      if (thumb) list.push(`images/events/${n}-thumb.webp`);
-      list.push(`images/events/${n}.webp`);
-    }
+    const local = (n) => (thumb
+      ? [`images/events/${n}-thumb.webp`, `images/events/${n}.webp`]
+      : [`images/events/${n}.webp`]);
+    // In the list a local thumbnail beats the shared flyer (which has no
+    // small variant, so it would cost ~100x the bytes for a 46px row); the
+    // shared flyer still wins when this event has no local file at all.
+    const list = thumb
+      ? [`images/events/${slug}-thumb.webp`, ...(ev.image ? [ev.image] : []), `images/events/${slug}.webp`]
+      : [...(ev.image ? [ev.image] : []), ...local(slug)];
+    for (const n of names.slice(1)) list.push(...local(n));
     return list;
   }
 
