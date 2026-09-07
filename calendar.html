@@ -805,6 +805,7 @@
         description: get('DESCRIPTION'),
         location: get('LOCATION').replace('Location was not specified', ''),
         links: get('X-LINKS'),
+        cat: get('CATEGORIES').toLowerCase(),
         start: start,
         end: end,
         allDay: allDay,
@@ -871,7 +872,7 @@
       // Cells never exceed 3 event lines, so every row stays the same height
       const shown = dayEvents.length > 3 ? dayEvents.slice(0, 2) : dayEvents;
       shown.forEach(ev => {
-        html += `<div class="cal-event type-${ev.type}" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)}, ${JSON.stringify(ev.links||'').replace(/'/g,"&#39;")})'>${ev.summary}</div>`;
+        html += `<div class="cal-event type-${ev.type}" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)}, ${JSON.stringify(ev.links||'').replace(/'/g,"&#39;")}, ${JSON.stringify(ev.cat||'')})'>${ev.summary}</div>`;
       });
       if (dayEvents.length > 3) {
         html += `<div class="cal-more" onclick="setView('list')">+${dayEvents.length - 2} more</div>`;
@@ -903,7 +904,7 @@
     let html = '';
     upcoming.forEach(ev => {
       const d = ev.start;
-      html += `<div class="upcoming-item" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)}, ${JSON.stringify(ev.links||'').replace(/'/g,"&#39;")})'>
+      html += `<div class="upcoming-item" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)}, ${JSON.stringify(ev.links||'').replace(/'/g,"&#39;")}, ${JSON.stringify(ev.cat||'')})'>
         <div class="upcoming-date-badge">
           <span class="month">${months[d.getMonth()]}</span>
           <span class="day">${d.getDate()}</span>
@@ -977,7 +978,7 @@
     }
   }
 
-  function showEvent(title, date, time, location, description, links) {
+  function showEvent(title, date, time, location, description, links, cat) {
     document.getElementById('modal-title').textContent = title;
 
     // Resource links (registration, leader guide, etc.) from the X-LINKS
@@ -1000,14 +1001,24 @@
     linksEl.style.display = linksEl.children.length ? 'flex' : 'none';
 
 
-    // Auto-show a flyer if one exists at images/events/<slug>.webp.
-    // Drop a file there to add a poster to any event; no feed changes needed.
+    // Show the event's own flyer (images/events/<slug>.webp) if there is one,
+    // else fall back to a branded emblem for meetings/committee/food bank.
+    // Events with neither show no image rather than generic filler.
     const flyer = document.getElementById('modal-flyer');
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    const tries = ['images/events/' + slug + '.webp'];
+    if (/food ?bank/i.test(title)) tries.push('images/events/_default-foodbank.webp');
+    else if (cat === 'committee') tries.push('images/events/_default-committee.webp');
+    else if (cat === 'meeting') tries.push('images/events/_default-meeting.webp');
+    let attempt = 0;
     flyer.style.display = 'none';
     flyer.onload = () => { flyer.style.display = 'block'; };
-    flyer.onerror = () => { flyer.style.display = 'none'; };
-    flyer.src = 'images/events/' + slug + '.webp';
+    flyer.onerror = () => {
+      attempt += 1;
+      if (attempt < tries.length) flyer.src = tries[attempt];
+      else flyer.style.display = 'none';
+    };
+    flyer.src = tries[0];
 
     document.getElementById('modal-date').textContent = date;
     document.getElementById('modal-time').textContent = time;
