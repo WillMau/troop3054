@@ -821,10 +821,11 @@
     const d = parseInt(str.substr(6, 2));
     // All-day format: 20260705 (local midnight so the day doesn't shift)
     if (str.length === 8) return new Date(y, m, d);
-    // Timed format: 20260309T221500Z
+    // Timed format: 20260309T221500Z (UTC) or 20260914T181500 (floating local).
+    // Our feed emits floating local times, so only a trailing Z means UTC.
     const h = parseInt(str.substr(9, 2));
     const min = parseInt(str.substr(11, 2));
-    return new Date(Date.UTC(y, m, d, h, min));
+    return /Z$/.test(str) ? new Date(Date.UTC(y, m, d, h, min)) : new Date(y, m, d, h, min);
   }
 
   function categorizeEvent(summary) {
