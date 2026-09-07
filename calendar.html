@@ -346,6 +346,16 @@
       line-height: 1;
     }
 
+    .upcoming-thumb {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
     .upcoming-info {
       flex: 1;
       min-width: 0;
@@ -909,6 +919,10 @@
           <span class="month">${months[d.getMonth()]}</span>
           <span class="day">${d.getDate()}</span>
         </div>
+        <img class="upcoming-thumb" alt="" loading="lazy"
+             src="${flyerCandidates(ev.summary, ev.cat)[0]}"
+             data-tries="${flyerCandidates(ev.summary, ev.cat).join('|')}"
+             data-i="0" onerror="flyerFallback(this)">
         <div class="upcoming-info">
           <div class="event-name">${ev.summary}</div>
           <div class="event-meta">${formatEventTime(ev.start, ev.end, ev.allDay)}${ev.location ? ' &middot; ' + ev.location : ''}</div>
@@ -978,6 +992,26 @@
     }
   }
 
+  // Image candidates for an event, best first: its own flyer, then a branded
+  // emblem, then the troop crest so nothing is ever blank.
+  function flyerCandidates(title, cat) {
+    const slug = String(title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    const list = ['images/events/' + slug + '.webp'];
+    if (/food ?bank/i.test(title)) list.push('images/events/default-foodbank.webp');
+    else if (cat === 'committee') list.push('images/events/default-committee.webp');
+    list.push('images/events/default-troop.webp');
+    return list;
+  }
+
+  // Walks an <img> down its candidate list as each one 404s.
+  function flyerFallback(img) {
+    const tries = (img.dataset.tries || '').split('|');
+    const i = parseInt(img.dataset.i || '0', 10) + 1;
+    img.dataset.i = i;
+    if (i < tries.length) img.src = tries[i];
+    else img.style.visibility = 'hidden';
+  }
+
   function showEvent(title, date, time, location, description, links, cat) {
     document.getElementById('modal-title').textContent = title;
 
@@ -1005,12 +1039,7 @@
     // else fall back to a branded emblem for meetings/committee/food bank.
     // Events with neither show no image rather than generic filler.
     const flyer = document.getElementById('modal-flyer');
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-    const tries = ['images/events/' + slug + '.webp'];
-    if (/food ?bank/i.test(title)) tries.push('images/events/default-foodbank.webp');
-    else if (cat === 'committee') tries.push('images/events/default-committee.webp');
-    // Troop crest is the last resort so every event gets an identity
-    tries.push('images/events/default-troop.webp');
+    const tries = flyerCandidates(title, cat);
     let attempt = 0;
     flyer.style.display = 'none';
     flyer.onload = () => { flyer.style.display = 'block'; };
