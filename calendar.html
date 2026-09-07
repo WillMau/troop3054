@@ -279,6 +279,16 @@
       color: var(--color-secondary);
     }
 
+    #modal-links { flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .modal-link {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.5rem 0.85rem; border-radius: 8px;
+      background: #eef3f9; border: 1px solid #d6e0ec;
+      color: var(--color-primary, #003F87); font-weight: 600;
+      font-size: 0.88rem; text-decoration: none;
+    }
+    .modal-link:hover { background: #e0eaf6; }
+
     /* Upcoming Events List */
     .upcoming-list {
       margin-top: 2rem;
@@ -747,6 +757,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
         <span id="modal-desc"></span>
       </div>
+      <div id="modal-links" style="display:none;"></div>
     </div>
   </div>
 
@@ -793,6 +804,7 @@
         summary: get('SUMMARY'),
         description: get('DESCRIPTION'),
         location: get('LOCATION').replace('Location was not specified', ''),
+        links: get('X-LINKS'),
         start: start,
         end: end,
         allDay: allDay,
@@ -858,7 +870,7 @@
       // Cells never exceed 3 event lines, so every row stays the same height
       const shown = dayEvents.length > 3 ? dayEvents.slice(0, 2) : dayEvents;
       shown.forEach(ev => {
-        html += `<div class="cal-event type-${ev.type}" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)})'>${ev.summary}</div>`;
+        html += `<div class="cal-event type-${ev.type}" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)}, ${JSON.stringify(ev.links||'').replace(/'/g,"&#39;")})'>${ev.summary}</div>`;
       });
       if (dayEvents.length > 3) {
         html += `<div class="cal-more" onclick="setView('list')">+${dayEvents.length - 2} more</div>`;
@@ -890,7 +902,7 @@
     let html = '';
     upcoming.forEach(ev => {
       const d = ev.start;
-      html += `<div class="upcoming-item" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)})'>
+      html += `<div class="upcoming-item" onclick='showEvent(${JSON.stringify(ev.summary).replace(/'/g,"&#39;")}, ${JSON.stringify(formatEventDate(ev.start, ev.end))}, ${JSON.stringify(formatEventTime(ev.start, ev.end, ev.allDay))}, ${JSON.stringify(ev.location)}, ${JSON.stringify(ev.description)}, ${JSON.stringify(ev.links||'').replace(/'/g,"&#39;")})'>
         <div class="upcoming-date-badge">
           <span class="month">${months[d.getMonth()]}</span>
           <span class="day">${d.getDate()}</span>
@@ -964,8 +976,28 @@
     }
   }
 
-  function showEvent(title, date, time, location, description) {
+  function showEvent(title, date, time, location, description, links) {
     document.getElementById('modal-title').textContent = title;
+
+    // Resource links (registration, leader guide, etc.) from the X-LINKS
+    // feed property: "label1|url1|label2|url2".
+    const linksEl = document.getElementById('modal-links');
+    linksEl.innerHTML = '';
+    if (links) {
+      const parts = String(links).split('|');
+      for (let i = 0; i + 1 < parts.length; i += 2) {
+        const label = parts[i].trim();
+        const url = parts[i + 1].trim();
+        if (!label || !/^https?:\/\//i.test(url)) continue;
+        const a = document.createElement('a');
+        a.href = url; a.target = '_blank'; a.rel = 'noopener';
+        a.className = 'modal-link';
+        a.textContent = '🔗 ' + label;
+        linksEl.appendChild(a);
+      }
+    }
+    linksEl.style.display = linksEl.children.length ? 'flex' : 'none';
+
 
     // Auto-show a flyer if one exists at images/events/<slug>.webp.
     // Drop a file there to add a poster to any event; no feed changes needed.
