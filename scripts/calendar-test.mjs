@@ -28,13 +28,13 @@ const fixture = [
   'END:VEVENT',
   'BEGIN:VEVENT', 'UID:2',
   `DTSTART:${ymd(addD(3))}T170000`, `DTEND:${ymd(addD(5))}T120000`,
-  'SUMMARY:Weekend Trip', 'CATEGORIES:CAMPOUT', 'END:VEVENT',
+  'SUMMARY:Weekend Trip', 'CATEGORIES:CAMPOUT', 'X-RSVP:https://my.troop3054.org/#/event/2/rsvp', 'END:VEVENT',
   'BEGIN:VEVENT', 'UID:3',
   `DTSTART;VALUE=DATE:${ymd(addD(-1))}`, `DTEND;VALUE=DATE:${ymd(addD(2))}`,
   'SUMMARY:In-Progress Camp', 'CATEGORIES:CAMPOUT', 'END:VEVENT',
   'BEGIN:VEVENT', 'UID:4',
   `DTSTART;VALUE=DATE:${ymd(addD(-5))}`, `DTEND;VALUE=DATE:${ymd(addD(-3))}`,
-  'SUMMARY:Finished Camp', 'CATEGORIES:CAMPOUT', 'END:VEVENT',
+  'SUMMARY:Finished Camp', 'CATEGORIES:CAMPOUT', 'X-RSVP:https://my.troop3054.org/#/event/4/rsvp', 'END:VEVENT',
   'BEGIN:VEVENT', 'UID:5',
   `DTSTART:${ymd(addD(2))}T190000`, `DTEND:${ymd(addD(2))}T203000`,
   'SUMMARY:Committee Meeting', 'CATEGORIES:COMMITTEE', 'END:VEVENT',
@@ -49,7 +49,7 @@ const fixture = [
   'BEGIN:VEVENT', 'UID:8',
   `DTSTART;VALUE=DATE:${ymd(addD(6))}`, `DTEND;VALUE=DATE:${ymd(addD(7))}`,
   'SUMMARY:Bad Image Event', 'CATEGORIES:CAMPOUT',
-  'X-IMAGE:javascript:alert(1)', 'END:VEVENT',
+  'X-IMAGE:javascript:alert(1)', 'X-RSVP:javascript:alert(1)', 'END:VEVENT',
   'END:VCALENDAR', '',
 ].join('\r\n');
 
@@ -139,6 +139,20 @@ const thumbRow = /data-tries="images\/events\/troop-meeting[^"]*-thumb\.webp\|/.
   || /src="images\/events\/[a-z0-9-]+-thumb\.webp"/.test(list);
 ok('list rows request -thumb variants', thumbRow, '');
 ok('modal uses full-size images', /images\/events\/[a-z0-9-]+\.webp$/.test(els['modal-flyer'].src) && !els['modal-flyer'].src.includes('-thumb'), els['modal-flyer'].src);
+
+// RSVP: X-RSVP parsed (https only), tagged in the list, and a modal button for
+// upcoming events that disappears once the event is over.
+ok('X-RSVP parsed', trip.rsvp === 'https://my.troop3054.org/#/event/2/rsvp', trip.rsvp);
+ok('non-https X-RSVP rejected', ev.find((e) => e.summary === 'Bad Image Event').rsvp === '', '');
+ok('list tags RSVP events', /Weekend Trip<span class="rsvp-tag">RSVP<\/span>/.test(list), '');
+ok('list does not tag others', !/Troop Meeting[^<]*<span class="rsvp-tag">/.test(list), '');
+api.showEvent(trip);
+ok('modal shows RSVP button', els['modal-rsvp-row'].style.display === 'flex' && els['modal-rsvp'].href === trip.rsvp,
+  JSON.stringify([els['modal-rsvp-row'].style.display, els['modal-rsvp'].href]));
+api.showEvent(ev.find((e) => e.summary === 'Finished Camp'));
+ok('modal hides RSVP once event is over', els['modal-rsvp-row'].style.display === 'none', els['modal-rsvp-row'].style.display);
+api.showEvent(meet);
+ok('modal hides RSVP when event has none', els['modal-rsvp-row'].style.display === 'none', '');
 
 for (const [s, n, i] of checks) console.log(`  ${s}  ${n}${i ? '  -> ' + i : ''}`);
 const fails = checks.filter((c) => c[0] === 'FAIL').length;
