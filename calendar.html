@@ -105,7 +105,10 @@
 
     .cal-grid {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
+      /* minmax(0, 1fr), not 1fr: a plain 1fr track won't shrink below its
+         content, so a day with a long no-wrap chip widened its column and
+         pushed Saturday off the grid. */
+      grid-template-columns: repeat(7, minmax(0, 1fr));
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
       overflow: hidden;
@@ -126,6 +129,7 @@
     }
 
     .cal-day {
+      min-width: 0;
       min-height: 90px;
       padding: 0.35rem;
       border: 1px solid var(--color-border);
@@ -227,8 +231,10 @@
 
     /* Chips and list rows are real buttons so keyboards can open them;
        strip the browser's button chrome and keep the existing look. */
-    button.cal-event { display: block; width: 100%; border: 0; font: inherit; text-align: left; }
-    button.cal-more { border: 0; background: none; font: inherit; width: 100%; text-align: left; }
+    /* font-family only: the font shorthand would also reset size and line
+       height, overriding the chip's own small type (and the phone dot view). */
+    button.cal-event { display: block; width: 100%; border: 0; font-family: inherit; text-align: left; }
+    button.cal-more { border: 0; background: none; font-family: inherit; width: 100%; text-align: left; }
     button.upcoming-item { width: 100%; font: inherit; text-align: left; }
     .cal-event .t { font-weight: 700; margin-right: 2px; }
     .cal-note { color: #6b6b6b; text-align: center; padding: 2rem; }
