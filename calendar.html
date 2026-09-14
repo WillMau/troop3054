@@ -317,6 +317,19 @@
       font-size: 0.88rem; text-decoration: none;
     }
     .modal-link:hover { background: #e0eaf6; }
+    .modal-rsvp-row { flex-direction: column; align-items: flex-start; gap: 0.35rem; margin-top: 1rem; }
+    .modal-rsvp {
+      display: inline-block; padding: 0.6rem 1.5rem; border-radius: 8px;
+      background: var(--color-primary, #003F87); color: #fff; font-weight: 700;
+      font-size: 0.95rem; text-decoration: none;
+    }
+    .modal-rsvp:hover { filter: brightness(1.15); }
+    .modal-rsvp-note { font-size: 0.8rem; color: #666; }
+    .rsvp-tag {
+      display: inline-block; margin-left: 0.4rem; padding: 0.05rem 0.4rem;
+      border-radius: 4px; background: #eef3f9; color: var(--color-primary, #003F87);
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.03em; vertical-align: middle;
+    }
 
     /* Upcoming Events List */
     .upcoming-item {
@@ -783,6 +796,10 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
         <span id="modal-desc"></span>
       </div>
+      <div id="modal-rsvp-row" class="modal-rsvp-row" style="display:none;">
+        <a id="modal-rsvp" class="modal-rsvp" href="#">RSVP</a>
+        <span class="modal-rsvp-note">For scouts and their parents. Opens the troop app.</span>
+      </div>
       <div id="modal-links" style="display:none;"></div>
     </div>
   </div>
@@ -861,10 +878,13 @@
       const cat = get('CATEGORIES').toLowerCase();
       // X-IMAGE: a flyer the troop app is sharing publicly for this event.
       const image = get('X-IMAGE');
+      // X-RSVP: link into the troop app for events that collect RSVPs.
+      const rsvp = get('X-RSVP');
       parsed.push({
         summary, description: get('DESCRIPTION'), location: get('LOCATION'),
         links: get('X-LINKS'), cat, start, end, allDay, type: typeFor(cat, summary),
         image: /^https:\/\//i.test(image) ? image : '',
+        rsvp: /^https:\/\//i.test(rsvp) ? rsvp : '',
       });
     }
     parsed.sort((a, b) => a.start - b.start);
@@ -947,7 +967,7 @@
         <img class="upcoming-thumb" alt="" loading="lazy" src="${tries[0]}"
              data-tries="${tries.join('|')}" data-try="0" onerror="flyerFallback(this)">
         <div class="upcoming-info">
-          <div class="event-name">${esc(ev.summary)}</div>
+          <div class="event-name">${esc(ev.summary)}${ev.rsvp ? '<span class="rsvp-tag">RSVP</span>' : ''}</div>
           <div class="event-meta">${esc(formatEventTime(ev))}${ev.location ? ' &middot; ' + esc(ev.location) : ''}</div>
         </div>
       </button>`;
@@ -1066,6 +1086,16 @@
       linksEl.appendChild(a);
     }
     linksEl.style.display = linksEl.children.length ? 'flex' : 'none';
+
+    // RSVP button for events collecting RSVPs, hidden once the event is over.
+    const rsvpRow = document.getElementById('modal-rsvp-row');
+    const over = (ev.end || ev.start) < startOfDay(new Date());
+    if (ev.rsvp && !over) {
+      document.getElementById('modal-rsvp').href = ev.rsvp;
+      rsvpRow.style.display = 'flex';
+    } else {
+      rsvpRow.style.display = 'none';
+    }
 
     const flyer = document.getElementById('modal-flyer');
     const tries = flyerCandidates(ev, false);
