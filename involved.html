@@ -1107,7 +1107,7 @@
         var top = el('div', 'gi-pc-top');
         top.appendChild(head);
         if (v.desc) top.appendChild(el('p', 'gi-pc-desc', v.desc));
-        if (v.covers.length) {
+        if (v.covers && v.covers.length) {
           // "Covers the website, troop app and calendar." — what "Support it" points at
           var list = v.covers.length === 1 ? v.covers[0]
             : v.covers.slice(0, -1).join(', ') + ' and ' + v.covers[v.covers.length - 1];
