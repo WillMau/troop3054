@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5V1GSC01VW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5V1GSC01VW');
+    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troop 54 | Get Involved | Volunteer in Rotterdam, NY</title>
+  <meta name="description" content="Every job in Troop 54 in Rotterdam, NY is done by a parent or volunteer. See where we could use a hand and which merit badges our counselors teach.">
+  <link rel="canonical" href="https://www.troop3054.org/involved.html">
+
+  <!-- Geo / Local SEO -->
+  <meta name="geo.region" content="US-NY">
+  <meta name="geo.placename" content="Rotterdam, NY">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Get Involved | Troop 54">
+  <meta property="og:description" content="Every job in this troop is done by a parent or volunteer. Here’s who does what, and where we could use a hand.">
+  <meta property="og:image" content="https://www.troop3054.org/Troop3054.png">
+  <meta property="og:url" content="https://www.troop3054.org/involved.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BSA Troop 54 — Rotterdam, NY">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Get Involved | Troop 54">
+  <meta name="twitter:description" content="Every job in this troop is done by a parent or volunteer. Here’s who does what, and where we could use a hand.">
+  <meta name="twitter:image" content="https://www.troop3054.org/Troop3054.png">
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.troop3054.org/" },
+      { "@type": "ListItem", "position": 2, "name": "Get Involved", "item": "https://www.troop3054.org/involved.html" }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="48x48" href="Troop3054.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ---------- Get Involved page ---------- */
+    .gi {
+      --gi-tan-dark: #7A6C4F;
+      --gi-muted: #6D7168;
+      --gi-stone: var(--color-bg-card);
+    }
+
+    .gi h2, .gi h3, .gi h4 { text-wrap: balance; }
+    .gi p { text-wrap: pretty; }
+
+    /* Phones get the mockup's shorter copy */
+    .gi-short { display: none; }
+
+    /* style.css has no [hidden] rule, so a display: flex block would ignore the attribute */
+    .gi [hidden] { display: none !important; }
+
+    /* ---------- Three ways to help ---------- */
+    .gi-ways {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .gi-way {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .gi-way-icon {
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: rgba(0, 63, 135, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gi-way-text {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .gi-way h3 { font-size: 20px; }
+
+    .gi-way p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.7;
+      opacity: 0.75;
+    }
+
+    .gi-hour {
+      text-align: center;
+      font-size: 17px;
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 40px auto 0;
+    }
+
+    .gi-cta {
+      text-align: center;
+      margin-top: 28px;
+    }
+
+    /* ---------- Adult positions ---------- */
+    .gi-header-tight { margin-bottom: 28px; }
+
+    .gi-legend {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .gi-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      opacity: 0.85;
+    }
+
+    .gi-pill {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 11px;
+      line-height: 1.4;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .gi-pill--filled  { background: rgba(46, 93, 52, 0.12);   color: var(--color-green-light); }
+    .gi-pill--backup  { background: rgba(173, 157, 123, 0.22); color: var(--gi-tan-dark); }
+    .gi-pill--open    { background: rgba(206, 17, 38, 0.10);  color: var(--color-accent); }
+    .gi-pill--welcome { background: rgba(0, 63, 135, 0.10);   color: var(--color-primary); }
+
+    .gi-group-title {
+      text-align: center;
+      font-family: var(--font-heading);
+      font-size: 13.6px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-secondary);
+      margin: 40px auto 6px;
+    }
+
+    .gi-group-desc {
+      text-align: center;
+      font-size: 13.6px;
+      line-height: 1.6;
+      opacity: 0.6;
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+
+    /* Three across. Each card spans three shared rows (top, details, link) through
+       subgrid, so details and links line up across a row even when one card's text
+       runs longer. */
+    .gi-cards {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .gi-cards > .gi-pos { display: contents; }
+
+    .gi-cards .gi-pos-card {
+      grid-column: span 2;
+      grid-row: span 3;
+      display: grid;
+      grid-template-rows: subgrid;
+      row-gap: 14px;
+    }
+
+    /* A short last row centres instead of leaving a hole */
+    .gi-cards > .gi-pos:last-child:nth-child(3n+1) > .gi-pos-card { grid-column: 3 / span 2; }
+    .gi-cards > .gi-pos:nth-last-child(2):nth-child(3n+1) > .gi-pos-card { grid-column: 2 / span 2; }
+
+    .gi-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* The collapsed phone row; hidden on wider screens */
+    .gi-pos-row { display: none; }
+
+    /* Card layout (also what every position becomes on a phone) */
+    .gi-pos-card {
+      flex: 1;
+      min-width: 0;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .gi-pc-top {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .gi-pc-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .gi-patch {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .gi-pc-titles {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .gi-pc-title {
+      font-size: 17.6px;
+      line-height: 1.25;
+    }
+
+    .gi-pc-collapse { display: none; }
+
+    .gi-pc-desc {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.75;
+    }
+
+    .gi-pc-meta {
+      display: grid;
+      grid-template-columns: 82px minmax(0, 1fr);
+      gap: 6px 12px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      border-top: 1px solid var(--gi-stone);
+      padding-top: 14px;
+    }
+
+    .gi-meta-k {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-primary);
+      opacity: 0.75;
+      padding-top: 2px;
+    }
+
+    .gi-meta-v {
+      color: var(--color-text);
+      overflow-wrap: break-word;
+    }
+
+    .gi-v-open   { color: var(--color-accent); font-weight: 600; }
+    .gi-v-needed { color: var(--gi-tan-dark); font-weight: 600; }
+
+    .gi-pc-link {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-accent);
+    }
+
+    .gi-pc-link svg { flex-shrink: 0; }
+
+    /* Bar layout: full-width row for the positions many people hold at once */
+    @media (min-width: 701px) {
+      .gi-pos--bar .gi-pos-card {
+        display: grid;
+        grid-template-columns: 72px minmax(0, 1.2fr) minmax(0, 1fr) auto;
+        grid-template-rows: 1fr auto auto 1fr;
+        grid-template-areas:
+          "patch .     meta link"
+          "patch title meta link"
+          "patch desc  meta link"
+          "patch .     meta link";
+        column-gap: 24px;
+        row-gap: 0;
+        align-items: center;
+        padding: 20px 24px;
+      }
+
+      .gi-pos--bar .gi-pc-top,
+      .gi-pos--bar .gi-pc-head { display: contents; }
+      .gi-pos--bar .gi-patch { grid-area: patch; }
+      .gi-pos--bar .gi-pc-titles {
+        grid-area: title;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+      .gi-pos--bar .gi-pc-desc { grid-area: desc; margin-top: 8px; }
+      .gi-pos--bar .gi-pc-meta {
+        grid-area: meta;
+        margin-top: 0;
+        border-top: 0;
+        padding-top: 0;
+        border-left: 1px solid var(--gi-stone);
+        padding-left: 24px;
+      }
+      .gi-pos--bar .gi-pc-link { grid-area: link; white-space: nowrap; align-self: center; }
+    }
+
+    /* ---------- Loading and failure ---------- */
+    .gi-loading-text {
+      text-align: center;
+      font-size: 14px;
+      color: var(--gi-muted);
+      margin: 32px 0 0;
+    }
+
+    .gi-skel-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      max-width: 1100px;
+      margin: 16px auto 0;
+    }
+
+    .gi-skel {
+      width: calc((100% - 48px) / 3);
+      height: 230px;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      opacity: 0.6;
+      animation: gi-pulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes gi-pulse { 50% { opacity: 0.3; } }
+
+    .gi-fail {
+      max-width: 640px;
+      margin: 40px auto 0;
+      padding: 32px;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .gi-fail p {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .gi-closing {
+      text-align: center;
+      margin-top: 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .gi-closing p {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    /* ---------- Merit badges ---------- */
+    .gi-badges {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .gi-badge-col {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .gi-badge-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .gi-badge-label {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-secondary);
+    }
+
+    .gi-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .gi-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--color-text);
+    }
+
+    .gi-chip svg { flex-shrink: 0; }
+
+    .gi-chip-skel {
+      width: 110px;
+      height: 38px;
+      border-radius: 999px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      opacity: 0.6;
+      animation: gi-pulse 1.4s ease-in-out infinite;
+    }
+
+    .gi-note {
+      margin: 0;
+      font-size: 14.5px;
+      line-height: 1.7;
+    }
+
+    .gi-note a { font-weight: 600; }
+
+    .gi-steps {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .gi-steps h3 { font-size: 19px; }
+
+    .gi-steps ol {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .gi-steps li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .gi-step-num {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .gi-steps li p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .gi-pos-row:focus-visible,
+    .gi-pc-collapse:focus-visible,
+    .gi-pc-link:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gi-skel, .gi-chip-skel { animation: none; }
+    }
+
+    /* ---------- Tablet ---------- */
+    @media (max-width: 1000px) {
+      .gi-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .gi-cards > .gi-pos:last-child:nth-child(3n+1) > .gi-pos-card,
+      .gi-cards > .gi-pos:nth-last-child(2):nth-child(3n+1) > .gi-pos-card { grid-column: span 2; }
+      .gi-cards > .gi-pos:last-child:nth-child(2n+1) > .gi-pos-card { grid-column: 2 / span 2; }
+      .gi-skel { width: calc((100% - 24px) / 2); }
+    }
+
+    @media (max-width: 960px) and (min-width: 701px) {
+      .gi-pos--bar .gi-pos-card {
+        grid-template-columns: 72px minmax(0, 1.2fr) minmax(0, 1fr);
+        grid-template-rows: 1fr auto auto auto 1fr;
+        grid-template-areas:
+          "patch .     meta"
+          "patch title meta"
+          "patch desc  meta"
+          "patch link  meta"
+          "patch .     meta";
+      }
+      .gi-pos--bar .gi-pc-link { justify-self: start; margin-top: 12px; }
+    }
+
+    @media (max-width: 900px) {
+      .gi-ways {
+        grid-template-columns: 1fr;
+        max-width: 640px;
+        gap: 16px;
+      }
+      .gi-way {
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+        padding: 24px;
+      }
+      .gi-way-text { gap: 4px; }
+    }
+
+    @media (max-width: 820px) {
+      .gi-badges {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 640px;
+        gap: 32px;
+      }
+    }
+
+    /* ---------- Phone ---------- */
+    @media (max-width: 700px) {
+      .gi-long { display: none; }
+      .gi-short { display: inline; }
+
+      .gi-section { padding: 3rem 0; }
+      .gi-section .section-header { margin-bottom: 28px; }
+      .gi-section .section-header h2 { font-size: 26px; }
+      .gi-section .section-subtitle { font-size: 15px; }
+      .gi-section .gi-header-tight { margin-bottom: 8px; }
+      .gi-section .gi-header-badges { margin-bottom: 24px; }
+
+      .gi-ways { gap: 12px; }
+      .gi-way { padding: 18px; gap: 14px; }
+      .gi-way-icon { width: 46px; height: 46px; }
+      .gi-way-text { gap: 2px; }
+      .gi-way h3 { font-size: 17px; }
+      .gi-way p { font-size: 14px; line-height: 1.55; }
+
+      .gi-hour {
+        text-align: left;
+        font-size: 15px;
+        margin: 24px 0 20px;
+      }
+      .gi-cta { margin-top: 0; }
+      .gi-btn-block { display: block; width: 100%; }
+
+      .gi-legend {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        margin-top: 16px;
+      }
+      .gi-legend-item { font-size: 13px; }
+
+      .gi-group-title { margin-top: 28px; }
+
+      .gi-cards, .gi-bars, .gi-skel-wrap {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 10px;
+      }
+      .gi-cards > .gi-pos { display: block; }
+      .gi-cards .gi-pos-card { display: flex; }
+      .gi-skel { width: auto; height: 68px; }
+
+      .gi-pos-row {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--color-white);
+        border: 0;
+        border-radius: var(--radius-md);
+        padding: 12px 14px;
+        box-shadow: var(--shadow-sm);
+        font: inherit;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .gi-pos-row .gi-patch { width: 44px; height: 44px; }
+      .gi-pos-row-text {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .gi-pos-row-title {
+        font-family: var(--font-heading);
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 1.3;
+        color: var(--color-text);
+      }
+
+      .gi-pos:not(.is-open) > .gi-pos-card { display: none; }
+      .gi-pos.is-open > .gi-pos-row { display: none; }
+      .gi-pos-card { padding: 18px; }
+      .gi-pc-collapse {
+        display: inline-flex;
+        flex-shrink: 0;
+        background: none;
+        border: 0;
+        padding: 8px;
+        margin: -8px;
+        cursor: pointer;
+        line-height: 0;
+      }
+      /* Blank slots only line up cards side by side, which a phone never has */
+      .gi-spacer { display: none; }
+
+      .gi-closing { margin-top: 32px; }
+
+      .gi-chips { gap: 8px; }
+      .gi-chip { padding: 7px 12px; font-size: 13px; }
+      .gi-steps { padding: 20px; }
+      .gi-steps li p { font-size: 14.5px; }
+      .gi-badges { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Navigation -->
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Troop 54 Home">
+        <img src="Troop3054.png" alt="Troop 54 logo" width="44" height="44">
+        <span>Troop 54</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <div class="nav-group nav-group-left">
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+              About
+              <svg class="nav-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown-menu">
+              <a href="about.html">Our Troop</a>
+              <a href="eagles.html">Eagle Scouts</a>
+              <a href="governance.html">Committee</a>
+              <a href="involved.html">Get Involved</a>
+              <a href="sponsors.html">Sponsors</a>
+            </div>
+          </div>
+          <a href="calendar.html">Calendar</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+              Resources
+              <svg class="nav-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown-menu">
+              <a href="guide.html">Welcome Guide</a>
+              <a href="packing-list.html">Packing List</a>
+            </div>
+          </div>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="nav-group nav-group-right">
+          <a href="https://my.troop3054.org" class="nav-member-btn">Member Login</a>
+          <a href="join.html" class="nav-join-btn">Join</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-overlay" aria-hidden="true"></div>
+  </nav>
+
+  <!-- Icons the position cards and badge chips reuse -->
+  <svg width="0" height="0" style="position: absolute; overflow: hidden;" aria-hidden="true" focusable="false">
+    <symbol id="gi-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></g></symbol>
+    <symbol id="gi-chev-down" viewBox="0 0 24 24"><g fill="none" stroke="#6D7168" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></g></symbol>
+    <symbol id="gi-chev-up" viewBox="0 0 24 24"><g fill="none" stroke="#6D7168" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"/></g></symbol>
+    <symbol id="gi-star" viewBox="0 0 24 24"><path fill="#003F87" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></symbol>
+    <symbol id="gi-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="#AD9D7B" stroke-width="3"/></symbol>
+    <symbol id="gi-mbc" viewBox="0 0 72 72"><g fill="none">
+      <circle cx="36" cy="36" r="33" fill="#E9E9E4" stroke="#AD9D7B" stroke-width="3"/>
+      <circle cx="36" cy="36" r="26" stroke="#AD9D7B" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <path d="M24 28c4-2 8-2 12 1 4-3 8-3 12-1v17c-4-2-8-2-12 1-4-3-8-3-12-1z" stroke="#003F87" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M36 29v17" stroke="#003F87" stroke-width="2"/>
+    </g></symbol>
+  </svg>
+
+  <main id="main-content" class="gi">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="fade-in">Get Involved</h1>
+        <p class="fade-in">Every job in this troop is done by a parent or volunteer. Here’s who does what, and where we could use a hand.</p>
+      </div>
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,40 C360,80 720,0 1440,40 L1440,60 L0,60 Z" fill="#F5F2EC"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Three ways to help -->
+    <section class="section gi-section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Three ways to help</h2>
+          <p class="section-subtitle"><span class="gi-long">You don’t have to run a position to help. </span>Pick the level that fits your life.</p>
+        </div>
+        <div class="gi-ways fade-in">
+          <div class="gi-way">
+            <div class="gi-way-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#003F87" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22V3"/><path d="M5 4h12l-2.5 4.5L17 13H5"/></svg>
+            </div>
+            <div class="gi-way-text">
+              <h3>Hold it</h3>
+              <p><span class="gi-long">Take the position and own it. You’re the person the committee turns to for that job.</span><span class="gi-short">Take the position and own it.</span></p>
+            </div>
+          </div>
+          <div class="gi-way">
+            <div class="gi-way-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#003F87" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="3"/><path d="M16.5 14.2c3 .3 5 2.4 5 5.8"/></svg>
+            </div>
+            <div class="gi-way-text">
+              <h3>Back it up</h3>
+              <p><span class="gi-long">Learn a key job next to the person who holds it, and cover when they can’t.</span><span class="gi-short">Learn the job and cover when the holder can’t.</span></p>
+            </div>
+          </div>
+          <div class="gi-way">
+            <div class="gi-way-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#003F87" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 7.5 2.8C19.5 16.4 12 21 12 21z"/></svg>
+            </div>
+            <div class="gi-way-text">
+              <h3>Support it</h3>
+              <p><span class="gi-long">Help with one piece of it, like a trip, a fundraiser or one badge. No title needed.</span><span class="gi-short">Help with one piece of it. No title needed.</span></p>
+            </div>
+          </div>
+        </div>
+        <p class="gi-hour fade-in">Scouting America suggests about an hour a week, but <strong>the position is what you make of it</strong>. Limited time? We’ll work with that.</p>
+        <div class="gi-cta fade-in">
+          <a href="contact.html?topic=Getting%20involved" class="btn btn-primary gi-btn-block">Tell us you’re interested</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Adult positions -->
+    <section class="section section-alt gi-section">
+      <div class="container">
+        <div class="section-header gi-header-tight fade-in">
+          <h2>Adult positions</h2>
+          <p class="section-subtitle"><span class="gi-long">Every position here is an official Scouting America role. Each needs a registration with a background check, Safeguarding Youth Training once a year, and the short online course on its card.</span><span class="gi-short">Official Scouting America roles. Each needs a registration with a background check, yearly Safeguarding Youth Training and a short online course.</span></p>
+        </div>
+        <div class="gi-legend fade-in">
+          <span class="gi-legend-item"><span class="gi-pill gi-pill--filled">Filled</span>someone holds it</span>
+          <span class="gi-legend-item"><span class="gi-pill gi-pill--backup">Backup needed</span>held, but no backup yet</span>
+          <span class="gi-legend-item"><span class="gi-pill gi-pill--open">Open</span>we need someone</span>
+        </div>
+
+        <div id="gi-positions" aria-busy="true">
+          <p class="gi-loading-text" role="status">Loading current positions…</p>
+          <div class="gi-skel-wrap" aria-hidden="true">
+            <div class="gi-skel"></div><div class="gi-skel"></div><div class="gi-skel"></div>
+          </div>
+        </div>
+
+        <div class="gi-closing" id="gi-closing">
+          <p>Not sure where you fit? We’ll help you find the right spot.</p>
+          <a href="contact.html?topic=Getting%20involved" class="btn btn-primary gi-btn-block">Tell us you’re interested</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Merit badges -->
+    <section class="section gi-section">
+      <div class="container">
+        <div class="section-header gi-header-badges fade-in">
+          <h2>Merit badges we offer</h2>
+          <p class="section-subtitle">Badges a Troop 54 counselor can teach.</p>
+        </div>
+        <div class="gi-badges">
+          <div class="gi-badge-col" id="gi-badges" aria-busy="true">
+            <div class="gi-chips" aria-hidden="true">
+              <span class="gi-chip-skel"></span><span class="gi-chip-skel"></span><span class="gi-chip-skel"></span><span class="gi-chip-skel"></span>
+            </div>
+          </div>
+          <div class="gi-steps">
+            <h3>How to start a merit badge</h3>
+            <ol>
+              <li><span class="gi-step-num" aria-hidden="true">1</span><p>Pick a badge you want to earn.</p></li>
+              <li><span class="gi-step-num" aria-hidden="true">2</span><p>Talk to the Scoutmaster. They’ll sign your blue card and give you a counselor’s contact.</p></li>
+              <li><span class="gi-step-num" aria-hidden="true">3</span><p>Reach out to the counselor with a parent or another adult copied on every message.</p></li>
+              <li><span class="gi-step-num" aria-hidden="true">4</span><p>Meet, finish the requirements, then bring your signed card back to the Scoutmaster.</p></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-brand">
+            <img src="Troop3054.png" alt="Troop 54 logo" width="50" height="50">
+            <span>Troop 54</span>
+          </div>
+          <p>Sponsored by <a href="https://schalmontpto.com" target="_blank" rel="noopener noreferrer">Schalmont PTO</a>. Part of Twin Rivers Council, Scouting America. Proudly serving Rotterdam and the Capital Region.</p>
+          <a href="https://trcscouting.org" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 0.75rem;">
+            <img src="images/twinrivers.webp" alt="Twin Rivers Council, Scouting America" width="120" loading="lazy" style="opacity: 0.8;">
+          </a>
+        </div>
+        <div class="footer-col">
+          <h4>Pages</h4>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="join.html">Join Our Troop</a>
+          <a href="involved.html">Get Involved</a>
+          <a href="eagles.html">Eagle Scouts</a>
+          <a href="calendar.html">Calendar</a>
+          <a href="governance.html">Committee</a>
+          <a href="guide.html">Welcome Guide</a>
+          <a href="sponsors.html">Sponsors</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="packing-list.html">Packing List</a>
+          <a href="https://www.scouting.org" target="_blank" rel="noopener noreferrer">Scouting America</a>
+          <a href="https://trcscouting.org" target="_blank" rel="noopener noreferrer">Twin Rivers Council</a>
+          <a href="https://my.scouting.org/online-registration/658c377d-63c4-48c3-9862-2643d1c01745/applicant-type" target="_blank" rel="noopener noreferrer">Register Online</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="contact.html">Contact Us</a>
+          <div class="social-links" style="margin-top: 0.75rem;">
+            <a href="https://www.facebook.com/profile.php?id=61561353564653" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Troop 54, Twin Rivers Council, Scouting America. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Website by <a href="https://mauops.com" target="_blank" rel="noopener noreferrer">Mau Consulting</a> &middot; <a href="privacy.html">Privacy Policy</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Get Involved: fills the positions and badges from the member app.
+    // Every string from the feed goes in through textContent, never innerHTML.
+    (function () {
+      'use strict';
+
+      var PROD_API = 'https://my.troop3054.org';
+      var SVG_NS = 'http://www.w3.org/2000/svg';
+
+      var GROUPS = [
+        { key: 'key3', kind: 'cards', title: 'The Key 3',
+          desc: 'The chartered organization rep, the committee chair and the Scoutmaster share final responsibility for the troop.' },
+        { key: 'start', kind: 'bars', title: 'Where most adults start',
+          desc: 'Open to as many people as want to help. Committee Members fill the committee jobs below, and Assistant Scoutmasters are the Scoutmaster’s bench.' },
+        { key: 'committee', kind: 'cards', title: 'Committee jobs',
+          desc: 'The committee handles money, logistics, permits, drivers and paperwork so the Scouts can run the program. Each job is a Committee Member with a specific role.' }
+      ];
+      var PILLS = { filled: 'Filled', backup: 'Backup needed', open: 'Open', welcome: 'Always welcome' };
+      var LINKS = { open: 'I can help with this', backup: 'Be the backup', filled: 'Learn more', welcome: 'Join them' };
+
+      // Not in the feed: counselors are approved badge by badge by the council.
+      var MBC = {
+        mbc: true,
+        title: 'Merit Badge Counselor',
+        status: 'welcome',
+        desc: 'Teaches one subject a Scout wants to learn, from Cooking to Welding, and signs off when every requirement is met.',
+        rows: [['Approved', { text: 'Badge by badge, by the council' }], ['Training', { text: 'About 35 min online' }]],
+        link: 'Counsel a badge',
+        topic: 'Merit Badge Counselor'
+      };
+
+      var positionsBox = document.getElementById('gi-positions');
+      var badgesBox = document.getElementById('gi-badges');
+      var closing = document.getElementById('gi-closing');
+
+      function hasOwn(obj, key) { return Object.prototype.hasOwnProperty.call(obj, key); }
+
+      // ?api= lets a local copy of the app feed the page; anything else falls back to production.
+      function apiOrigin() {
+        var raw = new URLSearchParams(window.location.search).get('api');
+        if (!raw) return PROD_API;
+        try {
+          var u = new URL(raw);
+          if ((u.protocol === 'http:' && u.hostname === 'localhost') || u.origin === PROD_API) return u.origin;
+        } catch (e) { /* not a URL */ }
+        return PROD_API;
+      }
+
+      function el(tag, cls, text) {
+        var n = document.createElement(tag);
+        if (cls) n.className = cls;
+        if (text != null) n.textContent = text;
+        return n;
+      }
+
+      function icon(id, size, cls) {
+        var s = document.createElementNS(SVG_NS, 'svg');
+        s.setAttribute('width', size);
+        s.setAttribute('height', size);
+        s.setAttribute('aria-hidden', 'true');
+        s.setAttribute('focusable', 'false');
+        if (cls) s.setAttribute('class', cls);
+        var u = document.createElementNS(SVG_NS, 'use');
+        u.setAttribute('href', '#' + id);
+        s.appendChild(u);
+        return s;
+      }
+
+      function str(v) { return typeof v === 'string' ? v.trim() : ''; }
+      function names(list) { return Array.isArray(list) ? list.map(str).filter(Boolean) : []; }
+      function count(n) { n = Number(n); return isFinite(n) && n > 0 ? Math.floor(n) : 0; }
+
+      function contactHref(topic) {
+        return 'contact.html?topic=' + encodeURIComponent(topic).replace(/\(/g, '%28').replace(/\)/g, '%29');
+      }
+
+      function heldBy(p, group) {
+        var list = names(p.holders);
+        var more = count(p.holders_unconfirmed);
+        if (list.length) return { text: list.join(', ') + (more ? ' and ' + more + ' more' : '') };
+        if (more) return { text: group === 'start' ? more + (more === 1 ? ' adult' : ' adults') : 'Filled' };
+        return { text: 'Open', cls: 'gi-v-open' };
+      }
+
+      function backup(p) {
+        var list = names(p.backups);
+        var more = count(p.backups_unconfirmed);
+        if (list.length) return { text: list.join(', ') + (more ? ' and ' + more + ' more' : '') };
+        if (more) return { text: 'Filled' };
+        return { text: 'Needed', cls: 'gi-v-needed' };
+      }
+
+      function toView(p, group, spacer) {
+        var status = hasOwn(PILLS, p.status) ? p.status : null;
+        var title = str(p.title);
+        var patch = str(p.patch);
+        var rows = [['Held by', heldBy(p, group)]];
+        if (p.backup_needed === true) rows.push(['Backup', backup(p)]);
+        else if (spacer) rows.push(null);
+        var training = str(p.training);
+        if (training) rows.push(['Training', { text: training }]);
+        return {
+          title: title,
+          status: status,
+          desc: str(p.summary),
+          rows: rows,
+          patch: /^[a-z0-9-]+$/.test(patch) ? patch : 'committee-member',
+          link: status ? LINKS[status] : 'Learn more',
+          topic: status === 'backup' ? title + ' (backup)' : title
+        };
+      }
+
+      function pill(status) {
+        return el('span', 'gi-pill gi-pill--' + status, PILLS[status]);
+      }
+
+      function patchNode(v, size) {
+        if (v.mbc) return icon('gi-mbc', size, 'gi-patch');
+        var img = el('img', 'gi-patch');
+        img.alt = '';
+        img.width = size;
+        img.height = size;
+        img.decoding = 'async';
+        img.addEventListener('error', function onError() {
+          img.removeEventListener('error', onError);
+          img.src = 'images/patches/committee-member.webp';
+        });
+        img.src = 'images/patches/' + v.patch + '.webp';
+        return img;
+      }
+
+      function renderPosition(v, kind, n) {
+        var pos = el('div', 'gi-pos ' + (kind === 'bars' ? 'gi-pos--bar' : 'gi-pos--card'));
+        var cardId = 'gi-pos-' + n;
+
+        // Phone: a tappable row that opens into the full card below
+        var row = el('button', 'gi-pos-row');
+        row.type = 'button';
+        row.setAttribute('aria-expanded', 'false');
+        row.setAttribute('aria-controls', cardId);
+        row.appendChild(patchNode(v, 44));
+        var rowText = el('span', 'gi-pos-row-text');
+        rowText.appendChild(el('span', 'gi-pos-row-title', v.title));
+        if (v.status) rowText.appendChild(pill(v.status));
+        row.appendChild(rowText);
+        row.appendChild(icon('gi-chev-down', 18));
+        pos.appendChild(row);
+
+        var card = el('div', 'gi-pos-card');
+        card.id = cardId;
+        var head = el('div', 'gi-pc-head');
+        head.appendChild(patchNode(v, 72));
+        var titles = el('div', 'gi-pc-titles');
+        titles.appendChild(el('h4', 'gi-pc-title', v.title));
+        if (v.status) titles.appendChild(pill(v.status));
+        head.appendChild(titles);
+        var collapse = el('button', 'gi-pc-collapse');
+        collapse.type = 'button';
+        collapse.setAttribute('aria-expanded', 'true');
+        collapse.setAttribute('aria-controls', cardId);
+        collapse.setAttribute('aria-label', 'Close ' + v.title);
+        collapse.appendChild(icon('gi-chev-up', 18));
+        head.appendChild(collapse);
+        var top = el('div', 'gi-pc-top');
+        top.appendChild(head);
+        if (v.desc) top.appendChild(el('p', 'gi-pc-desc', v.desc));
+        card.appendChild(top);
+
+        var meta = el('dl', 'gi-pc-meta');
+        v.rows.forEach(function (r) {
+          if (!r) {
+            // Blank slot, the height of a real row, so rows line up across cards
+            var k = el('dt', 'gi-meta-k gi-spacer', String.fromCharCode(160));
+            var d = el('dd', 'gi-meta-v gi-spacer', String.fromCharCode(160));
+            k.setAttribute('aria-hidden', 'true');
+            d.setAttribute('aria-hidden', 'true');
+            meta.appendChild(k);
+            meta.appendChild(d);
+            return;
+          }
+          meta.appendChild(el('dt', 'gi-meta-k', r[0]));
+          meta.appendChild(el('dd', 'gi-meta-v' + (r[1].cls ? ' ' + r[1].cls : ''), r[1].text));
+        });
+        card.appendChild(meta);
+
+        var link = el('a', 'gi-pc-link', v.link);
+        link.href = contactHref(v.topic);
+        link.appendChild(el('span', 'sr-only', ': ' + v.title));
+        link.appendChild(icon('gi-arrow', 14));
+        card.appendChild(link);
+        pos.appendChild(card);
+
+        function setOpen(open) {
+          pos.classList.toggle('is-open', open);
+          row.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+        row.addEventListener('click', function () { setOpen(true); collapse.focus(); });
+        collapse.addEventListener('click', function () { setOpen(false); row.focus(); });
+
+        return pos;
+      }
+
+      function renderPositions(data) {
+        var byGroup = { key3: [], start: [], committee: [] };
+        data.positions.forEach(function (p) {
+          if (p && typeof p === 'object' && hasOwn(byGroup, p.group) && str(p.title)) byGroup[p.group].push(p);
+        });
+
+        var frag = document.createDocumentFragment();
+        var n = 0;
+        GROUPS.forEach(function (g) {
+          var list = byGroup[g.key];
+          var spacer = g.kind === 'cards' && list.some(function (p) { return p.backup_needed === true; });
+          var views = list.map(function (p) { return toView(p, g.key, spacer); });
+          if (g.key === 'start') views.push(MBC);
+          if (!views.length) return;
+
+          frag.appendChild(el('h3', 'gi-group-title', g.title));
+          frag.appendChild(el('p', 'gi-group-desc', g.desc));
+          var wrap = el('div', g.kind === 'bars' ? 'gi-bars' : 'gi-cards');
+          views.forEach(function (v) { wrap.appendChild(renderPosition(v, g.kind, ++n)); });
+          frag.appendChild(wrap);
+        });
+
+        positionsBox.textContent = '';
+        positionsBox.appendChild(frag);
+      }
+
+      function badgeGroup(label, list, eagle) {
+        var group = el('div', 'gi-badge-group');
+        group.appendChild(el('h3', 'gi-badge-label', label));
+        var chips = el('ul', 'gi-chips');
+        list.forEach(function (b) {
+          var chip = el('li', 'gi-chip');
+          chip.appendChild(icon(eagle ? 'gi-star' : 'gi-dot', eagle ? 13 : 12));
+          chip.appendChild(document.createTextNode(str(b.name)));
+          chips.appendChild(chip);
+        });
+        group.appendChild(chips);
+        return group;
+      }
+
+      // "We're looking for counselors for X, Y and Z, all required for Eagle."
+      function neededNote(list) {
+        var p = el('p', 'gi-note');
+        p.appendChild(document.createTextNode(list.length === 1 ? 'We’re looking for a counselor for ' : 'We’re looking for counselors for '));
+        list.forEach(function (item, i) {
+          if (i) p.appendChild(document.createTextNode(i === list.length - 1 ? ' and ' : ', '));
+          item.split(' or ').forEach(function (part, j) {
+            if (j) p.appendChild(document.createTextNode(' or '));
+            p.appendChild(el('strong', null, part));
+          });
+        });
+        var tail = list.length === 1 ? ', which is required for Eagle. '
+          : list.length === 2 ? ', both required for Eagle. '
+          : ', all required for Eagle. ';
+        p.appendChild(document.createTextNode(tail));
+        var a = el('a', null, 'Counsel a badge');
+        a.href = contactHref('Merit Badge Counselor');
+        p.appendChild(a);
+        return p;
+      }
+
+      function renderBadges(data) {
+        var badges = Array.isArray(data.badges)
+          ? data.badges.filter(function (b) { return b && typeof b === 'object' && str(b.name); })
+          : [];
+        var frag = document.createDocumentFragment();
+        if (!badges.length) {
+          frag.appendChild(el('p', 'gi-note', 'We’re putting our counselor list together. Ask the Scoutmaster about any badge you want to earn.'));
+        } else {
+          var eagle = badges.filter(function (b) { return b.eagle === true; });
+          var more = badges.filter(function (b) { return b.eagle !== true; });
+          if (eagle.length) frag.appendChild(badgeGroup('Required for Eagle', eagle, true));
+          if (more.length) frag.appendChild(badgeGroup('More badges', more, false));
+        }
+        var needed = names(data.eagle_needed);
+        if (needed.length) frag.appendChild(neededNote(needed));
+
+        badgesBox.textContent = '';
+        badgesBox.appendChild(frag);
+      }
+
+      function fail() {
+        var box = el('div', 'gi-fail');
+        box.appendChild(el('p', null, 'We couldn’t load the current positions. Reach out and we’ll tell you where we could use a hand.'));
+        var a = el('a', 'btn btn-primary', 'Tell us you’re interested');
+        a.href = contactHref('Getting involved');
+        box.appendChild(a);
+        positionsBox.textContent = '';
+        positionsBox.appendChild(box);
+        closing.hidden = true;
+
+        badgesBox.textContent = '';
+        badgesBox.appendChild(el('p', 'gi-note', 'Ask the Scoutmaster about any badge you want to earn.'));
+      }
+
+      var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+      var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 10000) : null;
+
+      fetch(apiOrigin() + '/api/public/involved', { credentials: 'omit', signal: ctrl ? ctrl.signal : undefined })
+        .then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function (data) {
+          if (!data || !Array.isArray(data.positions)) throw new Error('Unexpected response');
+          renderPositions(data);
+          renderBadges(data);
+        })
+        .catch(fail)
+        .then(function () {
+          if (timer) clearTimeout(timer);
+          positionsBox.removeAttribute('aria-busy');
+          badgesBox.removeAttribute('aria-busy');
+        });
+    })();
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
