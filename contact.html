@@ -113,6 +113,7 @@
               <a href="about.html">Our Troop</a>
               <a href="eagles.html">Eagle Scouts</a>
               <a href="governance.html">Committee</a>
+              <a href="involved.html">Get Involved</a>
               <a href="sponsors.html">Sponsors</a>
             </div>
           </div>
@@ -273,6 +274,7 @@
           <a href="index.html">Home</a>
           <a href="about.html">About</a>
           <a href="join.html">Join Our Troop</a>
+          <a href="involved.html">Get Involved</a>
           <a href="eagles.html">Eagle Scouts</a>
           <a href="calendar.html">Calendar</a>
           <a href="governance.html">Committee</a>
@@ -304,6 +306,19 @@
     </div>
   </footer>
 
+  <script>
+    // Coming from a Get Involved link (?topic=...): start the message for them.
+    (function () {
+      var topic = new URLSearchParams(window.location.search).get('topic');
+      if (!topic) return;
+      topic = Array.from(topic, function (c) { var n = c.charCodeAt(0); return n < 32 || n === 127 ? " " : c; }).join("").trim().slice(0, 120);
+      if (!topic) return;
+      var message = document.getElementById('message');
+      if (message && !message.value) message.value = 'I’m interested in: ' + topic;
+      var subject = document.querySelector('#contact-form input[name="_subject"]');
+      if (subject) subject.value = 'New Contact Inquiry — Troop 54 (Get Involved: ' + topic + ')';
+    })();
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
