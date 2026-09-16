@@ -2653,3 +2653,17 @@ button:focus-visible,
 .gov-body { padding: 0.75rem 1.25rem 1rem; }
 .gov-body ol { padding-left: 1.2rem; }
 .gov-body li { margin-bottom: 0.5rem; }
+
+/* About › Our Leaders: the Key 3 as three featured cards; a placeholder
+   avatar until we have a photo. The grids under them fill from the roster. */
+.leaders-featured-3 { grid-template-columns: repeat(3, 1fr); max-width: 1100px; }
+.leader-card-featured .leader-avatar.leader-avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.leader-card-featured .leader-avatar.leader-avatar-placeholder svg { width: 64px; height: 64px; }
+@media (max-width: 900px) {
+  .leaders-featured-3 { grid-template-columns: 1fr; max-width: 480px; }
+}
+.leaders-section-desc a { color: var(--color-primary); font-weight: 600; }

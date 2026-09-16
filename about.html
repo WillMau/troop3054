@@ -142,7 +142,9 @@
       </div>
     </section>
 
-    <!-- Our Leaders -->
+    <!-- Our Leaders. The Key 3 are written here (photos and blurbs); everyone
+         below them is pulled from the troop app's roster, the same feed the
+         Get Involved page uses, so the two pages can't drift apart. -->
     <section class="section section-alt">
       <div class="container">
         <div class="section-header fade-in">
@@ -150,8 +152,9 @@
           <h2>Our Leaders</h2>
           <p class="section-subtitle">Dedicated volunteers who guide our Scouts every step of the way</p>
         </div>
-        <!-- Featured Leaders: Committee Chair & Scoutmaster -->
-        <div class="leaders-featured fade-in">
+
+        <!-- The Key 3: the three adults who share final responsibility for the troop -->
+        <div class="leaders-featured leaders-featured-3 fade-in">
           <div class="card leader-card-featured">
             <div class="leader-avatar">
               <img src="images/willmau.jpg" alt="William Mau" style="object-position: center 20%;">
@@ -159,7 +162,7 @@
             <div class="leader-info">
               <h3>William Mau</h3>
               <p class="leader-role">Committee Chair</p>
-              <p class="leader-blurb">The Committee Chair oversees the troop's administrative operations, coordinates with the chartering organization, manages the budget, and ensures the troop runs smoothly so leaders can focus on delivering the Scouting program.</p>
+              <p class="leader-blurb">Runs the troop committee and its meetings, keeps the budget and the paperwork in order, and makes sure every position is filled by a trained adult, so the Scoutmaster and her team can focus on the program.</p>
             </div>
           </div>
           <div class="card leader-card-featured">
@@ -169,66 +172,113 @@
             <div class="leader-info">
               <h3>Julie Yanson</h3>
               <p class="leader-role">Scoutmaster</p>
-              <p class="leader-blurb">The Scoutmaster is the troop's lead adult mentor, guiding Scouts through the program by training youth leaders, planning outdoor activities, and helping each Scout progress along the trail to Eagle.</p>
+              <p class="leader-blurb">The troop's lead adult mentor. Trains the youth leaders so the Scouts run their own troop, plans the outdoor program with them, and helps each Scout along the trail to Eagle.</p>
+            </div>
+          </div>
+          <div class="card leader-card-featured">
+            <div class="leader-avatar leader-avatar-placeholder" aria-hidden="true">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="leader-info">
+              <h3>Julie Dion</h3>
+              <p class="leader-role">Chartered Organization Representative</p>
+              <p class="leader-blurb">Our link to the Schalmont PTO, which charters the troop. Approves every adult leader's application and represents the troop on the district committee.</p>
             </div>
           </div>
         </div>
 
-        <!-- Assistant Scoutmasters -->
+        <!-- Assistant Scoutmasters, from the roster -->
         <p class="leaders-section-label fade-in">Assistant Scoutmasters</p>
         <p class="leaders-section-desc fade-in">Assistant Scoutmasters support the Scoutmaster by mentoring patrols, leading skill instruction, supervising outings, and stepping in to ensure every Scout gets the attention they need.</p>
-        <div class="leaders-grid leaders-grid-4 stagger-children">
-          <div class="card leader-card fade-in">
-            <div class="leader-avatar" aria-hidden="true">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <h3>Kyle Stark</h3>
-          </div>
-          <div class="card leader-card fade-in">
-            <div class="leader-avatar" aria-hidden="true">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <h3>Harry O'Connell</h3>
-          </div>
-          <div class="card leader-card fade-in">
-            <div class="leader-avatar" aria-hidden="true">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <h3>Barbara Potter</h3>
-          </div>
-          <div class="card leader-card fade-in">
-            <div class="leader-avatar" aria-hidden="true">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <h3>Dave Lawrence</h3>
-          </div>
-        </div>
+        <div class="leaders-grid leaders-grid-4 stagger-children" id="leaders-asm"></div>
 
-        <!-- Committee Members -->
+        <!-- Committee, from the roster -->
         <p class="leaders-section-label fade-in">Committee Members</p>
-        <p class="leaders-section-desc fade-in">Committee Members handle the behind-the-scenes work that keeps the troop running — from organizing fundraisers and coordinating transportation to managing equipment and supporting troop events.</p>
-        <div class="leaders-grid leaders-grid-3 stagger-children">
-          <div class="card leader-card fade-in">
-            <div class="leader-avatar" aria-hidden="true">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <h3>Laurinda O'Connell</h3>
-          </div>
-          <div class="card leader-card fade-in">
-            <div class="leader-avatar" aria-hidden="true">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <h3>Jackie Stark</h3>
-          </div>
-          <div class="card leader-card fade-in">
-            <div class="leader-avatar" aria-hidden="true">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <h3>Jay Lawrence</h3>
-          </div>
-        </div>
+        <p class="leaders-section-desc fade-in">Committee Members handle the behind-the-scenes work that keeps the troop running, from fundraisers and transportation to equipment and advancement records.</p>
+        <div class="leaders-grid leaders-grid-3 stagger-children" id="leaders-committee"></div>
+
+        <p class="leaders-section-desc fade-in" style="margin-top: 2rem;">Every adult position, who holds it, and where we could use a hand is on <a href="involved.html">Get Involved</a>.</p>
       </div>
     </section>
+
+    <script>
+      // Everyone below the Key 3 comes from the troop app's roster: the same
+      // feed as the Get Involved page, so this list stays right on its own.
+      (function () {
+        var asm = document.getElementById('leaders-asm');
+        var committee = document.getElementById('leaders-committee');
+        if (!asm || !committee) return;
+        var ICON = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#232528" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+        function card(name, role) {
+          var el = document.createElement('div');
+          el.className = 'card leader-card fade-in';
+          var av = document.createElement('div');
+          av.className = 'leader-avatar';
+          av.setAttribute('aria-hidden', 'true');
+          av.innerHTML = ICON; // fixed markup, nothing from the feed goes in here
+          var h = document.createElement('h3');
+          h.textContent = name;
+          el.appendChild(av);
+          el.appendChild(h);
+          if (role) {
+            var r = document.createElement('p');
+            r.className = 'leader-role';
+            r.textContent = role;
+            el.appendChild(r);
+          }
+          return el;
+        }
+        function fill(grid, people) {
+          grid.textContent = '';
+          people.forEach(function (p) { grid.appendChild(card(p.name, p.role)); });
+          // The page's fade-in observer only knows elements that were there at load.
+          requestAnimationFrame(function () {
+            Array.prototype.forEach.call(grid.children, function (c) { c.classList.add('visible'); });
+          });
+        }
+        function fallback(grid) {
+          grid.textContent = '';
+          var p = document.createElement('p');
+          p.className = 'leaders-section-desc';
+          p.appendChild(document.createTextNode('See who is serving right now on '));
+          var a = document.createElement('a');
+          a.href = 'involved.html';
+          a.textContent = 'Get Involved';
+          p.appendChild(a);
+          p.appendChild(document.createTextNode('.'));
+          grid.appendChild(p);
+        }
+        function names(list) {
+          return Array.isArray(list) ? list.filter(function (s) { return typeof s === 'string' && s.trim(); }) : [];
+        }
+        fetch('https://my.troop3054.org/api/public/involved', { credentials: 'omit' })
+          .then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
+          .then(function (data) {
+            var positions = Array.isArray(data.positions) ? data.positions : [];
+            var key3 = [], asms = [], members = [], jobs = {};
+            positions.forEach(function (p) {
+              var held = names(p.holders);
+              if (p.group === 'key3') key3 = key3.concat(held);
+              else if (p.title === 'Assistant Scoutmaster') asms = asms.concat(held);
+              else if (p.title === 'Committee Member') members = members.concat(held);
+              else if (p.group === 'committee') held.forEach(function (n) { if (!jobs[n]) jobs[n] = p.title; });
+            });
+            // Committee: everyone registered as a Committee Member, then anyone
+            // holding a committee job who isn't already listed. The Key 3 are above.
+            var seen = {}, list = [];
+            key3.forEach(function (n) { seen[n] = true; });
+            members.concat(Object.keys(jobs)).forEach(function (n) {
+              if (seen[n]) return;
+              seen[n] = true;
+              list.push({ name: n, role: jobs[n] || '' });
+            });
+            if (!asms.length && !list.length) throw new Error('empty');
+            if (asms.length) fill(asm, asms.map(function (n) { return { name: n, role: '' }; })); else fallback(asm);
+            if (list.length) fill(committee, list); else fallback(committee);
+          })
+          .catch(function () { fallback(asm); fallback(committee); });
+      })();
+    </script>
 
     <!-- What is Scouting America -->
     <section class="section">
