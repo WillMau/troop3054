@@ -245,7 +245,7 @@ p {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  min-height: 48px;
+  min-height: 52px;
   padding: 6px 5%;
   background: #fff;
   color: #46526B;
@@ -267,13 +267,13 @@ p {
 
 .pack-banner-logo {
   flex: none;
-  width: 44px;
-  height: auto;
+  width: 40px;
+  height: 40px;
 }
 
 /* Before script.js lines it up exactly */
 .pack-banner + .site-nav {
-  top: 48px;
+  top: 52px;
 }
 
 @media (max-width: 900px) {
