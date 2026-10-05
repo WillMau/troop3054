@@ -235,6 +235,63 @@ p {
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* ---------- Pack banner ----------
+   The white strip above the menu on every page, pointing families with
+   younger kids to Cub Scout Pack 3054 (pack3054.org has the same strip
+   pointing back here). It scrolls away with the page; until it's gone, the
+   menu bar rides just under it (script.js keeps the two lined up). */
+.pack-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 6px 5%;
+  background: #fff;
+  color: #46526B;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.pack-banner p {
+  margin: 0;
+}
+
+.pack-banner a {
+  color: var(--color-primary);
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.pack-banner-logo {
+  flex: none;
+  width: 44px;
+  height: auto;
+}
+
+/* Before script.js lines it up exactly */
+.pack-banner + .site-nav {
+  top: 48px;
+}
+
+@media (max-width: 900px) {
+  .pack-banner-more {
+    display: none;
+  }
+}
+
+/* The slide-out menu is positioned inside the bar; without the blur it's
+   measured from the screen, so it starts at the top even while the bar
+   sits under the banner. */
+@media (max-width: 1100px) {
+  .site-nav {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
 .site-nav.scrolled {
   background: rgba(0, 51, 102, 0.97);
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
@@ -484,6 +541,7 @@ p {
     right: -100%;
     width: 280px;
     height: 100vh;
+    z-index: 1000; /* above the page-dimming overlay (999) */
     background: var(--color-primary-dark);
     flex: none;
     flex-direction: column;

@@ -88,6 +88,9 @@
   function initScrollEffects() {
     var nav = document.querySelector('.site-nav');
     if (!nav) return;
+    // The pack banner sits above the menu bar and scrolls away; until it's
+    // gone, the bar rides just under it.
+    var banner = document.querySelector('.pack-banner');
 
     var scrollThreshold = 60;
 
@@ -97,9 +100,13 @@
       } else {
         nav.classList.remove('scrolled');
       }
+      if (banner) {
+        nav.style.top = Math.max(0, banner.offsetHeight - window.scrollY) + 'px';
+      }
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
     onScroll(); // Check initial state
   }
 
