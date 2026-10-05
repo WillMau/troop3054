@@ -229,6 +229,25 @@
     }
     .legend-dot.committee { background: #6a4c93; }
 
+    /* Pack 3054 (Cub Scouts) events, shown when "Show Pack 3054 events" is on */
+    .cal-event.type-pack {
+      background: rgba(252, 209, 22, 0.3);
+      color: #6b5200;
+    }
+    .legend-dot.pack { background: #FCD116; box-shadow: inset 0 0 0 1px #e2ae00; }
+    .pack-toggle { cursor: pointer; font-weight: 600; }
+    .pack-toggle input { margin: 0 0.15rem 0 0; accent-color: var(--color-primary); }
+    .pack-status { flex-basis: 100%; margin: 0; font-size: 0.8rem; color: #8a2c1a; }
+    .pack-tag {
+      display: inline-block; margin-left: 0.4rem; padding: 0.05rem 0.4rem;
+      border-radius: 4px; background: #fff4c2; color: #6b5200;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.03em; vertical-align: middle;
+    }
+    .upcoming-thumb.pack-thumb {
+      display: grid; place-items: center; background: #FCD116; border-color: #e2ae00;
+      font-family: var(--font-heading); font-size: 0.62rem; font-weight: 800; color: #0A2752;
+    }
+
     /* Chips and list rows are real buttons so keyboards can open them;
        strip the browser's button chrome and keep the existing look. */
     /* font-family only: the font shorthand would also reset size and line
@@ -650,12 +669,14 @@
               <div class="legend-item"><span class="legend-dot service"></span> Service</div>
               <div class="legend-item"><span class="legend-dot committee"></span> Committee</div>
               <div class="legend-item"><span class="legend-dot special"></span> Special Event</div>
+              <label class="legend-item pack-toggle" title="Cub Scout Pack 3054 meets at Jefferson on Monday nights too. Its calendar is at pack3054.org."><input type="checkbox" id="show-pack"><span class="legend-dot pack"></span> Show Pack 3054 events</label>
             </div>
             <div class="view-toggle">
               <button class="active" onclick="setView('calendar')">Calendar</button>
               <button onclick="setView('list')">List</button>
               <a class="subscribe-link" href="webcal://my.troop3054.org/calendar.ics" title="Add the troop calendar to Apple Calendar or Outlook. On Google Calendar, use Other calendars → From URL and paste https://my.troop3054.org/calendar.ics">Subscribe</a>
             </div>
+            <p class="pack-status" id="pack-status" role="status" hidden></p>
           </div>
 
           <!-- Controls -->
@@ -784,7 +805,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Troop 54, Twin Rivers Council, Scouting America. All rights reserved.</p>
+        <p>&copy; 2026 Troop 3054, Twin Rivers Council, Scouting America. All rights reserved.</p>
         <p style="margin-top: 0.5rem; font-size: 0.8rem;"><a href="https://www.scouting.org" target="_blank" rel="noopener noreferrer">Scouting America</a> &middot; <a href="privacy.html">Privacy Policy</a> &middot; Website by <a href="https://mauops.com" target="_blank" rel="noopener noreferrer">Mau Consulting</a></p>
       </div>
     </div>
@@ -839,6 +860,47 @@
   const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
   const fmtTime = (d) => d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
 
+  // Pack 3054 (Cub Scouts, K-5) meets at Jefferson on Monday nights too, and
+  // some families are in both. "Show Pack 3054 events" mixes in the pack's own
+  // public feed, served by the pack's leader app (my.pack3054.org).
+  const PACK_FEED = 'https://my.pack3054.org/calendar.ics';
+  const PACK_KEY = 't3054-show-pack';
+  let troopEvents = [];
+  let packEvents = null; // loaded the first time the switch is turned on
+  const packToggle = document.getElementById('show-pack');
+  try { packToggle.checked = localStorage.getItem(PACK_KEY) === '1'; } catch (e) { /* no storage: starts off */ }
+
+  // events = the troop's, plus the pack's when the switch is on. Chips and rows
+  // find their event by index, so number the combined list.
+  function mergeEvents() {
+    const all = packToggle.checked && packEvents ? troopEvents.concat(packEvents) : troopEvents.slice();
+    all.sort((a, b) => a.start - b.start);
+    all.forEach((e, i) => { e.i = i; });
+    events = all;
+  }
+
+  async function loadPack() {
+    const status = document.getElementById('pack-status');
+    try {
+      const res = await fetch(PACK_FEED);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      packEvents = parseICS(await res.text()).map((e) => Object.assign(e, { type: 'pack', unit: 'pack' }));
+      status.hidden = true;
+    } catch (e) {
+      console.error('Failed to load the Pack 3054 calendar:', e);
+      status.textContent = "Pack 3054's events didn't load just now. They're always at pack3054.org.";
+      status.hidden = false;
+    }
+  }
+
+  packToggle.addEventListener('change', async () => {
+    try { localStorage.setItem(PACK_KEY, packToggle.checked ? '1' : '0'); } catch (e) { /* fine */ }
+    if (packToggle.checked && !packEvents) await loadPack();
+    mergeEvents();
+    renderCalendar();
+    renderList();
+  });
+
   // Draw the month at once so the page isn't blank while the feed loads.
   async function loadEvents() {
     const list = document.getElementById('upcoming-events');
@@ -847,7 +909,9 @@
     try {
       const res = await fetch('https://my.troop3054.org/calendar.ics?t=' + Date.now());
       if (!res.ok) throw new Error('HTTP ' + res.status);
-      events = parseICS(await res.text());
+      troopEvents = parseICS(await res.text());
+      if (packToggle.checked) await loadPack();
+      mergeEvents();
       renderCalendar();
       renderList();
     } catch (e) {
@@ -959,7 +1023,8 @@
       const shown = dayEvents.length > 3 && !expanded ? dayEvents.slice(0, 2) : dayEvents;
       shown.forEach(ev => {
         const t = ev.allDay ? '' : `<span class="t">${fmtTime(ev.start).replace(/ ?[AP]M$/, '')}</span> `;
-        html += `<button type="button" class="cal-event type-${ev.type}" data-i="${ev.i}" title="${esc(ev.summary)}">${t}${esc(ev.summary)}</button>`;
+        const name = ev.unit === 'pack' ? 'Pack 3054: ' + ev.summary : ev.summary;
+        html += `<button type="button" class="cal-event type-${ev.type}" data-i="${ev.i}" title="${esc(name)}"${ev.unit === 'pack' ? ` aria-label="${esc(name)}"` : ''}>${t}${esc(ev.summary)}</button>`;
       });
       if (dayEvents.length > 3) {
         html += `<button type="button" class="cal-more" data-day="${key}">${expanded ? 'show less' : `+${dayEvents.length - 2} more`}</button>`;
@@ -985,16 +1050,20 @@
     let html = '';
     upcoming.forEach(ev => {
       const d = ev.start;
-      const tries = flyerCandidates(ev, true);
+      const pack = ev.unit === 'pack';
+      const tries = pack ? [] : flyerCandidates(ev, true);
+      const thumb = pack
+        ? '<span class="upcoming-thumb pack-thumb" aria-hidden="true">PACK</span>'
+        : `<img class="upcoming-thumb" alt="" loading="lazy" src="${tries[0]}"
+             data-tries="${tries.join('|')}" data-try="0" onerror="flyerFallback(this)">`;
       html += `<button type="button" class="upcoming-item" data-i="${ev.i}">
         <div class="upcoming-date-badge">
           <span class="month">${MONTH_SHORT[d.getMonth()]}</span>
           <span class="day">${d.getDate()}</span>
         </div>
-        <img class="upcoming-thumb" alt="" loading="lazy" src="${tries[0]}"
-             data-tries="${tries.join('|')}" data-try="0" onerror="flyerFallback(this)">
+        ${thumb}
         <div class="upcoming-info">
-          <div class="event-name">${esc(ev.summary)}${ev.rsvp ? '<span class="rsvp-tag">RSVP</span>' : ''}</div>
+          <div class="event-name">${esc(ev.summary)}${ev.rsvp ? '<span class="rsvp-tag">RSVP</span>' : ''}${pack ? '<span class="pack-tag">Pack 3054</span>' : ''}</div>
           <div class="event-meta">${esc(formatEventTime(ev))}${ev.location ? ' &middot; ' + esc(ev.location) : ''}</div>
         </div>
       </button>`;
@@ -1097,7 +1166,7 @@
   function showEvent(ev) {
     if (!ev) return;
     const title = ev.summary;
-    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-title').textContent = ev.unit === 'pack' ? 'Pack 3054: ' + title : title;
 
     // Resource links from the X-LINKS property: "label1|url1|label2|url2".
     // Only http(s) targets become links.
@@ -1127,7 +1196,8 @@
     }
 
     const flyer = document.getElementById('modal-flyer');
-    const tries = flyerCandidates(ev, false);
+    // Pack events have no troop flyer or crest to fall back on.
+    const tries = ev.unit === 'pack' ? [] : flyerCandidates(ev, false);
     let attempt = 0;
     flyer.alt = title + ' flyer';
     flyer.style.display = 'none';
@@ -1137,7 +1207,7 @@
       if (attempt < tries.length) flyer.src = tries[attempt];
       else flyer.style.display = 'none';
     };
-    flyer.src = tries[0];
+    if (tries.length) flyer.src = tries[0];
 
     document.getElementById('modal-date').textContent = formatEventDate(ev.start, ev.end);
     document.getElementById('modal-time').textContent = formatEventTime(ev);
