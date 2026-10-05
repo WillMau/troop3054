@@ -2760,3 +2760,59 @@ button:focus-visible,
   .leaders-featured-3 { grid-template-columns: 1fr; max-width: 480px; }
 }
 .leaders-section-desc a { color: var(--color-primary); font-weight: 600; }
+
+/* ---------- Using the Troop App (app.html): steps beside a phone screenshot ---------- */
+.app-step {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 1.75rem;
+  align-items: start;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.app-shot {
+  margin: 0;
+}
+
+.app-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  background: #fff;
+}
+
+.app-shot figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #666;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .app-step {
+    grid-template-columns: 1fr;
+  }
+
+  .app-shot {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}
+
+/* The site turns list markers off; the app guide's steps need their numbers. */
+.app-guide .guide-section ol {
+  list-style: decimal;
+}
+
+.app-guide .guide-section ul {
+  list-style: disc;
+}
+
+.app-guide .guide-section li::marker {
+  color: var(--color-primary);
+  font-weight: 700;
+}

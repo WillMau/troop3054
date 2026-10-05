@@ -31,6 +31,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.troop3054.org/app.html</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.troop3054.org/eagles.html</loc>
     <lastmod>2026-10-05</lastmod>
     <changefreq>monthly</changefreq>
