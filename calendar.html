@@ -882,6 +882,14 @@
       let end = dtend ? parseICSDate(dtend) : null;
       // All-day DTEND is exclusive per RFC 5545 — pull back one day
       if (allDay && end) end = new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1);
+      // A timed trip that ends at midnight runs through the day before: the
+      // app sends that when a departure time is set but no return time yet.
+      // Show it ending that day, with no made-up end time.
+      let openEnd = false;
+      if (!allDay && end && end.getHours() === 0 && end.getMinutes() === 0) {
+        const lastDay = new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1);
+        if (lastDay > startOfDay(start)) { end = lastDay; openEnd = true; }
+      }
       const summary = get('SUMMARY');
       const cat = get('CATEGORIES').toLowerCase();
       // X-IMAGE: a flyer the troop app is sharing publicly for this event.
@@ -890,7 +898,7 @@
       const rsvp = get('X-RSVP');
       parsed.push({
         summary, description: get('DESCRIPTION'), location: get('LOCATION'),
-        links: get('X-LINKS'), cat, start, end, allDay, type: typeFor(cat, summary),
+        links: get('X-LINKS'), cat, start, end, allDay, openEnd, type: typeFor(cat, summary),
         image: /^https:\/\//i.test(image) ? image : '',
         rsvp: /^https:\/\//i.test(rsvp) ? rsvp : '',
       });
@@ -1002,12 +1010,14 @@
   }
 
   // "All day" | "6:15 PM – 7:45 PM" | "Fri 5:00 PM – Sun 12:00 PM" (a timed
-  // multi-day event names each day so the times can't be misread).
+  // multi-day event names each day so the times can't be misread) | "Fri
+  // 5:00 PM – Sun" (a departure time set, no return time yet).
   function formatEventTime(ev) {
     if (ev.allDay) return 'All day';
     if (!ev.end) return fmtTime(ev.start);
     if (ev.end.toDateString() === ev.start.toDateString()) return `${fmtTime(ev.start)} – ${fmtTime(ev.end)}`;
     const wd = (d) => d.toLocaleDateString('en-US', { weekday: 'short' });
+    if (ev.openEnd) return `${wd(ev.start)} ${fmtTime(ev.start)} – ${wd(ev.end)}`;
     return `${wd(ev.start)} ${fmtTime(ev.start)} – ${wd(ev.end)} ${fmtTime(ev.end)}`;
   }
 
