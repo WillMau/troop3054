@@ -58,12 +58,24 @@ const fixture = [
   'END:VCALENDAR', '',
 ].join('\r\n');
 
+// Pack 3054's feed, as pack3054.org builds it: a den meeting with a start time
+// and no end, and an all-day picnic.
+const packFixture = [
+  'BEGIN:VCALENDAR', 'VERSION:2.0', 'X-WR-CALNAME:Cub Scout Pack 3054',
+  'BEGIN:VEVENT', 'UID:p1@pack3054', `DTSTART:${ymd(addD(2))}T181500`,
+  'SUMMARY:Den Meeting (Lions & Tigers)', 'LOCATION:Jefferson Elementary cafeteria\\, 100 Princetown Rd',
+  'DESCRIPTION:Lions and Tigers come with their adult partner.\\nPack 3054 calendar: https://pack3054.org/calendar.html', 'END:VEVENT',
+  'BEGIN:VEVENT', 'UID:p2@pack3054', `DTSTART;VALUE=DATE:${ymd(addD(3))}`, `DTEND;VALUE=DATE:${ymd(addD(4))}`,
+  'SUMMARY:Pack Picnic <b>', 'END:VEVENT',
+  'END:VCALENDAR', '',
+].join('\r\n');
+
 // Minimal DOM stub: enough for the script to run and for us to read output.
 const els = {};
 const mkEl = (id) => ({
-  id, innerHTML: '', textContent: '', style: {}, dataset: {}, alt: '', src: '', children: [],
+  id, innerHTML: '', textContent: '', style: {}, dataset: {}, alt: '', src: '', children: [], listeners: {},
   classList: { add() {}, remove() {} },
-  addEventListener() {},
+  addEventListener(type, fn) { (this.listeners[type] ||= []).push(fn); },
   insertAdjacentHTML(_, s) { this.innerHTML += s; },
   appendChild(c) { this.children.push(c); },
   querySelector() { return { focus() {} }; },
@@ -79,7 +91,7 @@ const doc = {
 const sandbox = {
   document: doc, console, Date, Intl, Number, String, parseInt, RegExp, Error, Math,
   window: { matchMedia: () => ({ matches: false }) },
-  fetch: async () => ({ ok: true, text: async () => fixture }),
+  fetch: async (url) => ({ ok: true, text: async () => (String(url).includes('pack3054.org') ? packFixture : fixture) }),
   setTimeout,
 };
 vm.createContext(sandbox);
@@ -162,6 +174,28 @@ api.showEvent(ev.find((e) => e.summary === 'Finished Camp'));
 ok('modal hides RSVP once event is over', els['modal-rsvp-row'].style.display === 'none', els['modal-rsvp-row'].style.display);
 api.showEvent(meet);
 ok('modal hides RSVP when event has none', els['modal-rsvp-row'].style.display === 'none', '');
+
+// "Show Pack 3054 events": off by default, then mixes the pack's feed in.
+ok('pack events off by default', !api.events.some((e) => e.unit === 'pack'), '');
+const packSwitch = els['show-pack'];
+packSwitch.checked = true;
+await Promise.all(packSwitch.listeners.change.map((fn) => fn()));
+const all = api.events;
+const packs = all.filter((e) => e.unit === 'pack');
+ok('switch adds the pack events', all.length === 11 && packs.length === 2, `got ${all.length} / ${packs.length}`);
+ok('pack events get their own color', packs.every((e) => e.type === 'pack'), '');
+ok('combined list is in date order and renumbered', all.every((e, i) => e.i === i && (i === 0 || all[i - 1].start <= e.start)), '');
+const den = packs.find((e) => e.summary.startsWith('Den Meeting'));
+ok('pack meeting shows just its start time', api.formatEventTime(den) === '6:15 PM', api.formatEventTime(den));
+const list2 = els['upcoming-events'].innerHTML;
+ok('list labels pack events', /Den Meeting \(Lions &amp; Tigers\)<span class="pack-tag">Pack 3054<\/span>/.test(list2), '');
+ok('pack rows show a PACK badge, not a troop flyer', list2.includes('pack-thumb') && !/images\/events\/den-meeting/.test(list2), '');
+ok('pack titles are escaped too', list2.includes('Pack Picnic &lt;b&gt;') && !list2.includes('Pack Picnic <b>'), '');
+api.showEvent(den);
+ok('modal says it is a pack event', els['modal-title'].textContent === 'Pack 3054: ' + den.summary, els['modal-title'].textContent);
+packSwitch.checked = false;
+await Promise.all(packSwitch.listeners.change.map((fn) => fn()));
+ok('switch off takes them away again', api.events.length === 9, `got ${api.events.length}`);
 
 for (const [s, n, i] of checks) console.log(`  ${s}  ${n}${i ? '  -> ' + i : ''}`);
 const fails = checks.filter((c) => c[0] === 'FAIL').length;
