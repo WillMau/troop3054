@@ -291,6 +291,11 @@ p {
   gap: 0.25rem;
 }
 
+.nav-links a,
+.nav-dropdown-toggle {
+  white-space: nowrap;
+}
+
 .nav-links a {
   color: rgba(250, 246, 240, 0.85);
   font-family: var(--font-heading);
@@ -467,8 +472,8 @@ p {
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* Mobile Nav */
-@media (max-width: 768px) {
+/* Mobile Nav: the slide-out menu below 1,100px, where the full bar no longer fits */
+@media (max-width: 1100px) {
   .hamburger {
     display: flex;
   }
@@ -1651,8 +1656,33 @@ p {
 
 @media (max-width: 480px) {
   .footer-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
+  .footer-grid > .footer-col:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.footer-connect {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.footer-connect > a:not(.social-link) {
+  color: var(--color-secondary);
+  text-decoration: underline;
+  text-decoration-color: rgba(173, 157, 123, 0.5);
+}
+
+.footer-council {
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.footer-council img {
+  opacity: 0.8;
 }
 
 /* ---------- 404 Page ---------- */
@@ -1792,6 +1822,11 @@ p {
   color: var(--color-text);
   opacity: 0.7;
   margin-bottom: 0;
+}
+
+.need-item p a {
+  color: var(--color-primary);
+  text-decoration: underline;
 }
 
 /* ---------- Charter Org Spotlight ---------- */
