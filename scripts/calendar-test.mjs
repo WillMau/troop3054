@@ -50,6 +50,11 @@ const fixture = [
   `DTSTART;VALUE=DATE:${ymd(addD(6))}`, `DTEND;VALUE=DATE:${ymd(addD(7))}`,
   'SUMMARY:Bad Image Event', 'CATEGORIES:CAMPOUT',
   'X-IMAGE:javascript:alert(1)', 'X-RSVP:javascript:alert(1)', 'END:VEVENT',
+  // A trip with a departure time but no return time yet: the app ends it at
+  // midnight after the last day.
+  'BEGIN:VEVENT', 'UID:9',
+  `DTSTART:${ymd(addD(8))}T170000`, `DTEND:${ymd(addD(11))}T000000`,
+  'SUMMARY:Departure Only Trip', 'CATEGORIES:CAMPOUT', 'END:VEVENT',
   'END:VCALENDAR', '',
 ].join('\r\n');
 
@@ -94,7 +99,7 @@ const grid = els['cal-grid'].innerHTML;
 const checks = [];
 const ok = (name, cond, info = '') => checks.push([cond ? 'PASS' : 'FAIL', name, cond ? '' : info]);
 
-ok('8 events parsed', ev.length === 8, `got ${ev.length}`);
+ok('9 events parsed', ev.length === 9, `got ${ev.length}`);
 const meet = ev.find((e) => e.summary.startsWith('Troop Meeting'));
 ok('unfolded X-LINKS reassembled', meet.links.includes('2026_Harvest_Festival_Leader_Guide_.pdf|Bad'), meet.links);
 ok('\\, and \\; unescaped', meet.location === 'Jefferson Elementary; 100 Princetown Rd, Schenectady' && meet.summary.endsWith("O'Brien, Jr."), meet.location);
@@ -112,6 +117,10 @@ const trip = ev.find((e) => e.summary === 'Weekend Trip');
 const tt = api.formatEventTime(trip);
 ok('timed multi-day names both days', /^\w{3} 5:00 PM – \w{3} 12:00 PM$/.test(tt), tt);
 ok('same-day time range', api.formatEventTime(meet) === '6:15 PM – 7:45 PM', api.formatEventTime(meet));
+const open = ev.find((e) => e.summary === 'Departure Only Trip');
+ok('departure-only trip: no made-up end time', /^\w{3} 5:00 PM – \w{3}$/.test(api.formatEventTime(open)), api.formatEventTime(open));
+ok('departure-only trip ends on its last day', open.openEnd && open.end.toDateString() === addD(10).toDateString(), String(open.end));
+ok('trip with a real return time keeps it', !trip.openEnd, '');
 ok('chip shows start time', /class="t">6:15<\/span> Troop Meeting/.test(grid), 'no 6:15 chip in current month grid');
 // Month navigation from the 31st must not skip a month
 api.currentDate = new Date(2026, 0, 31);
