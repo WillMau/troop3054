@@ -1,3 +1,6 @@
 .claude/
 *.docx
 *.xlsx
+
+# Roster exports and other member data never go on the public site
+*.csv
