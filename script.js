@@ -196,12 +196,12 @@
         } else {
           submitBtn.textContent = originalText;
           submitBtn.disabled = false;
-          alert('Something went wrong. Please try again or reach out on the Band app.');
+          alert('Something went wrong. Please try again, or email info@troop3054.org.');
         }
       }).catch(function () {
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
-        alert('Something went wrong. Please try again or reach out on the Band app.');
+        alert('Something went wrong. Please try again, or email info@troop3054.org.');
       });
     });
   }
