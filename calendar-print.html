@@ -69,6 +69,9 @@
       cursor: pointer;
     }
     .toolbar button:hover { background: #003366; }
+    .toolbar button.ghost { background: #fff; color: var(--navy); box-shadow: inset 0 0 0 2px var(--navy); }
+    .toolbar button.ghost:hover { background: #eef2f8; }
+    .toolbar button:disabled { opacity: 0.6; cursor: progress; }
     .toolbar button:focus-visible, .toolbar a:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
     .toolbar a { color: var(--navy); font-weight: 600; }
     .toolbar .note { color: var(--soft); }
@@ -192,8 +195,9 @@
 <body>
   <div class="toolbar">
     <button type="button" id="print-btn">Print this calendar</button>
+    <button type="button" id="pdf-btn" class="ghost">Download PDF</button>
     <a href="calendar.html">Back to the calendar</a>
-    <span class="note">Letter paper, about two pages. It's built from the live calendar, so it's current when you print it.</span>
+    <span class="note" id="pdf-note">Letter paper, about two pages. It's built from the live calendar, so it's current when you print or download it.</span>
   </div>
 
   <main class="sheet">
@@ -226,6 +230,8 @@
     </footer>
   </main>
 
+  <script src="calendar-year.js"></script>
+  <script src="calendar-pdf.js"></script>
   <script>
   // Troop 3054 print calendar: the program year (September to August) from
   // the live feed. ?year=2027 prints 2027-28.
@@ -234,9 +240,6 @@
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
   ));
-  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
   // RFC 5545 text escapes: \\ \; \, \n \N
@@ -291,90 +294,29 @@
     return parsed.sort((a, b) => a.start - b.start);
   }
 
-  // 6:15 PM, or 6:15 for the first half of a range that stays PM.
-  const clock = (d, withHalf = true) => {
-    const h = d.getHours() % 12 || 12;
-    const m = String(d.getMinutes()).padStart(2, '0');
-    return withHalf ? `${h}:${m} ${d.getHours() < 12 ? 'AM' : 'PM'}` : `${h}:${m}`;
-  };
-  const multiDay = (ev) => ev.end && startOfDay(ev.end) > startOfDay(ev.start);
-
-  // "6:15 to 7:45 PM" | "8:30 AM to 4:00 PM" | "Fri 5:00 PM to Sun 12:00 PM" |
-  // "Leaves Fri 5:00 PM" (no return time yet) | "All day"
-  function timeText(ev) {
-    if (ev.allDay) return multiDay(ev) ? '' : 'All day';
-    if (!ev.end) return clock(ev.start);
-    if (!multiDay(ev)) {
-      const sameHalf = (ev.start.getHours() < 12) === (ev.end.getHours() < 12);
-      return `${clock(ev.start, !sameHalf)} to ${clock(ev.end)}`;
+  // The year's months and rows come from calendar-year.js, shared with the PDF.
+  let model = null;
+  function renderModel(m) {
+    document.getElementById('year-label').textContent = `${m.label} Calendar`;
+    document.title = `Troop 3054 Calendar ${m.label}`;
+    document.getElementById('printed').textContent = `Printed ${m.printed} from the live troop calendar.`;
+    if (!m.months.length) {
+      return `<p class="status">Nothing is on the ${esc(m.label)} calendar yet. Check troop3054.org/calendar.html.</p>`;
     }
-    if (ev.openEnd) return `Leaves ${WD[ev.start.getDay()]} ${clock(ev.start)}`;
-    return `${WD[ev.start.getDay()]} ${clock(ev.start)} to ${WD[ev.end.getDay()]} ${clock(ev.end)}`;
+    return m.months.map((month) => `<section class="month${month.long ? ' long' : ''}"><h2>${esc(month.name)}</h2>${
+      month.rows.map((r) => `<div class="ev t-${esc(r.type)}${r.routine ? ' routine' : ''}">
+          <div class="when"><b>${esc(r.big)}</b><i>${esc(r.small)}</i></div>
+          <div class="what"><div class="title">${esc(r.title)}</div>${r.meta ? `<div class="meta">${esc(r.meta)}</div>` : ''}</div>
+        </div>`).join('')}</section>`).join('');
   }
-
-  // Jefferson is in the masthead, so it gets its short name. Elsewhere, the
-  // first part of the address, plus the next part when the first is short.
-  function placeText(loc) {
-    if (!loc) return '';
-    if (/^Jefferson Elementary/i.test(loc)) return 'Jefferson';
-    const parts = loc.split(',').map((s) => s.trim()).filter(Boolean);
-    return parts[0].length < 12 && parts[1] ? `${parts[0]}, ${parts[1]}` : parts[0];
-  }
-
-  // Date column: "14" over "Mon"; a trip shows "9–11" over "Fri–Sun".
-  function whenHtml(ev) {
-    if (!multiDay(ev)) return `<b>${ev.start.getDate()}</b><i>${WD[ev.start.getDay()]}</i>`;
-    const sameMonth = ev.end.getMonth() === ev.start.getMonth();
-    const days = sameMonth ? `${ev.start.getDate()}–${ev.end.getDate()}` : `${ev.start.getDate()}–${MON[ev.end.getMonth()]} ${ev.end.getDate()}`;
-    return `<b>${days}</b><i>${WD[ev.start.getDay()]}–${WD[ev.end.getDay()]}</i>`;
-  }
-
-  const ROUTINE = /^(troop meeting|plc meeting|committee meeting)$/i;
-
-  // The program year runs September to August; from July on, it's next year's.
-  function programYear(now, asked) {
-    const n = Number(asked);
-    if (Number.isInteger(n) && n > 2000 && n < 2100) return n;
-    return now.getMonth() >= 6 ? now.getFullYear() : now.getFullYear() - 1;
-  }
-
   function render(events, year, now) {
-    const from = new Date(year, 8, 1);
-    const to = new Date(year + 1, 8, 1);
-    const inYear = events.filter((e) => e.start >= from && e.start < to);
-    const label = `${year}–${String(year + 1).slice(2)}`;
-    document.getElementById('year-label').textContent = `${label} Calendar`;
-    document.title = `Troop 3054 Calendar ${label}`;
-    document.getElementById('printed').textContent =
-      `Printed ${now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} from the live troop calendar.`;
-    if (!inYear.length) {
-      return `<p class="status">Nothing is on the ${esc(label)} calendar yet. Check troop3054.org/calendar.html.</p>`;
-    }
-    const byMonth = new Map();
-    for (const e of inYear) {
-      const key = e.start.getFullYear() * 12 + e.start.getMonth();
-      if (!byMonth.has(key)) byMonth.set(key, []);
-      byMonth.get(key).push(e);
-    }
-    let html = '';
-    for (const [key, list] of byMonth) {
-      const name = `${MONTHS[key % 12]} ${Math.floor(key / 12)}`;
-      html += `<section class="month${list.length > 9 ? ' long' : ''}"><h2>${esc(name)}</h2>`;
-      for (const e of list) {
-        const meta = [timeText(e), placeText(e.location)].filter(Boolean).join(' · ');
-        html += `<div class="ev t-${e.type}${ROUTINE.test(e.summary.trim()) ? ' routine' : ''}">
-          <div class="when">${whenHtml(e)}</div>
-          <div class="what"><div class="title">${esc(e.summary)}</div>${meta ? `<div class="meta">${esc(meta)}</div>` : ''}</div>
-        </div>`;
-      }
-      html += '</section>';
-    }
-    return html;
+    model = CalYear.yearModel(events, year, now);
+    return renderModel(model);
   }
 
   async function load() {
     const now = new Date();
-    const year = programYear(now, new URLSearchParams(location.search).get('year'));
+    const year = CalYear.programYear(now, new URLSearchParams(location.search).get('year'));
     const box = document.getElementById('year');
     try {
       const res = await fetch(FEED + '?t=' + Date.now());
@@ -387,6 +329,22 @@
   }
 
   document.getElementById('print-btn').addEventListener('click', () => window.print());
+  const pdfBtn = document.getElementById('pdf-btn');
+  pdfBtn.addEventListener('click', async () => {
+    if (!model) return;
+    const note = document.getElementById('pdf-note');
+    pdfBtn.disabled = true;
+    pdfBtn.textContent = 'Making the PDF…';
+    try {
+      await CalPdf.download(model);
+    } catch (e) {
+      console.error('PDF failed:', e);
+      note.textContent = "The PDF didn't come together just now. Print this calendar and choose Save as PDF instead.";
+    } finally {
+      pdfBtn.disabled = false;
+      pdfBtn.textContent = 'Download PDF';
+    }
+  });
   load();
   </script>
 </body>

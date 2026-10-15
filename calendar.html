@@ -270,6 +270,19 @@
       white-space: nowrap;
     }
     .subscribe-link:hover { background: #eef3f9; }
+    /* Download PDF is a button but should look like its link neighbors, not a view toggle */
+    .view-toggle button.subscribe-link {
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 0.35rem 0.7rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--color-primary);
+    }
+    .view-toggle button.subscribe-link:hover { background: #eef3f9; }
+    .view-toggle button.subscribe-link:disabled { opacity: 0.6; cursor: progress; }
 
     /* Event Detail Modal */
     .event-modal-overlay {
@@ -677,6 +690,7 @@
               <a class="subscribe-link" href="webcal://my.troop3054.org/calendar.ics" title="Add the troop calendar to Apple Calendar or Outlook">Subscribe</a>
               <a class="subscribe-link" href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Fmy.troop3054.org%2Fcalendar.ics" target="_blank" rel="noopener noreferrer" title="Add the troop calendar to Google Calendar (works on Android)">Google Calendar</a>
               <a class="subscribe-link" href="calendar-print.html" title="The year on about two pages, ready to print">Print</a>
+              <button type="button" class="subscribe-link" id="download-pdf" title="The year as a PDF file, branded and current">Download PDF</button>
             </div>
             <p class="pack-status" id="pack-status" role="status" hidden></p>
           </div>
@@ -814,6 +828,8 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="calendar-year.js"></script>
+  <script src="calendar-pdf.js"></script>
 
   <!-- Event Modal -->
   <div class="event-modal-overlay" id="event-modal" onclick="if(event.target===this)closeModal()">
@@ -1259,6 +1275,26 @@
 
   // Init: phones get the list first (the month grid is unreadable at that width)
   if (window.matchMedia && window.matchMedia('(max-width: 480px)').matches) setView('list');
+  // Download PDF: this program year as a branded PDF, made in the browser from
+  // the events already loaded (calendar-year.js lays it out, calendar-pdf.js
+  // draws it). If that can't happen, the print page offers Save as PDF.
+  const pdfBtn = document.getElementById('download-pdf');
+  pdfBtn.addEventListener('click', async () => {
+    if (!troopEvents.length || !window.CalPdf) { location.href = 'calendar-print.html'; return; }
+    pdfBtn.disabled = true;
+    pdfBtn.textContent = 'Making the PDF…';
+    try {
+      const now = new Date();
+      await CalPdf.download(CalYear.yearModel(troopEvents, CalYear.programYear(now), now));
+    } catch (e) {
+      console.error('PDF failed:', e);
+      location.href = 'calendar-print.html';
+    } finally {
+      pdfBtn.disabled = false;
+      pdfBtn.textContent = 'Download PDF';
+    }
+  });
+
   loadEvents();
   </script>
 

@@ -1,5 +1,6 @@
-// Headless test of calendar-print.html's inline script: the program year it
-// picks, what it leaves out, escaping, and how times, places and trips read.
+// Headless test of calendar-print.html's inline script and calendar-year.js
+// (shared with the PDF download): the program year it picks, what it leaves
+// out, escaping, and how times, places and trips read.
 import fs from 'fs';
 import vm from 'vm';
 
@@ -47,8 +48,10 @@ const sandbox = {
   fetch: async () => ({ ok: true, text: async () => fixture }),
 };
 vm.createContext(sandbox);
+vm.runInContext(fs.readFileSync(new URL('../calendar-year.js', import.meta.url), 'utf8'), sandbox);
 vm.runInContext(js, sandbox);
-vm.runInContext('globalThis.__api = { parseICS, render, programYear, timeText, placeText, whenHtml };', sandbox);
+vm.runInContext(`globalThis.__api = { parseICS, render, programYear: CalYear.programYear, yearModel: CalYear.yearModel,
+  timeText: CalYear.timeText, placeText: CalYear.placeText, whenParts: CalYear.whenParts };`, sandbox);
 await new Promise((r) => setTimeout(r, 30));
 const api = sandbox.__api;
 
@@ -83,9 +86,20 @@ ok('all-day event', api.timeText(by('Blue and Gold')) === 'All day', api.timeTex
 ok('Jefferson reads Jefferson', api.placeText(by('Troop Meeting').location) === 'Jefferson', '');
 ok('short first part keeps the next', api.placeText(by('Harvest Fest').location) === 'Gelder Hall, Camp Wakpominee', api.placeText(by('Harvest Fest').location));
 ok('long first part stands alone', api.placeText('Regional Food Bank, 965 Albany Shaker Rd, Latham, NY 12110') === 'Regional Food Bank', '');
-ok('trip date column', api.whenHtml(by('Cryptid')) === '<b>9–11</b><i>Fri–Sun</i>', api.whenHtml(by('Cryptid')));
-ok('trip across months', api.whenHtml(by('Spring Trip')) === '<b>31–Apr 2</b><i>Wed–Fri</i>', api.whenHtml(by('Spring Trip')));
-ok('one day', api.whenHtml(by('Troop Meeting')) === '<b>14</b><i>Mon</i>', api.whenHtml(by('Troop Meeting')));
+const when = (s) => JSON.stringify(api.whenParts(by(s)));
+ok('trip date column', when('Cryptid') === '{"big":"9–11","small":"Fri–Sun"}', when('Cryptid'));
+ok('trip across months', when('Spring Trip') === '{"big":"31–Apr 2","small":"Wed–Fri"}', when('Spring Trip'));
+ok('one day', when('Troop Meeting') === '{"big":"14","small":"Mon"}', when('Troop Meeting'));
+ok('date column in the page', out.includes('<b>9–11</b><i>Fri–Sun</i>'), '');
+
+// The model the PDF draws from
+const model = api.yearModel(evs, 2026, new Date(2026, 9, 15));
+ok('model: label and printed date', model.label === '2026–27' && model.printed === 'October 15, 2026', `${model.label} / ${model.printed}`);
+ok('model: four months', model.months.map((x) => x.name).join('|') === 'September 2026|October 2026|November 2026|March 2027',
+  model.months.map((x) => x.name).join('|'));
+const camp = model.months[1].rows.find((r) => r.title === 'Cryptid Camporee');
+ok('model: a row carries its meta', camp.meta === 'Leaves Fri 5:00 PM · Camp Wakpominee' && camp.type === 'camping', JSON.stringify(camp));
+ok('model: titles stay raw for the PDF', model.months[1].rows[0].title.includes('<img'), '');
 ok('an empty year says so', api.render(evs, 2030, new Date(2030, 9, 1)).includes('Nothing is on the 2030–31 calendar yet'), '');
 ok('the page loads the feed on its own', els.year.innerHTML.includes('class="month'), els.year.innerHTML.slice(0, 120));
 
