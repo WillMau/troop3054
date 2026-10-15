@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5V1GSC01VW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5V1GSC01VW');
+    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troop 3054 Calendar</title>
+  <meta name="description" content="The Troop 3054 program year on two printable pages: meetings, campouts, service projects and special events, straight from the live troop calendar.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://www.troop3054.org/calendar.html">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="images/troop-logo-96.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* The troop's brand colors (style.css), set for paper: solid inks, no tints. */
+    :root {
+      --navy: #003F87;
+      --red: #CE1126;
+      --tan: #AD9D7B;
+      --tan-line: #D6CEBD;
+      --ink: #232528;
+      --soft: #5d5f63;
+      --paper: #FFFFFF;
+      --desk: #E9E5DC;
+      --t-meeting: #003F87;
+      --t-camping: #2E5D34;
+      --t-service: #8C7A50;
+      --t-committee: #6a4c93;
+      --t-special: #CE1126;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--desk);
+      color: var(--ink);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 10pt;
+      line-height: 1.35;
+      padding: 24px 16px 48px;
+    }
+    @page { size: letter portrait; margin: 0.45in 0.5in 0.5in; }
+
+    /* Screen only: what to do with this page */
+    .toolbar {
+      max-width: 8.5in;
+      margin: 0 auto 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 16px;
+      font-size: 14px;
+    }
+    .toolbar button {
+      font: 700 14px 'Montserrat', sans-serif;
+      background: var(--navy);
+      color: #fff;
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 18px;
+      cursor: pointer;
+    }
+    .toolbar button:hover { background: #003366; }
+    .toolbar button:focus-visible, .toolbar a:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+    .toolbar a { color: var(--navy); font-weight: 600; }
+    .toolbar .note { color: var(--soft); }
+
+    .sheet {
+      max-width: 8.5in;
+      margin: 0 auto;
+      background: var(--paper);
+      padding: 0.45in 0.5in 0.5in;
+      box-shadow: 0 4px 24px rgba(35, 37, 40, 0.14);
+    }
+
+    /* Masthead: the patch, the name, and how to find the live calendar */
+    .mast {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--navy);
+    }
+    .mast img.patch { width: 66px; height: 66px; display: block; }
+    .mast h1 {
+      font: 800 25pt/1 'Montserrat', sans-serif;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+    }
+    .mast h1 span { display: block; margin-top: 3px; font-size: 15pt; color: var(--red); font-weight: 700; letter-spacing: 0; }
+    .mast .meets { margin-top: 5px; font-size: 9pt; color: var(--soft); }
+    .mast .meets strong { color: var(--ink); font-weight: 600; }
+    .live { display: flex; align-items: center; gap: 8px; text-align: right; font-size: 7.5pt; color: var(--soft); line-height: 1.3; }
+    .live strong { display: block; color: var(--navy); font: 700 8pt 'Montserrat', sans-serif; }
+    .live img { width: 0.72in; height: 0.72in; display: block; }
+
+    .rule-tan { height: 3px; background: var(--tan); margin-top: 2px; }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+      margin: 10px 0 4px;
+      font-size: 8.5pt;
+      color: var(--soft);
+    }
+    .legend span::before {
+      content: '';
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+      margin-right: 5px;
+      vertical-align: -1px;
+      background: var(--c);
+    }
+
+    /* The year, month by month, in two columns */
+    .year { columns: 2; column-gap: 0.32in; margin-top: 8px; }
+    .month { break-inside: avoid-column; margin-bottom: 10px; }
+    .month.long { break-inside: auto; }
+    .month h2 {
+      font: 800 11pt 'Montserrat', sans-serif;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding-bottom: 3px;
+      border-bottom: 1px solid var(--tan-line);
+      margin-bottom: 2px;
+      break-after: avoid;
+    }
+    .ev {
+      display: grid;
+      grid-template-columns: 0.62in minmax(0, 1fr);
+      gap: 8px;
+      padding: 4px 0;
+      border-bottom: 1px solid #efebe3;
+      break-inside: avoid;
+    }
+    .ev:last-child { border-bottom: 0; }
+    .ev .when { font-family: 'Montserrat', sans-serif; line-height: 1.1; padding-top: 1px; }
+    .ev .when b { display: block; font-size: 11.5pt; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+    .ev .when i { display: block; font-style: normal; font-size: 7pt; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--soft); }
+    .ev .what { border-left: 3px solid var(--c); padding-left: 7px; min-width: 0; }
+    .ev .title { font-weight: 600; font-size: 9.5pt; }
+    .ev.routine .title { font-weight: 400; }
+    .ev .meta { font-size: 8pt; color: var(--soft); }
+
+    .foot {
+      margin-top: 10px;
+      padding-top: 6px;
+      border-top: 1px solid var(--tan-line);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 4px 16px;
+      font-size: 7.5pt;
+      color: var(--soft);
+    }
+    .status { padding: 24px 0; color: var(--soft); font-size: 11pt; }
+
+    .t-meeting { --c: var(--t-meeting); }
+    .t-camping { --c: var(--t-camping); }
+    .t-service { --c: var(--t-service); }
+    .t-committee { --c: var(--t-committee); }
+    .t-special { --c: var(--t-special); }
+
+    @media (max-width: 640px) {
+      .sheet { padding: 20px 16px; }
+      .mast { grid-template-columns: auto minmax(0, 1fr); }
+      .live { grid-column: 1 / -1; justify-content: flex-end; }
+      .year { columns: 1; }
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .toolbar { display: none; }
+      .sheet { max-width: none; padding: 0; box-shadow: none; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button type="button" id="print-btn">Print this calendar</button>
+    <a href="calendar.html">Back to the calendar</a>
+    <span class="note">Letter paper, about two pages. It's built from the live calendar, so it's current when you print it.</span>
+  </div>
+
+  <main class="sheet">
+    <header class="mast">
+      <img class="patch" src="images/troop-logo-512.png" alt="Troop 3054 patch" width="66" height="66">
+      <div>
+        <h1>Troop 3054 <span id="year-label">Calendar</span></h1>
+        <p class="meets"><strong>Troop meetings:</strong> most Mondays, 6:15 to 7:45 PM, Jefferson Elementary School, 100 Princetown Rd, Schenectady</p>
+      </div>
+      <div class="live">
+        <p><strong>Always current online</strong>troop3054.org/calendar.html<br>Scan to see it or add it<br>to your phone's calendar</p>
+        <img src="images/qr-calendar.svg" alt="QR code for troop3054.org/calendar.html">
+      </div>
+    </header>
+    <div class="rule-tan" aria-hidden="true"></div>
+
+    <div class="legend" aria-label="Event types">
+      <span class="t-meeting">Meeting</span>
+      <span class="t-camping">Camping</span>
+      <span class="t-service">Service</span>
+      <span class="t-committee">Committee</span>
+      <span class="t-special">Special event</span>
+    </div>
+
+    <div class="year" id="year"><p class="status">Loading the calendar…</p></div>
+
+    <footer class="foot">
+      <span id="printed"></span>
+      <span>Dates can change. Check troop3054.org/calendar.html before you go.</span>
+    </footer>
+  </main>
+
+  <script>
+  // Troop 3054 print calendar: the program year (September to August) from
+  // the live feed. ?year=2027 prints 2027-28.
+  // The parser follows calendar.html's; keep the two in step when the feed changes.
+  const FEED = 'https://my.troop3054.org/calendar.ics';
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+  // RFC 5545 text escapes: \\ \; \, \n \N
+  const unesc = (s) => s.replace(/\\([\\;,nN])/g, (m, c) => (c === 'n' || c === 'N' ? '\n' : c));
+  const CAT_TYPE = { meeting: 'meeting', committee: 'committee', campout: 'camping', service: 'service', other: 'special' };
+  function typeFor(cat, summary) {
+    if (CAT_TYPE[cat]) return CAT_TYPE[cat];
+    const s = summary.toLowerCase();
+    if (s.includes('meeting')) return 'meeting';
+    if (s.includes('camp') || s.includes('hike') || s.includes('klondike') || s.includes('derby')) return 'camping';
+    if (s.includes('food bank') || s.includes('service') || s.includes('cleanup')) return 'service';
+    return 'special';
+  }
+
+  function parseICSDate(str) {
+    const y = parseInt(str.substr(0, 4));
+    const m = parseInt(str.substr(4, 2)) - 1;
+    const d = parseInt(str.substr(6, 2));
+    if (str.length === 8) return new Date(y, m, d);
+    const h = parseInt(str.substr(9, 2));
+    const min = parseInt(str.substr(11, 2));
+    return /Z$/.test(str) ? new Date(Date.UTC(y, m, d, h, min)) : new Date(y, m, d, h, min);
+  }
+
+  function parseICS(text) {
+    const parsed = [];
+    const blocks = text.replace(/\r?\n[ \t]/g, '').split('BEGIN:VEVENT');
+    for (let i = 1; i < blocks.length; i++) {
+      const block = blocks[i].split('END:VEVENT')[0];
+      const get = (key) => {
+        const match = block.match(new RegExp('^' + key + '(?:;[^:\\r\\n]*)?:(.+)$', 'm'));
+        return match ? unesc(match[1].trim()) : '';
+      };
+      const dtstart = get('DTSTART');
+      if (!dtstart) continue;
+      const dtend = get('DTEND');
+      const allDay = /^\d{8}$/.test(dtstart);
+      const start = parseICSDate(dtstart);
+      let end = dtend ? parseICSDate(dtend) : null;
+      // All-day DTEND is exclusive: pull back one day.
+      if (allDay && end) end = new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1);
+      // A timed trip ending at midnight has a departure time and no return time yet.
+      let openEnd = false;
+      if (!allDay && end && end.getHours() === 0 && end.getMinutes() === 0) {
+        const lastDay = new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1);
+        if (lastDay > startOfDay(start)) { end = lastDay; openEnd = true; }
+      }
+      const summary = get('SUMMARY');
+      const cat = get('CATEGORIES').toLowerCase();
+      parsed.push({ summary, location: get('LOCATION'), start, end, allDay, openEnd, type: typeFor(cat, summary) });
+    }
+    return parsed.sort((a, b) => a.start - b.start);
+  }
+
+  // 6:15 PM, or 6:15 for the first half of a range that stays PM.
+  const clock = (d, withHalf = true) => {
+    const h = d.getHours() % 12 || 12;
+    const m = String(d.getMinutes()).padStart(2, '0');
+    return withHalf ? `${h}:${m} ${d.getHours() < 12 ? 'AM' : 'PM'}` : `${h}:${m}`;
+  };
+  const multiDay = (ev) => ev.end && startOfDay(ev.end) > startOfDay(ev.start);
+
+  // "6:15 to 7:45 PM" | "8:30 AM to 4:00 PM" | "Fri 5:00 PM to Sun 12:00 PM" |
+  // "Leaves Fri 5:00 PM" (no return time yet) | "All day"
+  function timeText(ev) {
+    if (ev.allDay) return multiDay(ev) ? '' : 'All day';
+    if (!ev.end) return clock(ev.start);
+    if (!multiDay(ev)) {
+      const sameHalf = (ev.start.getHours() < 12) === (ev.end.getHours() < 12);
+      return `${clock(ev.start, !sameHalf)} to ${clock(ev.end)}`;
+    }
+    if (ev.openEnd) return `Leaves ${WD[ev.start.getDay()]} ${clock(ev.start)}`;
+    return `${WD[ev.start.getDay()]} ${clock(ev.start)} to ${WD[ev.end.getDay()]} ${clock(ev.end)}`;
+  }
+
+  // Jefferson is in the masthead, so it gets its short name. Elsewhere, the
+  // first part of the address, plus the next part when the first is short.
+  function placeText(loc) {
+    if (!loc) return '';
+    if (/^Jefferson Elementary/i.test(loc)) return 'Jefferson';
+    const parts = loc.split(',').map((s) => s.trim()).filter(Boolean);
+    return parts[0].length < 12 && parts[1] ? `${parts[0]}, ${parts[1]}` : parts[0];
+  }
+
+  // Date column: "14" over "Mon"; a trip shows "9–11" over "Fri–Sun".
+  function whenHtml(ev) {
+    if (!multiDay(ev)) return `<b>${ev.start.getDate()}</b><i>${WD[ev.start.getDay()]}</i>`;
+    const sameMonth = ev.end.getMonth() === ev.start.getMonth();
+    const days = sameMonth ? `${ev.start.getDate()}–${ev.end.getDate()}` : `${ev.start.getDate()}–${MON[ev.end.getMonth()]} ${ev.end.getDate()}`;
+    return `<b>${days}</b><i>${WD[ev.start.getDay()]}–${WD[ev.end.getDay()]}</i>`;
+  }
+
+  const ROUTINE = /^(troop meeting|plc meeting|committee meeting)$/i;
+
+  // The program year runs September to August; from July on, it's next year's.
+  function programYear(now, asked) {
+    const n = Number(asked);
+    if (Number.isInteger(n) && n > 2000 && n < 2100) return n;
+    return now.getMonth() >= 6 ? now.getFullYear() : now.getFullYear() - 1;
+  }
+
+  function render(events, year, now) {
+    const from = new Date(year, 8, 1);
+    const to = new Date(year + 1, 8, 1);
+    const inYear = events.filter((e) => e.start >= from && e.start < to);
+    const label = `${year}–${String(year + 1).slice(2)}`;
+    document.getElementById('year-label').textContent = `${label} Calendar`;
+    document.title = `Troop 3054 Calendar ${label}`;
+    document.getElementById('printed').textContent =
+      `Printed ${now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} from the live troop calendar.`;
+    if (!inYear.length) {
+      return `<p class="status">Nothing is on the ${esc(label)} calendar yet. Check troop3054.org/calendar.html.</p>`;
+    }
+    const byMonth = new Map();
+    for (const e of inYear) {
+      const key = e.start.getFullYear() * 12 + e.start.getMonth();
+      if (!byMonth.has(key)) byMonth.set(key, []);
+      byMonth.get(key).push(e);
+    }
+    let html = '';
+    for (const [key, list] of byMonth) {
+      const name = `${MONTHS[key % 12]} ${Math.floor(key / 12)}`;
+      html += `<section class="month${list.length > 9 ? ' long' : ''}"><h2>${esc(name)}</h2>`;
+      for (const e of list) {
+        const meta = [timeText(e), placeText(e.location)].filter(Boolean).join(' · ');
+        html += `<div class="ev t-${e.type}${ROUTINE.test(e.summary.trim()) ? ' routine' : ''}">
+          <div class="when">${whenHtml(e)}</div>
+          <div class="what"><div class="title">${esc(e.summary)}</div>${meta ? `<div class="meta">${esc(meta)}</div>` : ''}</div>
+        </div>`;
+      }
+      html += '</section>';
+    }
+    return html;
+  }
+
+  async function load() {
+    const now = new Date();
+    const year = programYear(now, new URLSearchParams(location.search).get('year'));
+    const box = document.getElementById('year');
+    try {
+      const res = await fetch(FEED + '?t=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      box.innerHTML = render(parseICS(await res.text()), year, now);
+    } catch (e) {
+      console.error('Failed to load calendar:', e);
+      box.innerHTML = '<p class="status">The calendar didn\'t load just now. Try again in a few minutes, or see troop3054.org/calendar.html.</p>';
+    }
+  }
+
+  document.getElementById('print-btn').addEventListener('click', () => window.print());
+  load();
+  </script>
+</body>
+</html>
