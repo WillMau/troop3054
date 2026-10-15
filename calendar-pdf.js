@@ -3,9 +3,14 @@
 // the troop's colors and fonts, and the year in two columns on letter pages.
 // pdf-lib, its font kit and the fonts load only when someone asks for the PDF.
 (function (root) {
+  // Pinned versions with integrity hashes: if a CDN ever served a different
+  // file, the browser refuses to run it (and the print page's Save as PDF
+  // still works).
   const LIBS = [
-    ['PDFLib', 'https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js'],
-    ['fontkit', 'https://cdn.jsdelivr.net/npm/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js'],
+    ['PDFLib', 'https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js',
+      'sha384-weMABwrltA6jWR8DDe9Jp5blk+tZQh7ugpCsF3JwSA53WZM9/14PjS5LAJNHNjAI'],
+    ['fontkit', 'https://cdn.jsdelivr.net/npm/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js',
+      'sha384-2p6U+1mmqF10USehFeRiyG2ESG9FwIqN+jxULn5w9jjQIihSn9Pt13dVCn/Hawjn'],
   ];
   // Montserrat and Open Sans, under the SIL Open Font License (fonts/OFL.txt).
   const FILES = [
@@ -27,9 +32,11 @@
   const GAP = 23, COL = (W - L - R - GAP) / 2;
   const DATE_W = 50.6, BAR = 2.25, TEXT_X = DATE_W + BAR + 5.25, TEXT_W = COL - TEXT_X;
 
-  const loadScript = (name, src) => (root[name] ? Promise.resolve() : new Promise((resolve, reject) => {
+  const loadScript = (name, src, integrity) => (root[name] ? Promise.resolve() : new Promise((resolve, reject) => {
     const s = document.createElement('script');
     s.src = src;
+    s.integrity = integrity;
+    s.crossOrigin = 'anonymous';
     s.onload = resolve;
     s.onerror = () => reject(new Error('Could not load ' + src));
     document.head.appendChild(s);
@@ -41,7 +48,7 @@
   };
 
   async function build(model) {
-    for (const [name, src] of LIBS) await loadScript(name, src);
+    for (const [name, src, integrity] of LIBS) await loadScript(name, src, integrity);
     const { PDFDocument, rgb } = root.PDFLib;
     const color = {};
     for (const [k, hex] of Object.entries(HEX)) {
