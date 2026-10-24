@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Rotterdam Scouts Food Drive - Drop-Off Poster</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  @page { size: 8.5in 11in; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { width: 8.5in; height: 11in; padding: 0.4in; display: flex; flex-direction: column; background: #fff; color: #232528;
+    font-family: 'Open Sans', Arial, sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .hero { position: relative; background: #003f87; color: #fff; border-radius: 0.2in; padding: 0.34in 0.4in 0.5in; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; right: -0.7in; top: -0.9in; width: 3.6in; height: 3.6in; border-radius: 50%; background: rgba(255,255,255,0.06); }
+  .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 0.09in; background: #ad9d7b; }
+  .eyebrow { display: inline-block; border: 1.5px solid #c4b596; border-radius: 20pt; padding: 3pt 11pt;
+    font: 700 9pt 'Montserrat', sans-serif; letter-spacing: 2.6pt; color: #e3d5b2; }
+  h1 { font: 800 34pt/1.02 'Montserrat', sans-serif; margin-top: 0.14in; width: 4.6in; position: relative; z-index: 1; }
+  h1 span { color: #f2c94c; }
+  .when { display: flex; align-items: center; gap: 0.2in; margin-top: 0.24in; position: relative; z-index: 1; }
+  .cal { width: 1.08in; background: #fff; border-radius: 0.1in; overflow: hidden; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,.3); }
+  .cal .m { background: #ce1126; color: #fff; font: 800 12pt 'Montserrat', sans-serif; letter-spacing: 2pt; padding: 3pt 0; }
+  .cal .d { color: #003f87; font: 800 36pt/1 'Montserrat', sans-serif; padding-top: 4pt; }
+  .cal .w { color: #003f87; font: 700 8pt 'Montserrat', sans-serif; letter-spacing: 1.6pt; padding: 3pt 0 6pt; }
+  .whentext b { display: block; font: 800 22pt 'Montserrat', sans-serif; }
+  .whentext span { display: block; color: #e3d5b2; font: 600 13pt 'Open Sans', sans-serif; margin-top: 3pt; line-height: 1.3; }
+  .bag { position: absolute; right: 0.3in; bottom: 0.3in; width: 2.3in; height: 2.3in; z-index: 1; }
+  .lead { font-size: 13pt; line-height: 1.45; margin-top: 0.26in; }
+  .lead b { color: #003f87; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.16in; margin-top: 0.24in; }
+  .tile { border: 1px solid #e3dccd; border-radius: 0.12in; padding: 0.16in 0.16in 0.14in; background: #fff; }
+  .tile.main { background: #fffbef; border-color: #f2d27a; }
+  .tile .k { font: 800 8.5pt 'Montserrat', sans-serif; letter-spacing: 1.5pt; color: #a10e1f; text-transform: uppercase; }
+  .tile .t { font: 800 13pt/1.2 'Montserrat', sans-serif; color: #003f87; margin-top: 4pt; }
+  .tile p { font-size: 10pt; line-height: 1.4; margin-top: 4pt; color: #3a3c40; }
+  h2 { font: 800 11pt 'Montserrat', sans-serif; letter-spacing: 2pt; color: #003f87; text-transform: uppercase;
+    border-bottom: 2px solid #ad9d7b; padding-bottom: 4pt; margin-top: 0.26in; }
+  .foods { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.1in; margin-top: 0.14in; text-align: center; }
+  .food img { width: 0.8in; height: 0.8in; display: block; margin: 0 auto; }
+  .food div { font: 700 9pt/1.2 'Montserrat', sans-serif; color: #003f87; margin-top: 4pt; }
+  .small { font-size: 10pt; color: #5d5f63; margin-top: 0.1in; text-align: center; }
+  .goes { margin-top: auto; background: #f8f5ee; border-left: 5px solid #ad9d7b; border-radius: 0.08in; padding: 0.14in 0.2in; font-size: 11.5pt; line-height: 1.45; }
+  .goes b { color: #003f87; font-family: 'Montserrat', sans-serif; }
+  .foot { display: flex; align-items: center; gap: 0.2in; margin-top: 0.2in; padding-top: 0.16in; border-top: 1px solid #e3dccd; }
+  .foot img { width: 1.05in; height: 1.05in; flex: none; }
+  .foot .url { font: 800 16pt 'Montserrat', sans-serif; color: #003f87; }
+  .foot .who { font-size: 10pt; color: #5d5f63; margin-top: 3pt; line-height: 1.4; }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="eyebrow">ROTTERDAM SCOUTS FOOD DRIVE</div>
+    <h1>Drop off food for <span>our neighbors</span></h1>
+    <div class="when">
+      <div class="cal"><div class="m">NOV</div><div class="d">15</div><div class="w">SUNDAY</div></div>
+      <div class="whentext"><b>10&nbsp;AM to 1&nbsp;PM</b><span>Rotterdam Community Center<br>705 Curry Rd, Rotterdam</span></div>
+    </div>
+    <img class="bag" src="../bag.png" alt="">
+  </header>
+
+  <p class="lead">Scouts from <b>Troop 3054</b> and <b>Pack 3054</b> will be at the Rotterdam Community Center to take your donation and sort it, ready for the RCC's pantry shelves. Bring a bag, a box, or a single can. It all helps.</p>
+
+  <div class="tiles">
+    <div class="tile main"><div class="k">Drop-off day</div><div class="t">Sun 11/15<br>10&nbsp;AM to 1&nbsp;PM</div><p>Pull up at the RCC and Scouts will take it from there.</p></div>
+    <div class="tile"><div class="k">Any weekday</div><div class="t">Mon to Fri<br>9&nbsp;AM to 5&nbsp;PM</div><p>Can't make Sunday? The RCC takes drop-offs whenever it's open.</p></div>
+    <div class="tile"><div class="k">Got our flier?</div><div class="t">End of your driveway</div><p>Leave your bag out by 9&nbsp;AM on 11/15 and Scouts will pick it up.</p></div>
+  </div>
+
+  <h2>What to give</h2>
+  <div class="foods">
+    <div class="food"><img src="../../email/food-drive-2026/food-pasta.png" alt=""><div>Pasta &amp; rice</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-beans.png" alt=""><div>Canned beans</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-fruit.png" alt=""><div>Canned fruit &amp; veggies</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-soup.png" alt=""><div>Soups</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-pb.png" alt=""><div>Peanut butter</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-cereal.png" alt=""><div>Cereal &amp; oatmeal</div></div>
+  </div>
+  <p class="small">Unopened and in date, please. Any shelf-stable food helps.</p>
+
+  <div class="goes"><b>Every can stays in our community.</b> The Rotterdam Community Center's nutrition programs serve more than 1,000 guests a month, and the holidays are a critical time of year.</div>
+
+  <footer class="foot">
+    <img src="../qr.png" alt="QR code for troop3054.org/food-drive">
+    <div><div class="url">troop3054.org/food-drive</div>
+      <div class="who">Troop 3054 and Pack 3054, Scouting America, with the Rotterdam Community Center.<br>Part of Scouting America's National Day of Service.</div></div>
+  </footer>
+</body>
+</html>
