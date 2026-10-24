@@ -50,7 +50,7 @@
     .fd-way .btn { margin-top: 1.25rem; }
     .fd-note { max-width: 960px; margin: 1.5rem auto 0; padding: 1rem 1.25rem; background: var(--color-white); border-left: 4px solid var(--color-secondary); border-radius: var(--radius-sm); }
     .fd-foods { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1.25rem; max-width: 900px; margin: 0 auto; text-align: center; }
-    .fd-foods img { display: block; width: 80px; height: 80px; margin: 0 auto 0.5rem; }
+    .fd-foods img { display: block; width: 96px; height: 96px; margin: 0 auto 0.5rem; }
     .fd-foods span { font-family: var(--font-heading); font-weight: 700; font-size: 0.9rem; color: var(--color-primary); }
     .fd-center { text-align: center; margin-top: 1.25rem; }
     .fd-share { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
@@ -73,6 +73,57 @@
     .fd-table th, .fd-table td { text-align: left; padding: 0.7rem 0.85rem; border-bottom: 1px solid var(--color-border); vertical-align: top; font-size: 0.95rem; }
     .fd-table th { font-family: var(--font-heading); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-primary); }
     .fd-table td:first-child { white-space: nowrap; font-weight: 600; }
+    /* Campaign look: the same navy, gold and grocery bag as the poster and fliers */
+    .fd-hero { position: relative; overflow: hidden; color: #fff; padding: 10rem 0 4.5rem; border-bottom: 6px solid var(--color-secondary);
+      background: radial-gradient(circle at 85% 15%, #1d4f9a 0%, #003f87 45%, #002a5c 100%); }
+    .fd-hero-inner { position: relative; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 2rem; align-items: center; }
+    .fd-pill { display: inline-block; border: 2px solid #c4b596; color: #e3d5b2; border-radius: 999px; padding: 0.35rem 1rem;
+      font-family: var(--font-heading); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; }
+    .fd-hero h1 { color: #fff; font-size: clamp(2.3rem, 1.4rem + 3.6vw, 4rem); line-height: 1.04; margin: 1rem 0 0; text-wrap: balance; }
+    .fd-hero h1 span { color: #f2c94c; }
+    .fd-when-row { display: flex; align-items: center; gap: 1.1rem; margin-top: 1.75rem; }
+    .fd-cal { flex: none; width: 96px; background: #fff; border-radius: 12px; overflow: hidden; text-align: center; box-shadow: 0 8px 22px rgba(0,0,0,.35); display: flex; flex-direction: column; }
+    .fd-cal .m { background: var(--color-accent); color: #fff; font-family: var(--font-heading); font-weight: 800; font-size: 0.95rem; letter-spacing: 0.15em; padding: 0.25rem 0; }
+    .fd-cal .d { color: var(--color-primary); font-family: var(--font-heading); font-weight: 800; font-size: 2.6rem; line-height: 1; padding-top: 0.35rem; }
+    .fd-cal .w { color: var(--color-primary); font-family: var(--font-heading); font-weight: 700; font-size: 0.62rem; letter-spacing: 0.18em; padding: 0.25rem 0 0.55rem; }
+    .fd-when-text b { display: block; font-family: var(--font-heading); font-weight: 800; font-size: 1.25rem; }
+    .fd-when-text span { display: block; color: #e3d5b2; margin-top: 0.25rem; }
+    .fd-hero-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+    .fd-hero-art img { display: block; width: 100%; max-width: 360px; height: auto; margin-left: auto; filter: drop-shadow(0 18px 30px rgba(0,0,0,.35)); }
+    .fd-hero-sm { padding: 9.5rem 0 3.5rem; }
+    .fd-hero-sub { color: #e3d5b2; max-width: 46rem; margin-top: 1rem; font-size: 1.05rem; line-height: 1.6; }
+    .fd-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1040px; margin: 0 auto; }
+    .fd-tile { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.75rem 1.5rem; box-shadow: var(--shadow-sm); }
+    .fd-tile img { width: 88px; height: 88px; display: block; margin-bottom: 0.9rem; }
+    .fd-tile-main { background: #fffbef; border: 2px solid #f2d27a; }
+    .fd-tile h3 { color: var(--color-primary); font-size: 1.2rem; line-height: 1.3; margin: 0.2rem 0 0.6rem; }
+    .fd-tile p:last-child { font-size: 0.95rem; }
+    .fd-goes { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: 2rem; max-width: 1000px; margin: 0 auto; align-items: start; }
+    .fd-stat { background: var(--color-primary); color: #fff; border-radius: var(--radius-lg); padding: 2rem 1.5rem; text-align: center; }
+    .fd-stat b { display: block; font-family: var(--font-heading); font-weight: 800; font-size: 3.4rem; line-height: 1; color: #f2c94c; }
+    .fd-stat span { display: block; margin-top: 0.75rem; color: #e3d5b2; }
+    .fd-goes-text p + p { margin-top: 1rem; }
+    .fd-ndos { display: flex; gap: 1rem; align-items: center; margin-top: 1.25rem; padding: 1rem; background: var(--color-white); border-radius: var(--radius-md); border: 1px solid var(--color-border); }
+    .fd-ndos img { flex: none; width: 88px; height: 88px; }
+    .fd-ndos p { margin: 0; font-size: 0.95rem; }
+    .fd-map { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 1.5rem; max-width: 1040px; margin: 0 auto; align-items: center; }
+    .fd-map iframe { display: block; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+    .fd-map-side p + p { margin-top: 1rem; }
+    .fd-map-side .btn { margin-top: 1.25rem; }
+    .fd-downloads { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; max-width: 1040px; margin: 0 auto; }
+    .fd-download { display: flex; flex-direction: column; background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1rem;
+      color: var(--color-text); text-decoration: none; box-shadow: var(--shadow-sm); transition: transform var(--transition), box-shadow var(--transition); }
+    .fd-download:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .fd-download img { width: 100%; height: 220px; object-fit: contain; background: var(--color-bg-light); border-radius: var(--radius-sm); margin-bottom: 0.9rem; }
+    .fd-download b { font-family: var(--font-heading); color: var(--color-primary); }
+    .fd-download span { font-size: 0.9rem; margin-top: 0.25rem; }
+    .fd-partners { text-align: center; margin-top: 2rem; font-size: 0.95rem; }
+    @media (max-width: 760px) {
+      .fd-hero-inner, .fd-goes, .fd-map { grid-template-columns: minmax(0, 1fr); }
+      .fd-hero-art { order: -1; }
+      .fd-hero-art img { max-width: 170px; margin: 0 auto; }
+    }
+    @media (prefers-reduced-motion: reduce) { .fd-download, .fd-download:hover { transition: none; transform: none; } }
   </style>
   <script type="application/ld+json">
 {
@@ -195,43 +246,53 @@
 
   <main id="main-content">
 
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container">
-        <h1 class="fade-in">Rotterdam Scouts Food Drive</h1>
-        <p class="fade-in">Sunday, November 15. Drop off food at the Rotterdam Community Center, or leave a bag at the end of your driveway if you got one of our fliers. Every can stays in our community.</p>
-      </div>
-      <div class="wave-divider">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,40 C360,80 720,0 1440,40 L1440,60 L0,60 Z" fill="#F5F2EC"/>
-        </svg>
+    <!-- Campaign hero: the same look as the poster and fliers -->
+    <section class="fd-hero" aria-labelledby="fd-title">
+      <div class="container fd-hero-inner">
+        <div class="fd-hero-text">
+          <span class="fd-pill">Rotterdam Scouts Food Drive</span>
+          <h1 id="fd-title">Drop off food for <span>our neighbors</span></h1>
+          <div class="fd-when-row">
+            <div class="fd-cal" aria-hidden="true"><span class="m">NOV</span><span class="d">15</span><span class="w">SUNDAY</span></div>
+            <div class="fd-when-text">
+              <b>Sunday, November 15</b><b>10&nbsp;AM to 1&nbsp;PM</b>
+              <span>Rotterdam Community Center, 705 Curry Rd, Rotterdam</span>
+            </div>
+          </div>
+          <div class="fd-hero-cta">
+            <a class="btn btn-primary" href="#directions">Get directions</a>
+            <a class="btn btn-secondary" href="#ways">All the ways to give</a>
+          </div>
+        </div>
+        <div class="fd-hero-art"><img src="bag.png" alt="" width="360" height="360"></div>
       </div>
     </section>
 
-    <!-- Two ways to give -->
-    <section class="section">
+    <!-- Ways to give -->
+    <section class="section" id="ways">
       <div class="container">
         <div class="section-header fade-in">
-          <h2>Two Ways to Give</h2>
-          <p class="section-subtitle">Pick whichever is easier for you</p>
+          <h2>Three Ways to Give</h2>
+          <p class="section-subtitle">Pick whichever is easiest for you</p>
         </div>
-        <div class="fd-ways">
-          <div class="card fd-way fd-way-main fade-in">
-            <img src="../email/food-drive-2026/step-sort.png" alt="" width="96" height="96">
-            <p class="fd-kicker">Anyone can do this</p>
-            <h3>Drop it off</h3>
-            <p class="fd-when">Sunday, November 15 &middot; 10&nbsp;AM to 1&nbsp;PM</p>
-            <p><strong>Rotterdam Community Center</strong>, 705 Curry Rd, Rotterdam. Pull up and Scouts will take your donation and sort it for the RCC's pantry shelves. A bag, a box or a single can all help.</p>
-            <p><strong>Can't make Sunday?</strong> The RCC takes drop-offs weekdays, 9&nbsp;AM to 5&nbsp;PM.</p>
-            <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=Rotterdam+Community+Center%2C+705+Curry+Rd%2C+Rotterdam%2C+NY" target="_blank" rel="noopener noreferrer">Get directions</a>
+        <div class="fd-tiles">
+          <div class="fd-tile fd-tile-main fade-in">
+            <img src="../email/food-drive-2026/step-sort.png" alt="" width="88" height="88">
+            <p class="fd-kicker">Drop-off day</p>
+            <h3>Sunday 11/15<br>10&nbsp;AM to 1&nbsp;PM</h3>
+            <p>Pull up at the Rotterdam Community Center. Scouts will take your donation from your car and sort it for the RCC's pantry shelves. A bag, a box or a single can all help.</p>
           </div>
-          <div class="card fd-way fade-in">
-            <img src="../email/food-drive-2026/step-pickup.png" alt="" width="96" height="96">
-            <p class="fd-kicker">Got one of our fliers?</p>
-            <h3>Leave it at the end of your driveway</h3>
-            <p class="fd-when">Sunday, November 15 &middot; out by 9&nbsp;AM</p>
-            <p>Cub Scouts drop fliers in a few Rotterdam neighborhoods on Saturday, November 7. If you got one, set a bag of food at the end of your driveway by 9&nbsp;AM on the 15th, and Scouts from Troop 3054 will come by and pick it up.</p>
-            <p>No flier? You're still welcome to give. Just drop it off at the RCC.</p>
+          <div class="fd-tile fade-in">
+            <img src="../email/food-drive-2026/step-fliers.png" alt="" width="88" height="88">
+            <p class="fd-kicker">Any weekday</p>
+            <h3>Monday to Friday<br>9&nbsp;AM to 5&nbsp;PM</h3>
+            <p>Can't make Sunday? The RCC takes food drop-offs whenever its office is open, at the same address.</p>
+          </div>
+          <div class="fd-tile fade-in">
+            <img src="../email/food-drive-2026/step-pickup.png" alt="" width="88" height="88">
+            <p class="fd-kicker">Got our flier?</p>
+            <h3>End of your driveway<br>by 9&nbsp;AM on 11/15</h3>
+            <p>Cub Scouts drop fliers in a few neighborhoods on Saturday, November 7. If you got one, set your bag out and Troop 3054 Scouts will pick it up.</p>
           </div>
         </div>
         <p class="fd-note fade-in"><strong>Live in Colonial Manor or Cold Brook?</strong> Another Scout food drive covers those neighborhoods, so follow the flier you get from them for pickup. You can always drop off with us too.</p>
@@ -246,12 +307,12 @@
           <p class="section-subtitle">Shelf-stable pantry staples help the most</p>
         </div>
         <div class="fd-foods fade-in">
-          <div><img src="../email/food-drive-2026/food-pasta.png" alt="" width="80" height="80"><span>Pasta &amp; rice</span></div>
-          <div><img src="../email/food-drive-2026/food-beans.png" alt="" width="80" height="80"><span>Canned beans</span></div>
-          <div><img src="../email/food-drive-2026/food-fruit.png" alt="" width="80" height="80"><span>Canned fruit &amp; veggies</span></div>
-          <div><img src="../email/food-drive-2026/food-soup.png" alt="" width="80" height="80"><span>Soups</span></div>
-          <div><img src="../email/food-drive-2026/food-pb.png" alt="" width="80" height="80"><span>Peanut butter</span></div>
-          <div><img src="../email/food-drive-2026/food-cereal.png" alt="" width="80" height="80"><span>Cereal &amp; oatmeal</span></div>
+          <div><img src="../email/food-drive-2026/food-pasta.png" alt="" width="96" height="96"><span>Pasta &amp; rice</span></div>
+          <div><img src="../email/food-drive-2026/food-beans.png" alt="" width="96" height="96"><span>Canned beans</span></div>
+          <div><img src="../email/food-drive-2026/food-fruit.png" alt="" width="96" height="96"><span>Canned fruit &amp; veggies</span></div>
+          <div><img src="../email/food-drive-2026/food-soup.png" alt="" width="96" height="96"><span>Soups</span></div>
+          <div><img src="../email/food-drive-2026/food-pb.png" alt="" width="96" height="96"><span>Peanut butter</span></div>
+          <div><img src="../email/food-drive-2026/food-cereal.png" alt="" width="96" height="96"><span>Cereal &amp; oatmeal</span></div>
         </div>
         <p class="fd-center fade-in">Unopened and in date, please. Any shelf-stable food helps.</p>
       </div>
@@ -264,31 +325,64 @@
           <h2>Where It Goes</h2>
           <p class="section-subtitle">Every can stays in our community</p>
         </div>
-        <div class="card fade-in" style="max-width: 800px; margin: 0 auto;">
-          <p>Almost everything goes to the <strong>Rotterdam Community Center</strong>, whose nutrition programs serve more than 1,000 guests a month. The holidays are a critical time of year for them, and Scouts sort the food by type on the day so it's ready for their shelves.</p>
-          <p style="margin-top: 1rem;">Some of it also goes to the Blessing Box pantry at <strong>Christ's Church of the Hills</strong> in Mariaville, which our troop has supported in past years.</p>
-          <p style="margin-top: 1rem;">The drive surrounds Scouting America's <strong>National Day of Service</strong> on Saturday, November 14, when Scouts across the country serve their communities, with food drives leading the way.</p>
+        <div class="fd-goes fade-in">
+          <div class="fd-stat"><b>1,000+</b><span>guests a month served by the Rotterdam Community Center's nutrition programs</span></div>
+          <div class="fd-goes-text">
+            <p>Almost everything goes to the <strong>Rotterdam Community Center</strong>. The holidays are a critical time of year for their pantry, and Scouts sort the food by type on the day so it's ready for their shelves.</p>
+            <p>Some also goes to the Blessing Box pantry at <strong>Christ's Church of the Hills</strong> in Mariaville, which our troop has supported in past years.</p>
+            <div class="fd-ndos">
+              <img src="../email/food-drive-2026/ndos.png" alt="Scouting America National Day of Service emblem" width="88" height="88">
+              <p>The drive surrounds Scouting America's <strong>National Day of Service</strong> on Saturday, November 14, when Scouts across the country serve their communities, with food drives leading the way.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Share -->
-    <section class="section section-alt">
+    <!-- Directions -->
+    <section class="section section-alt" id="directions">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Finding the RCC</h2>
+          <p class="section-subtitle">Rotterdam Community Center &middot; 705 Curry Rd, Rotterdam, NY 12306</p>
+        </div>
+        <div class="fd-map fade-in">
+          <iframe src="https://maps.google.com/maps?q=Rotterdam+Community+Center,+705+Curry+Rd,+Rotterdam,+NY+12306&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" title="Map of the Rotterdam Community Center" width="100%" height="380" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="fd-map-side">
+            <p><strong>Sunday, November 15</strong><br>10&nbsp;AM to 1&nbsp;PM, with Scouts there to unload your car.</p>
+            <p><strong>Weekdays</strong><br>9&nbsp;AM to 5&nbsp;PM at the RCC office.</p>
+            <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=Rotterdam+Community+Center%2C+705+Curry+Rd%2C+Rotterdam%2C+NY" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spread the word -->
+    <section class="section">
       <div class="container">
         <div class="section-header fade-in">
           <h2>Help Spread the Word</h2>
           <p class="section-subtitle">The more neighbors who know, the more food we collect</p>
         </div>
-        <div class="fd-share fade-in">
-          <a class="btn btn-primary" href="Food-Drive-Drop-Off-Poster.pdf" target="_blank" rel="noopener">Print the poster (PDF)</a>
-          <a class="btn btn-outline" href="food-drive-social.png" download>Download the social media image</a>
+        <div class="fd-downloads">
+          <a class="fd-download fade-in" href="Food-Drive-Drop-Off-Poster.pdf" target="_blank" rel="noopener">
+            <img src="preview-poster.jpg" alt="Preview of the drop-off poster" width="480" height="621" loading="lazy">
+            <b>Drop-off poster</b><span>PDF, letter size. Post it at work, school or church.</span>
+          </a>
+          <a class="fd-download fade-in" href="food-drive-social.png" download>
+            <img src="preview-social.jpg" alt="Preview of the social media image" width="480" height="480" loading="lazy">
+            <b>Social media image</b><span>Square, for Facebook, Instagram and Nextdoor.</span>
+          </a>
+          <a class="fd-download fade-in" href="Food-Drive-Door-Flier.pdf" target="_blank" rel="noopener">
+            <img src="preview-door.jpg" alt="Preview of the door flier" width="480" height="742" loading="lazy">
+            <b>Door flier</b><span>PDF, two per sheet. For the Cub Scouts' flier drop.</span>
+          </a>
         </div>
-        <p class="fd-center fade-in">Post it at work, in your neighborhood group or at your kids' school.</p>
       </div>
     </section>
 
     <!-- Volunteers -->
-    <section class="section">
+    <section class="section section-alt">
       <div class="container">
         <div class="card fd-volunteer fade-in">
           <h3>Scouts, families and leaders</h3>
@@ -296,6 +390,7 @@
           <a class="btn btn-primary" href="guide.html">Read the leader guide</a>
           <p class="fd-small">Questions? <a href="../contact.html">Contact the troop</a>.</p>
         </div>
+        <p class="fd-partners fade-in">Brought to you by <strong>Troop 3054</strong> and <strong>Pack 3054</strong>, Scouting America, with the <strong>Rotterdam Community Center</strong>.</p>
       </div>
     </section>
 
