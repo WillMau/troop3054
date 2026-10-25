@@ -681,6 +681,38 @@ p {
   text-align: center;
 }
 
+/* Seasonal announcement pill in the home hero (e.g. the food drive). Remove the link when it's over. */
+.hero-news {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  padding: 0.35rem 0.95rem 0.35rem 0.4rem;
+  border: 1px solid rgba(242, 201, 76, 0.55);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-light);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.hero-news:hover {
+  color: var(--color-text-light);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.hero-news-date {
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: #f2c94c;
+  color: var(--color-primary);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .hero-home p {
   margin: 0 auto 2rem;
 }
