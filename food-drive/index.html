@@ -70,12 +70,18 @@
     .fd-table th, .fd-table td { text-align: left; padding: 0.7rem 0.85rem; border-bottom: 1px solid var(--color-border); vertical-align: top; font-size: 0.95rem; }
     .fd-table th { font-family: var(--font-heading); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-primary); }
     .fd-table td:first-child { white-space: nowrap; font-weight: 600; }
-    .fd-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 840px; margin: 0 auto; }
-    .fd-tile { text-align: left; }
+    .fd-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 920px; margin: 0 auto; }
+    .fd-tile { text-align: left; display: flex; flex-direction: column; }
     .fd-tile img { width: 88px; height: 88px; display: block; margin-bottom: 0.9rem; }
     .fd-tile-main { border: 2px solid var(--color-secondary); }
     .fd-tile h3 { color: var(--color-primary); font-size: 1.2rem; line-height: 1.3; margin: 0.2rem 0 0.6rem; }
-    .fd-tile p:last-child { font-size: 0.95rem; }
+    /* Facts as label/value rows, so the when and where can be scanned. */
+    .fd-facts { display: grid; grid-template-columns: 5.6rem minmax(0, 1fr); gap: 0.6rem 0.75rem; margin: 0.4rem 0 1.25rem; }
+    .fd-facts dt { font-family: var(--font-heading); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-primary); padding-top: 0.2rem; }
+    .fd-facts dd { margin: 0; font-size: 0.95rem; line-height: 1.5; }
+    .fd-more { margin-top: auto; font-family: var(--font-heading); font-weight: 700; font-size: 0.92rem; color: var(--color-primary); }
+    .fd-more:hover { color: var(--color-green); }
+    .fd-fine { margin-top: auto; padding-top: 0.9rem; border-top: 1px solid var(--color-border); font-size: 0.86rem; line-height: 1.5; color: #5d5f63; }
     .fd-goes { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: 2rem; max-width: 1000px; margin: 0 auto; align-items: start; }
     .fd-stat { text-align: center; }
     .fd-stat b { display: block; font-family: var(--font-heading); font-weight: 800; font-size: 3.2rem; line-height: 1; color: var(--color-primary); }
@@ -98,9 +104,15 @@
     @media (max-width: 760px) {
       .fd-goes, .fd-map { grid-template-columns: minmax(0, 1fr); }
     }
+    /* On phones each label sits above its value, so values get the full width. */
+    @media (max-width: 520px) {
+      .fd-facts { grid-template-columns: minmax(0, 1fr); gap: 0; }
+      .fd-facts dt { padding-top: 0; }
+      .fd-facts dd { margin-bottom: 0.75rem; }
+    }
     /* Partner links in the content read as links: the site green plus a tan underline. */
-    .section p a:not(.btn), .section li a, .section td a, .fd-stat a { color: var(--color-green); text-decoration: underline; text-decoration-color: var(--color-secondary); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
-    .section p a:not(.btn):hover, .section li a:hover, .section td a:hover, .fd-stat a:hover { color: var(--color-green-light); text-decoration-color: currentColor; }
+    .section p a:not(.btn), .section li a, .section td a, .section dd a, .fd-stat a { color: var(--color-green); text-decoration: underline; text-decoration-color: var(--color-secondary); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+    .section p a:not(.btn):hover, .section li a:hover, .section td a:hover, .section dd a:hover, .fd-stat a:hover { color: var(--color-green-light); text-decoration-color: currentColor; }
   </style>
   <script type="application/ld+json">
 {
@@ -250,23 +262,32 @@
       <div class="container">
         <div class="section-header fade-in">
           <h2>Two Ways to Give</h2>
-          <p class="section-subtitle">Pick whichever is easiest for you</p>
+          <p class="section-subtitle">Pick whichever is easiest. Both happen rain or shine.</p>
         </div>
         <div class="fd-tiles">
           <div class="card fd-tile fd-tile-main fade-in">
-            <img src="../email/food-drive-2026/step-sort.png" alt="" width="88" height="88">
-            <p class="fd-kicker">Drop-off day</p>
-            <h3>Sunday 11/15<br>10&nbsp;AM to 1&nbsp;PM</h3>
-            <p>Pull up at the <a href="https://rotterdamcc.org/" target="_blank" rel="noopener">Rotterdam Community Center</a>. Scouts will take your donation from your car and sort it for the RCC's pantry shelves. A bag, a box or a single can all help. Rain or shine.</p>
+            <img src="bag.png" alt="" width="88" height="88">
+            <p class="fd-kicker">Anyone can give</p>
+            <h3>Drop it off at the RCC</h3>
+            <dl class="fd-facts">
+              <dt>When</dt><dd>Sunday, Nov&nbsp;15, 10&nbsp;AM to 1&nbsp;PM</dd>
+              <dt>Where</dt><dd><a href="https://rotterdamcc.org/" target="_blank" rel="noopener">Rotterdam Community Center</a>, 705&nbsp;Curry&nbsp;Rd</dd>
+              <dt>How</dt><dd>Pull up and Scouts unload your car. A bag, a box or a single can all help.</dd>
+            </dl>
+            <a class="fd-more" href="#directions">Map and directions <span aria-hidden="true">&rarr;</span></a>
           </div>
           <div class="card fd-tile fade-in">
             <img src="../email/food-drive-2026/step-pickup.png" alt="" width="88" height="88">
             <p class="fd-kicker">Got our flier?</p>
-            <h3>End of your driveway<br>by 7&nbsp;AM on 11/15</h3>
-            <p>Cub Scouts from <a href="https://pack3054.org/" target="_blank" rel="noopener">Pack 3054</a> hand out our fliers on Saturday, November 7. If you got one, set your bag out Saturday night or by 7&nbsp;AM Sunday, and Troop 3054 Scouts will pick it up, rain or shine. A plastic bag keeps it dry. Missed the pickup? Bring it to the <a href="https://rotterdamcc.org/" target="_blank" rel="noopener">RCC</a> by 1&nbsp;PM.</p>
+            <h3>Leave it at the end of your driveway</h3>
+            <dl class="fd-facts">
+              <dt>When</dt><dd>Saturday night or by&nbsp;7&nbsp;AM&nbsp;Sunday</dd>
+              <dt>Pickup</dt><dd>Troop 3054 Scouts come by. A plastic bag keeps it dry.</dd>
+              <dt>Missed us?</dt><dd>Bring it to the <a href="https://rotterdamcc.org/" target="_blank" rel="noopener">RCC</a> by 1&nbsp;PM.</dd>
+            </dl>
+            <p class="fd-fine"><a href="https://pack3054.org/" target="_blank" rel="noopener">Pack 3054</a> Cub Scouts deliver our fliers to select neighborhoods on Saturday, Nov 7. Got one from another Scout group? Follow its instructions.</p>
           </div>
         </div>
-        <p class="fd-note fade-in"><strong>Got a flier from another Scout group?</strong> Other Scouts are collecting food in Rotterdam too, some on Saturday. Follow the instructions on the flier you got. Everyone is welcome to drop off with us on Sunday.</p>
       </div>
     </section>
 
