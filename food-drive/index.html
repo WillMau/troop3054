@@ -97,9 +97,13 @@
     .fd-download b { font-family: var(--font-heading); color: var(--color-primary); }
     .fd-download span { font-size: 0.9rem; margin-top: 0.25rem; }
     .fd-partners { text-align: center; margin-top: 2rem; font-size: 0.95rem; }
+    .hero p a { color: var(--color-text-light); text-decoration: underline; text-underline-offset: 3px; }
     @media (max-width: 760px) {
       .fd-goes, .fd-map { grid-template-columns: minmax(0, 1fr); }
     }
+    /* Partner links in the content read as links: the site green plus a tan underline. */
+    .section p a:not(.btn), .section li a, .section td a, .fd-stat a { color: var(--color-green); text-decoration: underline; text-decoration-color: var(--color-secondary); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+    .section p a:not(.btn):hover, .section li a:hover, .section td a:hover, .fd-stat a:hover { color: var(--color-green-light); text-decoration-color: currentColor; }
   </style>
   <script type="application/ld+json">
 {
@@ -118,6 +122,7 @@
   "location": {
     "@type": "Place",
     "name": "Rotterdam Community Center",
+    "url": "https://rotterdamcc.org/",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "705 Curry Rd",
@@ -127,11 +132,18 @@
       "addressCountry": "US"
     }
   },
-  "organizer": {
-    "@type": "Organization",
-    "name": "Troop 3054 - Scouting America",
-    "url": "https://www.troop3054.org/"
-  }
+  "organizer": [
+    {
+      "@type": "Organization",
+      "name": "Troop 3054 - Scouting America",
+      "url": "https://www.troop3054.org/"
+    },
+    {
+      "@type": "Organization",
+      "name": "Pack 3054 - Scouting America",
+      "url": "https://pack3054.org/"
+    }
+  ]
 }
   </script>
   <script type="application/ld+json">
@@ -226,7 +238,7 @@
     <section class="hero">
       <div class="container">
         <h1 class="fade-in">Rotterdam Scouts Food Drive</h1>
-        <p class="fade-in">Sunday, November 15, 10&nbsp;AM to 1&nbsp;PM at the Rotterdam Community Center. Drop off food for our neighbors, or leave a bag at the end of your driveway if you got one of our fliers.</p>
+        <p class="fade-in">Sunday, November 15, 10&nbsp;AM to 1&nbsp;PM at the <a href="https://rotterdamcc.org/" target="_blank" rel="noopener">Rotterdam Community Center</a>. Drop off food for our neighbors, or leave a bag at the end of your driveway if you got one of our fliers.</p>
       </div>
       <div class="wave-divider">
         <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -247,13 +259,13 @@
             <img src="../email/food-drive-2026/step-sort.png" alt="" width="88" height="88">
             <p class="fd-kicker">Drop-off day</p>
             <h3>Sunday 11/15<br>10&nbsp;AM to 1&nbsp;PM</h3>
-            <p>Pull up at the Rotterdam Community Center. Scouts will take your donation from your car and sort it for the RCC's pantry shelves. A bag, a box or a single can all help.</p>
+            <p>Pull up at the <a href="https://rotterdamcc.org/" target="_blank" rel="noopener">Rotterdam Community Center</a>. Scouts will take your donation from your car and sort it for the RCC's pantry shelves. A bag, a box or a single can all help.</p>
           </div>
           <div class="card fd-tile fade-in">
             <img src="../email/food-drive-2026/step-pickup.png" alt="" width="88" height="88">
             <p class="fd-kicker">Got our flier?</p>
             <h3>End of your driveway<br>by 7&nbsp;AM on 11/15</h3>
-            <p>Cub Scouts from Pack 3054 hand out our fliers on Saturday, November 7. If you got one, set your bag out Saturday night or by 7&nbsp;AM Sunday, and Troop 3054 Scouts will pick it up. Missed the pickup? Bring it to the RCC by 1&nbsp;PM.</p>
+            <p>Cub Scouts from <a href="https://pack3054.org/" target="_blank" rel="noopener">Pack 3054</a> hand out our fliers on Saturday, November 7. If you got one, set your bag out Saturday night or by 7&nbsp;AM Sunday, and Troop 3054 Scouts will pick it up. Missed the pickup? Bring it to the <a href="https://rotterdamcc.org/" target="_blank" rel="noopener">RCC</a> by 1&nbsp;PM.</p>
           </div>
         </div>
         <p class="fd-note fade-in"><strong>Got a flier from another Scout group?</strong> Other Scouts are collecting food in Rotterdam too, some on Saturday. Follow the instructions on the flier you got. Everyone is welcome to drop off with us on Sunday.</p>
@@ -287,9 +299,9 @@
           <p class="section-subtitle">Every can stays in our community</p>
         </div>
         <div class="fd-goes fade-in">
-          <div class="card fd-stat"><b>1,000+</b><span>guests a month served by the Rotterdam Community Center's nutrition programs</span></div>
+          <div class="card fd-stat"><b>1,000+</b><span>guests a month served by the <a href="https://rotterdamcc.org/food-pantries" target="_blank" rel="noopener">Rotterdam Community Center&#39;s nutrition programs</a></span></div>
           <div class="fd-goes-text">
-            <p>Almost everything goes to the <strong>Rotterdam Community Center</strong>. The holidays are a critical time of year for their pantry, and Scouts sort the food by type on the day so it's ready for their shelves.</p>
+            <p>Almost everything goes to the <a href="https://rotterdamcc.org/food-pantries" target="_blank" rel="noopener"><strong>Rotterdam Community Center</strong></a>. The holidays are a critical time of year for their pantry, and Scouts sort the food by type on the day so it's ready for their shelves.</p>
             <p>Some also goes to the Blessing Box pantry at <strong>Christ's Church of the Hills</strong> in Mariaville, which our troop has supported in past years.</p>
             <div class="card fd-ndos">
               <img src="../email/food-drive-2026/ndos.png" alt="Scouting America National Day of Service emblem" width="88" height="88">
@@ -305,7 +317,7 @@
       <div class="container">
         <div class="section-header fade-in">
           <h2>Finding the RCC</h2>
-          <p class="section-subtitle">Rotterdam Community Center &middot; 705 Curry Rd, Rotterdam, NY 12306</p>
+          <p class="section-subtitle"><a href="https://rotterdamcc.org/" target="_blank" rel="noopener">Rotterdam Community Center</a> &middot; 705 Curry Rd, Rotterdam, NY 12306</p>
         </div>
         <div class="fd-map fade-in">
           <iframe src="https://maps.google.com/maps?q=Rotterdam+Community+Center,+705+Curry+Rd,+Rotterdam,+NY+12306&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" title="Map of the Rotterdam Community Center" width="100%" height="380" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -350,7 +362,7 @@
           <a class="btn btn-primary" href="guide.html">Read the leader guide</a>
           <p class="fd-small">Questions? <a href="../contact.html">Contact the troop</a>.</p>
         </div>
-        <p class="fd-partners fade-in">Brought to you by <strong>Troop 3054</strong> and <strong>Pack 3054</strong>, Scouting America, with the <strong>Rotterdam Community Center</strong>.</p>
+        <p class="fd-partners fade-in">Brought to you by <strong>Troop 3054</strong> and <a href="https://pack3054.org/" target="_blank" rel="noopener"><strong>Pack 3054</strong></a>, Scouting America, with the <a href="https://rotterdamcc.org/" target="_blank" rel="noopener"><strong>Rotterdam Community Center</strong></a>.</p>
       </div>
     </section>
 
