@@ -890,9 +890,16 @@
   try { packToggle.checked = localStorage.getItem(PACK_KEY) === '1'; } catch (e) { /* no storage: starts off */ }
 
   // events = the troop's, plus the pack's when the switch is on. Chips and rows
-  // find their event by index, so number the combined list.
+  // find their event by index, so number the combined list. Something both
+  // calendars carry (same title, same day) shows once, as the troop's.
+  const sameEventKey = (e) => `${String(e.summary).trim().toLowerCase()}|${new Date(e.start).toDateString()}`;
   function mergeEvents() {
-    const all = packToggle.checked && packEvents ? troopEvents.concat(packEvents) : troopEvents.slice();
+    let pack = packToggle.checked && packEvents ? packEvents : [];
+    if (pack.length) {
+      const troopKeys = new Set(troopEvents.map(sameEventKey));
+      pack = pack.filter((e) => !troopKeys.has(sameEventKey(e)));
+    }
+    const all = troopEvents.concat(pack);
     all.sort((a, b) => a.start - b.start);
     all.forEach((e, i) => { e.i = i; });
     events = all;
