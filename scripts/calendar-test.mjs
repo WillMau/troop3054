@@ -67,6 +67,9 @@ const packFixture = [
   'DESCRIPTION:Lions and Tigers come with their adult partner.\\nPack 3054 calendar: https://pack3054.org/calendar.html', 'END:VEVENT',
   'BEGIN:VEVENT', 'UID:p2@pack3054', `DTSTART;VALUE=DATE:${ymd(addD(3))}`, `DTEND;VALUE=DATE:${ymd(addD(4))}`,
   'SUMMARY:Pack Picnic <b>', 'END:VEVENT',
+  // Also on the troop's calendar (same title, same day): should show once.
+  'BEGIN:VEVENT', 'UID:p3@pack3054', `DTSTART:${ymd(addD(3))}T170000`,
+  'SUMMARY:Weekend Trip', 'END:VEVENT',
   'END:VCALENDAR', '',
 ].join('\r\n');
 
@@ -184,6 +187,8 @@ const all = api.events;
 const packs = all.filter((e) => e.unit === 'pack');
 ok('switch adds the pack events', all.length === 11 && packs.length === 2, `got ${all.length} / ${packs.length}`);
 ok('pack events get their own color', packs.every((e) => e.type === 'pack'), '');
+const trips = all.filter((e) => e.summary === 'Weekend Trip');
+ok('an event both calendars list shows once, as the troop event', trips.length === 1 && trips[0].unit !== 'pack', `got ${trips.length}`);
 ok('combined list is in date order and renumbered', all.every((e, i) => e.i === i && (i === 0 || all[i - 1].start <= e.start)), '');
 const den = packs.find((e) => e.summary.startsWith('Den Meeting'));
 ok('pack meeting shows just its start time', api.formatEventTime(den) === '6:15 PM', api.formatEventTime(den));
