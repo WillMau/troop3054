@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Rotterdam Scouts Food Drive - Flier</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* Full-page door flier, letter portrait. Margins leave room for home printers. */
+  @page { size: 8.5in 11in; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --navy: #003f87; --navy-deep: #002a5c; --gold: #f2c94c; --tan: #ad9d7b; --tan-soft: #e3d5b2;
+    --cream: #f3ede0; --paper: #f8f5ee; --red: #ce1126; --ink: #232528; --soft: #5d5f63; --line: #e3dccd; }
+  body { width: 8.5in; height: 11in; padding: 0.38in 0.42in; display: flex; flex-direction: column; background: #fff; color: var(--ink);
+    font-family: 'Open Sans', Arial, sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body > * { flex-shrink: 0; }
+  .hero { position: relative; overflow: hidden; border-radius: 0.22in; padding: 0.32in 0.4in 0.44in; color: #fff;
+    background: radial-gradient(circle at 88% 12%, #1d4f9a 0%, var(--navy) 44%, var(--navy-deep) 100%); }
+  .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 0.1in; background: var(--tan); }
+  .pill { display: inline-block; border: 1.5px solid #c4b596; border-radius: 20pt; padding: 3pt 11pt;
+    font: 700 8.5pt 'Montserrat', sans-serif; letter-spacing: 2.6pt; color: var(--tan-soft); }
+  h1 { font: 800 31pt/1.03 'Montserrat', sans-serif; margin-top: 0.15in; width: 4.7in; position: relative; z-index: 1; }
+  h1 span { color: var(--gold); }
+  .when { display: flex; align-items: center; gap: 0.2in; margin-top: 0.24in; position: relative; z-index: 1; }
+  .cal { width: 1.05in; background: #fff; border-radius: 0.1in; overflow: hidden; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,.3); }
+  .cal .m { background: var(--red); color: #fff; font: 800 12pt 'Montserrat', sans-serif; letter-spacing: 2pt; padding: 3pt 0; }
+  .cal .d { color: var(--navy); font: 800 35pt/1 'Montserrat', sans-serif; padding-top: 4pt; }
+  .cal .w { color: var(--navy); font: 700 7.5pt 'Montserrat', sans-serif; letter-spacing: 1.6pt; padding: 3pt 0 6pt; }
+  .when b { display: block; font: 800 23pt 'Montserrat', sans-serif; }
+  .when span { display: block; color: var(--tan-soft); font: 600 12.5pt 'Open Sans', sans-serif; margin-top: 2pt; }
+  .bag { position: absolute; right: 0.32in; top: 0.42in; width: 2.35in; height: 2.35in; z-index: 1; }
+
+  h2 { font: 800 10pt 'Montserrat', sans-serif; letter-spacing: 2.2pt; color: var(--navy); text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.12in; margin-top: 0.22in; }
+  h2::after { content: ''; flex: 1; height: 2px; background: var(--tan); }
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.18in; margin-top: 0.14in; }
+  .step { position: relative; text-align: center; }
+  .step img { width: 0.92in; height: 0.92in; display: block; margin: 0 auto; }
+  .step .n { position: absolute; top: -0.02in; left: calc(50% - 0.62in); width: 0.32in; height: 0.32in; border-radius: 50%;
+    background: var(--navy); color: #fff; font: 800 11pt/0.32in 'Montserrat', sans-serif; text-align: center; box-shadow: 0 0 0 2.5px #fff; }
+  .step b { display: block; font: 800 12pt 'Montserrat', sans-serif; color: var(--navy); margin-top: 0.08in; }
+  .step span { display: block; font-size: 10pt; line-height: 1.35; color: #3a3c40; margin-top: 2pt; }
+
+  .foods { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.08in; margin-top: 0.14in; text-align: center; }
+  .food img { width: 0.68in; height: 0.68in; display: block; margin: 0 auto; }
+  .food div { font: 700 8.5pt/1.2 'Montserrat', sans-serif; color: var(--navy); margin-top: 4pt; }
+  .small { font-size: 9.5pt; color: var(--soft); text-align: center; margin-top: 0.08in; }
+
+  .duo { display: grid; grid-template-columns: 1.45fr 1fr; gap: 0.18in; margin-top: 0.2in; margin-bottom: 0.16in; }
+  .drop { background: var(--paper); border-left: 5px solid var(--tan); border-radius: 0.1in; padding: 0.16in 0.2in; }
+  .drop .k { font: 800 8.5pt 'Montserrat', sans-serif; letter-spacing: 1.8pt; color: #a10e1f; text-transform: uppercase; }
+  .drop .t { font: 800 15pt/1.2 'Montserrat', sans-serif; color: var(--navy); margin-top: 3pt; }
+  .drop p { font-size: 10.5pt; line-height: 1.4; margin-top: 4pt; }
+  .drop p b { color: var(--navy); }
+  .stat { background: var(--navy); color: #fff; border-radius: 0.1in; padding: 0.16in 0.18in; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+  .stat b { font: 800 30pt/1 'Montserrat', sans-serif; color: var(--gold); }
+  .stat span { font-size: 9.5pt; line-height: 1.35; color: var(--tan-soft); margin-top: 5pt; }
+
+  .foot { display: flex; align-items: center; gap: 0.18in; margin-top: auto; padding-top: 0.16in; border-top: 1px solid var(--line); }
+  .foot .qr { width: 0.95in; height: 0.95in; flex: none; }
+  .foot .url { font: 800 15pt 'Montserrat', sans-serif; color: var(--navy); }
+  .foot .who { font-size: 9.5pt; color: var(--soft); margin-top: 2pt; line-height: 1.4; }
+  .foot .patch { width: 0.85in; height: 0.85in; margin-left: auto; flex: none; }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="pill">ROTTERDAM SCOUTS FOOD DRIVE</div>
+    <h1>Leave a bag of food <span>at the end of your driveway</span></h1>
+    <div class="when">
+      <div class="cal"><div class="m">NOV</div><div class="d">15</div><div class="w">SUNDAY</div></div>
+      <div><b>Out by 9&nbsp;AM</b><span>Scouts from Troop 3054 will pick it up</span></div>
+    </div>
+    <img class="bag" src="../bag.png" alt="">
+  </header>
+
+  <h2>How it works</h2>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><img src="../../email/food-drive-2026/step-fliers.png" alt=""><b>You got our flier</b><span>So Scouts will come by your home.</span></div>
+    <div class="step"><span class="n">2</span><img src="../../email/food-drive-2026/step-pickup.png" alt=""><b>Set out a bag</b><span>By 9&nbsp;AM on Sunday, November&nbsp;15.</span></div>
+    <div class="step"><span class="n">3</span><img src="../../email/food-drive-2026/step-sort.png" alt=""><b>Scouts deliver it</b><span>Sorted onto the Rotterdam Community Center's shelves.</span></div>
+  </div>
+
+  <h2>What to give</h2>
+  <div class="foods">
+    <div class="food"><img src="../../email/food-drive-2026/food-pasta.png" alt=""><div>Pasta &amp; rice</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-beans.png" alt=""><div>Canned beans</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-fruit.png" alt=""><div>Canned fruit &amp; veggies</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-soup.png" alt=""><div>Soups</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-pb.png" alt=""><div>Peanut butter</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-cereal.png" alt=""><div>Cereal &amp; oatmeal</div></div>
+  </div>
+  <p class="small">Unopened and in date, please. Any shelf-stable food helps.</p>
+
+  <div class="duo">
+    <div class="drop">
+      <div class="k">Rather drop it off?</div>
+      <div class="t">Sunday 11/15, 10&nbsp;AM to 1&nbsp;PM</div>
+      <p><b>Rotterdam Community Center</b>, 705 Curry Rd. Pull up and Scouts will take it right from your car.</p>
+    </div>
+    <div class="stat"><b>1,000+</b><span>guests a month served by the RCC's nutrition programs. Every can stays in our community.</span></div>
+  </div>
+
+  <footer class="foot">
+    <img class="qr" src="../qr.png" alt="QR code for troop3054.org/food-drive">
+    <div><div class="url">troop3054.org/food-drive</div>
+      <div class="who">Troop 3054 and Pack 3054, Scouting America,<br>with the Rotterdam Community Center</div></div>
+    <img class="patch" src="../../images/troop-logo-512.png" alt="Troop 3054 patch">
+  </footer>
+</body>
+</html>
