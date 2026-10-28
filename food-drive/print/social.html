@@ -23,14 +23,19 @@
   .whentext b { display: block; font-weight: 800; font-size: 54px; }
   .whentext span { display: block; color: #e3d5b2; font: 600 32px 'Open Sans', sans-serif; margin-top: 8px; line-height: 1.3; }
   .bag { position: absolute; right: 60px; top: 230px; width: 340px; height: 340px; }
-  .also { position: absolute; left: 80px; right: 80px; bottom: 150px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .also { position: absolute; left: 80px; right: 80px; bottom: 178px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
   .also div { background: rgba(255,255,255,0.1); border-left: 6px solid #c4b596; border-radius: 10px; padding: 18px 22px;
     font: 600 25px/1.35 'Open Sans', sans-serif; color: #f4efe3; }
   .also b { display: block; font: 800 27px 'Montserrat', sans-serif; color: #fff; margin-bottom: 4px; }
-  .foot { position: absolute; left: 0; right: 0; bottom: 0; height: 110px; background: #ad9d7b; color: #002a5c;
-    display: flex; align-items: center; justify-content: space-between; padding: 0 80px; }
-  .foot .url { font-weight: 800; font-size: 36px; }
-  .foot .who { font-weight: 700; font-size: 20px; letter-spacing: 3px; text-align: right; }
+  /* A light band so the partners' logos keep their own colors; the tan stays as the top rule. */
+  .foot { position: absolute; left: 0; right: 0; bottom: 0; height: 148px; background: #f8f5ee; border-top: 8px solid #ad9d7b;
+    color: #002a5c; display: flex; align-items: center; justify-content: space-between; padding: 0 70px; }
+  .foot .url { font-weight: 800; font-size: 34px; }
+  .foot .who { font-weight: 700; font-size: 18px; letter-spacing: 3px; color: #6b5f45; margin-top: 6px; }
+  .foot .logos { display: flex; align-items: center; gap: 26px; }
+  .foot .logos .sa { height: 92px; }
+  .foot .logos .rcc { height: 52px; }
+  .foot .logos .rule { width: 2px; height: 72px; background: #d6cebd; }
 </style>
 </head>
 <body>
@@ -45,6 +50,9 @@
     <div><b>Just pull up</b>Scouts will take your donation right from your car.</div>
     <div><b>Got our flier?</b>Leave your bag at the end of your driveway by 7&nbsp;AM Sunday, rain or shine.</div>
   </div>
-  <div class="foot"><div class="url">troop3054.org/food-drive</div><div class="who">TROOP 3054 · PACK 3054</div></div>
+  <div class="foot">
+    <div><div class="url">troop3054.org/food-drive</div><div class="who">TROOP 3054 · PACK 3054</div></div>
+    <div class="logos"><img class="sa" src="../scouting-america.png" alt="Scouting America"><span class="rule"></span><img class="rcc" src="../rcc-logo.png" alt="Rotterdam Community Center"></div>
+  </div>
 </body>
 </html>
