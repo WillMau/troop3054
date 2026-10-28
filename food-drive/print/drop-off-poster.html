@@ -27,6 +27,7 @@
   .whentext b { display: block; font: 800 22pt 'Montserrat', sans-serif; }
   .whentext span { display: block; color: #e3d5b2; font: 600 13pt 'Open Sans', sans-serif; margin-top: 3pt; line-height: 1.3; }
   .bag { position: absolute; right: 0.3in; bottom: 0.3in; width: 2.3in; height: 2.3in; z-index: 1; }
+  .mill { position: absolute; right: 2.35in; bottom: 0.09in; height: 2.9in; width: auto; opacity: 0.12; z-index: 0; }
   .lead { font-size: 13pt; line-height: 1.45; margin-top: 0.18in; }
   .lead b { color: #003f87; }
   .tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.16in; margin-top: 0.16in; }
@@ -47,7 +48,9 @@
   .foot img { width: 1.05in; height: 1.05in; flex: none; }
   .foot .url { font: 800 16pt 'Montserrat', sans-serif; color: #003f87; }
   .foot .who { font-size: 10pt; color: #5d5f63; margin-top: 3pt; line-height: 1.4; }
-  .foot .partner { width: auto; height: 0.42in; margin-left: auto; }
+  .foot .sa { width: auto; height: 0.72in; margin-left: auto; }
+  .foot .rule { width: 1px; height: 0.6in; background: #e3dccd; flex: none; }
+  .foot .partner { width: auto; height: 0.42in; }
 </style>
 </head>
 <body>
@@ -58,6 +61,7 @@
       <div class="cal"><div class="m">NOV</div><div class="d">15</div><div class="w">SUNDAY</div></div>
       <div class="whentext"><b>10&nbsp;AM to 2&nbsp;PM</b><span><a href="https://rotterdamcc.org/" target="_blank" rel="noopener">Rotterdam Community Center</a><br>705 Curry Rd, Rotterdam</span></div>
     </div>
+    <img class="mill" src="../mill.svg" alt="">
     <img class="bag" src="../bag.png" alt="">
   </header>
 
@@ -84,9 +88,10 @@
   <footer class="foot">
     <img src="../qr.png" alt="QR code for troop3054.org/food-drive">
     <div><div class="url">troop3054.org/food-drive</div>
-      <div class="who">Troop 3054 and <a href="https://pack3054.org/" target="_blank" rel="noopener">Pack 3054</a>, Scouting America,<br>with the <a href="https://rotterdamcc.org/" target="_blank" rel="noopener">Rotterdam Community Center</a>.<br>Part of Scouting America's National Day of Service.<br>Questions? <a href="mailto:info@troop3054.org">info@troop3054.org</a></div></div>
+      <div class="who">Troop 3054 and <a href="https://pack3054.org/" target="_blank" rel="noopener">Pack 3054</a>, Scouting America,<br>with the <a href="https://rotterdamcc.org/" target="_blank" rel="noopener">Rotterdam Community Center</a>.<br>Part of the National Day of Service.<br>Questions? <a href="mailto:info@troop3054.org">info@troop3054.org</a></div></div>
+    <img class="sa" src="../scouting-america.png" alt="Scouting America">
+    <span class="rule"></span>
     <img class="partner" src="../rcc-logo.png" alt="Rotterdam Community Center">
-    <img class="badge" src="../windmill.png" alt="Troop 3054, Rotterdam, N.Y.">
   </footer>
 </body>
 </html>

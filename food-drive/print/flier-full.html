@@ -31,6 +31,7 @@
   .when b { display: block; font: 800 23pt 'Montserrat', sans-serif; }
   .when span { display: block; color: var(--tan-soft); font: 600 12.5pt 'Open Sans', sans-serif; margin-top: 2pt; }
   .bag { position: absolute; right: 0.32in; top: 0.42in; width: 2.35in; height: 2.35in; z-index: 1; }
+  .mill { position: absolute; right: 2.1in; bottom: 0.1in; height: 3.1in; width: auto; opacity: 0.12; z-index: 0; }
 
   h2 { font: 800 10pt 'Montserrat', sans-serif; letter-spacing: 2.2pt; color: var(--navy); text-transform: uppercase;
     display: flex; align-items: center; gap: 0.12in; margin-top: 0.14in; }
@@ -63,8 +64,9 @@
   .foot .qr { width: 0.95in; height: 0.95in; flex: none; }
   .foot .url { font: 800 15pt 'Montserrat', sans-serif; color: var(--navy); }
   .foot .who { font-size: 9.5pt; color: var(--soft); margin-top: 2pt; line-height: 1.4; }
-  .foot .partner { width: auto; height: 0.44in; margin-left: auto; flex: none; }
-  .foot .badge { width: 0.95in; height: 0.95in; flex: none; }
+  .foot .sa { width: auto; height: 0.7in; margin-left: auto; flex: none; }
+  .foot .rule { width: 1px; height: 0.6in; background: var(--line); flex: none; }
+  .foot .partner { width: auto; height: 0.44in; flex: none; }
 </style>
 </head>
 <body>
@@ -75,6 +77,7 @@
       <div class="cal"><div class="m">NOV</div><div class="d">15</div><div class="w">SUNDAY</div></div>
       <div><b>Out by 7&nbsp;AM</b><span>Scouts from Troop 3054 will pick it up</span></div>
     </div>
+    <img class="mill" src="../mill.svg" alt="">
     <img class="bag" src="../bag.png" alt="">
   </header>
 
@@ -109,8 +112,9 @@
     <img class="qr" src="../qr.png" alt="QR code for troop3054.org/food-drive">
     <div><div class="url">troop3054.org/food-drive</div>
       <div class="who">Troop 3054 and <a href="https://pack3054.org/" target="_blank" rel="noopener">Pack 3054</a>, Scouting America,<br>with the <a href="https://rotterdamcc.org/" target="_blank" rel="noopener">Rotterdam Community Center</a><br>Questions? <a href="mailto:info@troop3054.org">info@troop3054.org</a></div></div>
+    <img class="sa" src="../scouting-america.png" alt="Scouting America">
+    <span class="rule"></span>
     <img class="partner" src="../rcc-logo.png" alt="Rotterdam Community Center">
-    <img class="badge" src="../windmill.png" alt="Troop 3054, Rotterdam, N.Y.">
   </footer>
 </body>
 </html>
