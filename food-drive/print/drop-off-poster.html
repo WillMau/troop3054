@@ -11,6 +11,7 @@
   a { color: inherit; text-decoration: none; }
   body { width: 8.5in; height: 11in; padding: 0.4in; display: flex; flex-direction: column; background: #fff; color: #232528;
     font-family: 'Open Sans', Arial, sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body > * { flex-shrink: 0; }
   .hero { position: relative; background: #003f87; color: #fff; border-radius: 0.2in; padding: 0.34in 0.4in 0.5in; overflow: hidden; }
   .hero::before { content: ''; position: absolute; right: -0.7in; top: -0.9in; width: 3.6in; height: 3.6in; border-radius: 50%; background: rgba(255,255,255,0.06); }
   .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 0.09in; background: #ad9d7b; }
@@ -26,23 +27,23 @@
   .whentext b { display: block; font: 800 22pt 'Montserrat', sans-serif; }
   .whentext span { display: block; color: #e3d5b2; font: 600 13pt 'Open Sans', sans-serif; margin-top: 3pt; line-height: 1.3; }
   .bag { position: absolute; right: 0.3in; bottom: 0.3in; width: 2.3in; height: 2.3in; z-index: 1; }
-  .lead { font-size: 13pt; line-height: 1.45; margin-top: 0.26in; }
+  .lead { font-size: 13pt; line-height: 1.45; margin-top: 0.18in; }
   .lead b { color: #003f87; }
-  .tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.16in; margin-top: 0.24in; }
+  .tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.16in; margin-top: 0.16in; }
   .tile { border: 1px solid #e3dccd; border-radius: 0.12in; padding: 0.16in 0.16in 0.14in; background: #fff; }
   .tile.main { background: #fffbef; border-color: #f2d27a; }
   .tile .k { font: 800 8.5pt 'Montserrat', sans-serif; letter-spacing: 1.5pt; color: #a10e1f; text-transform: uppercase; }
   .tile .t { font: 800 13pt/1.2 'Montserrat', sans-serif; color: #003f87; margin-top: 4pt; }
   .tile p { font-size: 10pt; line-height: 1.4; margin-top: 4pt; color: #3a3c40; }
   h2 { font: 800 11pt 'Montserrat', sans-serif; letter-spacing: 2pt; color: #003f87; text-transform: uppercase;
-    border-bottom: 2px solid #ad9d7b; padding-bottom: 4pt; margin-top: 0.26in; }
+    border-bottom: 2px solid #ad9d7b; padding-bottom: 4pt; margin-top: 0.2in; }
   .foods { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.1in; margin-top: 0.14in; text-align: center; }
-  .food img { width: 0.8in; height: 0.8in; display: block; margin: 0 auto; }
+  .food img { width: 0.68in; height: 0.68in; display: block; margin: 0 auto; }
   .food div { font: 700 9pt/1.2 'Montserrat', sans-serif; color: #003f87; margin-top: 4pt; }
-  .small { font-size: 10pt; color: #5d5f63; margin-top: 0.1in; text-align: center; }
-  .goes { margin-top: auto; background: #f8f5ee; border-left: 5px solid #ad9d7b; border-radius: 0.08in; padding: 0.14in 0.2in; font-size: 11.5pt; line-height: 1.45; }
+  .small { font-size: 10pt; color: #5d5f63; margin-top: 0.08in; text-align: center; }
+  .goes { margin-top: auto; background: #f8f5ee; border-left: 5px solid #ad9d7b; border-radius: 0.08in; padding: 0.1in 0.2in; font-size: 11.5pt; line-height: 1.45; }
   .goes b { color: #003f87; font-family: 'Montserrat', sans-serif; }
-  .foot { display: flex; align-items: center; gap: 0.2in; margin-top: 0.2in; padding-top: 0.16in; border-top: 1px solid #e3dccd; }
+  .foot { display: flex; align-items: center; gap: 0.2in; margin-top: 0.14in; padding-top: 0.12in; border-top: 1px solid #e3dccd; }
   .foot img { width: 1.05in; height: 1.05in; flex: none; }
   .foot .url { font: 800 16pt 'Montserrat', sans-serif; color: #003f87; }
   .foot .who { font-size: 10pt; color: #5d5f63; margin-top: 3pt; line-height: 1.4; }
@@ -67,18 +68,18 @@
     <div class="tile"><div class="k">Got our flier?</div><div class="t">End of your driveway<br>by 7&nbsp;AM Sunday</div><p>Leave your bag out, even Saturday night, and Troop 3054 Scouts will pick it up, rain or shine. Got another group's flier? Follow its instructions.</p></div>
   </div>
 
-  <h2>What to give</h2>
+  <h2>Most needed</h2>
   <div class="foods">
-    <div class="food"><img src="../../email/food-drive-2026/food-pasta.png" alt=""><div>Pasta &amp; rice</div></div>
-    <div class="food"><img src="../../email/food-drive-2026/food-beans.png" alt=""><div>Canned beans</div></div>
     <div class="food"><img src="../../email/food-drive-2026/food-fruit.png" alt=""><div>Canned fruit &amp; veggies</div></div>
-    <div class="food"><img src="../../email/food-drive-2026/food-soup.png" alt=""><div>Soups</div></div>
-    <div class="food"><img src="../../email/food-drive-2026/food-pb.png" alt=""><div>Peanut butter</div></div>
-    <div class="food"><img src="../../email/food-drive-2026/food-cereal.png" alt=""><div>Cereal &amp; oatmeal</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-beans.png" alt=""><div>Beans, any kind</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-pasta.png" alt=""><div>Rice, noodles &amp; mac and cheese</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-milk.png" alt=""><div>Shelf-stable milk</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-snacks.png" alt=""><div>Lunchbox snacks</div></div>
+    <div class="food"><img src="../../email/food-drive-2026/food-cocoa.png" alt=""><div>Hot cocoa &amp; tea</div></div>
   </div>
-  <p class="small">Unopened and in date, please. Any shelf-stable food helps.</p>
+  <p class="small">Sloppy joe sauce is on their list too, and any shelf-stable food helps.<br>Unopened and in date, please. Nothing that needs a fridge or freezer, and no alcohol.</p>
 
-  <div class="goes"><b>Every can stays in our community.</b> The <a href="https://rotterdamcc.org/food-pantries" target="_blank" rel="noopener">Rotterdam Community Center</a> serves more than 1,000 neighbors a month, and the holidays are a critical time of year.</div>
+  <div class="goes"><b>Every can stays in our community.</b> The <a href="https://rotterdamcc.org/food-pantries" target="_blank" rel="noopener">RCC</a> serves more than 1,000 neighbors a month.</div>
 
   <footer class="foot">
     <img src="../qr.png" alt="QR code for troop3054.org/food-drive">
