@@ -91,6 +91,10 @@
     .fd-stat b { display: block; font-family: var(--font-heading); font-weight: 800; font-size: 3.2rem; line-height: 1; color: var(--color-primary); }
     .fd-stat span { display: block; margin-top: 0.75rem; }
     .fd-goes-text p + p { margin-top: 1rem; }
+    /* The RCC card leads with their logo, linked to their site. */
+    .fd-rcc-logo { display: block; max-width: 220px; margin: 0 auto 1.25rem; }
+    .fd-rcc-logo img { display: block; width: 100%; height: auto; }
+    .fd-stat a.fd-rcc-logo { text-decoration: none; }
     .fd-ndos { display: flex; gap: 1rem; align-items: center; margin-top: 1.25rem; }
     .fd-ndos img { flex: none; width: 88px; height: 88px; }
     .fd-ndos p { margin: 0; font-size: 0.95rem; }
@@ -339,7 +343,7 @@
           <p class="section-subtitle">Every can stays in our community</p>
         </div>
         <div class="fd-goes fade-in">
-          <div class="card fd-stat"><b>1,000+</b><span>neighbors served every month by the <a href="https://rotterdamcc.org/food-pantries" target="_blank" rel="noopener">Rotterdam Community Center&#39;s food programs</a></span></div>
+          <div class="card fd-stat"><a class="fd-rcc-logo" href="https://rotterdamcc.org/" target="_blank" rel="noopener"><img src="rcc-logo.png" alt="Rotterdam Community Center" width="1229" height="306" loading="lazy"></a><b>1,000+</b><span>neighbors served every month by the <a href="https://rotterdamcc.org/food-pantries" target="_blank" rel="noopener">Rotterdam Community Center&#39;s food programs</a></span></div>
           <div class="fd-goes-text">
             <p>Almost everything goes to the <a href="https://rotterdamcc.org/food-pantries" target="_blank" rel="noopener"><strong>Rotterdam Community Center</strong></a>. The holidays are a critical time of year for their pantry, and Scouts sort the food by type on the day so it's ready for their shelves.</p>
             <p>Some also goes to the Blessing Box pantry at <strong>Christ's Church of the Hills</strong> in Mariaville, which our troop has supported in past years.</p>
