@@ -112,7 +112,24 @@
     .fd-join { max-width: 800px; margin: 1.25rem auto 0; padding: 0.85rem 1.25rem; text-align: center; font-size: 0.95rem;
       background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-sm); }
     .fd-join .fd-join-link { font-weight: 700; white-space: nowrap; }
-    .hero p a { color: var(--color-text-light); text-decoration: underline; text-underline-offset: 3px; }
+    /* Hero: the site's banner, with the flier's date card and grocery bag so QR visitors know they're in the right place. */
+    .fd-hero-inner { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2.5rem; align-items: center; }
+    .fd-hero h1 { margin-bottom: 1.5rem; text-wrap: balance; }
+    .fd-hero-when { display: flex; align-items: center; gap: 1.25rem; }
+    .fd-cal { flex: none; width: 92px; background: #fff; border-radius: 12px; overflow: hidden; text-align: center; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28); font-family: var(--font-heading); }
+    .fd-cal span { display: block; }
+    .fd-cal .m { background: var(--color-accent); color: #fff; font-weight: 800; font-size: 0.95rem; letter-spacing: 0.15em; padding: 0.2rem 0; }
+    .fd-cal .d { color: var(--color-primary); font-weight: 800; font-size: 2.6rem; line-height: 1; padding-top: 0.35rem; }
+    .fd-cal .w { color: var(--color-primary); font-weight: 700; font-size: 0.62rem; letter-spacing: 0.14em; padding: 0.25rem 0 0.5rem; }
+    .fd-hero-when b { display: block; font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.35rem, 3vw, 1.9rem); line-height: 1.2; }
+    .fd-hero-when span { display: block; color: #e3d5b2; font-size: 1rem; line-height: 1.45; margin-top: 0.3rem; }
+    .fd-hero .hero-buttons { justify-content: flex-start; }
+    .fd-hero-when b .fd-nowrap { display: inline; white-space: nowrap; color: inherit; font-size: inherit; margin: 0; }
+    .fd-hero-bag { display: block; width: 260px; height: 260px; }
+    @media (max-width: 760px) {
+      .fd-hero-inner { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+      .fd-hero-bag { order: -1; width: 120px; height: 120px; }
+    }
     @media (max-width: 760px) {
       .fd-goes, .fd-map { grid-template-columns: minmax(0, 1fr); }
     }
@@ -270,10 +287,20 @@
   <main id="main-content">
 
     <!-- Hero -->
-    <section class="hero">
-      <div class="container">
-        <h1 class="fade-in">Rotterdam Scouts Food Drive</h1>
-        <p class="fade-in">Sunday, November 15, 10&nbsp;AM to 2&nbsp;PM at the <a href="https://rotterdamcc.org/" target="_blank" rel="noopener">Rotterdam Community Center</a>. Drop off food for our neighbors, or leave a bag at the end of your driveway if you got one of our fliers.</p>
+    <section class="hero fd-hero">
+      <div class="container fd-hero-inner">
+        <div>
+          <h1 class="fade-in">Rotterdam Scouts Food Drive</h1>
+          <div class="fd-hero-when fade-in">
+            <div class="fd-cal"><span class="m">NOV</span><span class="d">15</span><span class="w">SUNDAY</span></div>
+            <div><b>Drop off <span class="fd-nowrap">10&nbsp;AM to 2&nbsp;PM</span></b><span>Rotterdam Community Center, 705&nbsp;Curry&nbsp;Rd &middot; Rain or shine</span></div>
+          </div>
+          <div class="hero-buttons fade-in">
+            <a href="#ways" class="btn btn-primary">How to give</a>
+            <a href="#directions" class="btn btn-secondary">Directions</a>
+          </div>
+        </div>
+        <img class="fd-hero-bag fade-in" src="bag.png" alt="" width="260" height="260">
       </div>
       <div class="wave-divider">
         <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
