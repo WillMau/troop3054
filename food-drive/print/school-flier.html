@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Rotterdam Scouts Food Drive - School Take-Home Flier</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* Take-home flier for school families: two half-letter fliers (5.5 x 8.5 in) on letter landscape; cut on the dashed line.
+     ?d=Mohonasen swaps the district name. ?one shows a single flier, for the PNG. */
+  @page { size: 11in 8.5in; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  a { color: inherit; text-decoration: none; }
+  :root { --navy: #003f87; --navy-deep: #002a5c; --gold: #f2c94c; --tan: #ad9d7b; --tan-soft: #e3d5b2;
+    --paper: #f8f5ee; --red: #ce1126; --ink: #232528; --soft: #5d5f63; --line: #e3dccd; }
+  body { width: 11in; height: 8.5in; display: flex; background: #fff; color: var(--ink);
+    font-family: 'Open Sans', Arial, sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body.one { width: 5.5in; }
+  body.one .panel + .panel { display: none; }
+  .panel { width: 5.5in; height: 8.5in; padding: 0.3in 0.3in 0.28in; display: flex; flex-direction: column; }
+  .panel > * { flex-shrink: 0; }
+  .panel + .panel { border-left: 1px dashed #b9b2a2; }
+
+  .hero { position: relative; overflow: hidden; border-radius: 0.16in; padding: 0.22in 0.24in 0.3in; color: #fff;
+    background: radial-gradient(circle at 88% 12%, #1d4f9a 0%, var(--navy) 44%, var(--navy-deep) 100%); }
+  .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 0.07in; background: var(--tan); }
+  .pill { display: inline-block; border: 1.2px solid #c4b596; border-radius: 20pt; padding: 2pt 8pt;
+    font: 700 6.5pt 'Montserrat', sans-serif; letter-spacing: 2pt; color: var(--tan-soft); }
+  h1 { font: 800 22pt/1.04 'Montserrat', sans-serif; margin-top: 0.1in; width: 3.2in; position: relative; z-index: 1; }
+  h1 span { color: var(--gold); }
+  .when { display: flex; align-items: center; gap: 0.13in; margin-top: 0.15in; position: relative; z-index: 1; }
+  .cal { width: 0.74in; background: #fff; border-radius: 0.07in; overflow: hidden; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,.28); }
+  .cal .m { background: var(--red); color: #fff; font: 800 8.5pt 'Montserrat', sans-serif; letter-spacing: 1.4pt; padding: 2pt 0; }
+  .cal .d { color: var(--navy); font: 800 24pt/1 'Montserrat', sans-serif; padding-top: 3pt; }
+  .cal .w { color: var(--navy); font: 700 5.5pt 'Montserrat', sans-serif; letter-spacing: 1.1pt; padding: 2pt 0 4pt; }
+  .when b { display: block; font: 800 15pt 'Montserrat', sans-serif; }
+  .when span { display: block; color: var(--tan-soft); font: 600 8.5pt/1.3 'Open Sans', sans-serif; margin-top: 1pt; }
+  .bag { position: absolute; right: 0.16in; top: 0.3in; width: 1.45in; height: 1.45in; z-index: 1; }
+  .mill { position: absolute; right: 1.35in; bottom: 0.07in; height: 2in; width: auto; opacity: 0.12; z-index: 0; }
+
+  .lead { font-size: 9.6pt; line-height: 1.45; margin-top: 0.2in; }
+  .lead b { color: var(--navy); }
+  .tip { margin-top: 0.1in; font-size: 9pt; line-height: 1.35; color: #3a3c40; }
+  .tip b { font-family: 'Montserrat', sans-serif; color: var(--navy); }
+
+  h2 { font: 800 7.5pt 'Montserrat', sans-serif; letter-spacing: 1.6pt; color: var(--navy); text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.08in; margin-top: 0.22in; }
+  h2::after { content: ''; flex: 1; height: 1.5px; background: var(--tan); }
+  .foods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.11in 0.06in; margin-top: 0.12in; }
+  .food { display: flex; align-items: center; gap: 0.06in; font: 700 7.5pt/1.15 'Montserrat', sans-serif; color: var(--navy); }
+  .food img { width: 0.5in; height: 0.5in; flex: none; }
+  .small { font-size: 7.8pt; color: var(--soft); margin-top: 0.1in; }
+
+  .duo { display: grid; grid-template-columns: 1.5fr 1fr; gap: 0.1in; margin-top: 0.2in; }
+  .door { background: var(--paper); border-left: 3.5px solid var(--tan); border-radius: 0.07in; padding: 0.08in 0.12in; }
+  .door .k { font: 800 6.5pt 'Montserrat', sans-serif; letter-spacing: 1.3pt; color: #a10e1f; text-transform: uppercase; }
+  .door p { font-size: 8pt; line-height: 1.35; margin-top: 2pt; }
+  .door p b { color: var(--navy); }
+  .stat { background: var(--navy); color: #fff; border-radius: 0.07in; padding: 0.08in 0.1in; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+  .stat b { font: 800 18pt/1 'Montserrat', sans-serif; color: var(--gold); }
+  .stat span { font-size: 6.8pt; line-height: 1.3; color: var(--tan-soft); margin-top: 3pt; text-wrap: balance; }
+
+  .join { font-size: 8pt; line-height: 1.35; color: var(--soft); text-align: center; margin-top: 0.16in; text-wrap: balance; }
+  .join b { color: var(--navy); }
+
+  .foot { display: flex; align-items: center; gap: 0.11in; margin-top: auto; padding-top: 0.1in; border-top: 1px solid var(--line); }
+  .foot .qr { width: 0.66in; height: 0.66in; flex: none; }
+  .foot .url { font: 800 10.5pt 'Montserrat', sans-serif; color: var(--navy); }
+  .foot .who { font-size: 7pt; color: var(--soft); margin-top: 1pt; line-height: 1.35; }
+  .foot .sa { width: auto; height: 0.48in; margin-left: auto; flex: none; }
+  .foot .rule { width: 1px; height: 0.42in; background: var(--line); flex: none; }
+  .foot .partner { width: auto; height: 0.25in; flex: none; }
+</style>
+</head>
+<body>
+<section class="panel">
+  <header class="hero">
+    <div class="pill">ROTTERDAM SCOUTS FOOD DRIVE</div>
+    <h1>Drop off food <span>for our neighbors</span></h1>
+    <div class="when">
+      <div class="cal"><div class="m">NOV</div><div class="d">15</div><div class="w">SUNDAY</div></div>
+      <div><b>10&nbsp;AM to 2&nbsp;PM</b><span>Rotterdam Community Center<br>705 Curry Rd, Rotterdam</span></div>
+    </div>
+    <img class="mill" src="../mill.svg" alt="">
+    <img class="bag" src="../bag.png" alt="">
+  </header>
+
+  <p class="lead"><b>Hi, <span class="dist">Schalmont</span> families!</b> Scouts from Troop 3054 and Pack 3054, who meet at Jefferson Elementary, are collecting food for the <a href="https://rotterdamcc.org/food-pantries">Rotterdam Community Center&#39;s</a> food pantries. Pull up and Scouts will take it right from your car. A bag, a box or a single can all help.</p>
+  <p class="tip"><b>Make it a family thing:</b> let your kids pick out the food and hand it to a Scout.</p>
+
+  <h2>Most needed</h2>
+  <div class="foods">
+    <div class="food"><img src="../../email/food-drive-2026/food-fruit.png" alt="">Canned fruit &amp; veggies</div>
+    <div class="food"><img src="../../email/food-drive-2026/food-beans.png" alt="">Beans, any kind</div>
+    <div class="food"><img src="../../email/food-drive-2026/food-pasta.png" alt="">Rice, noodles &amp; mac and cheese</div>
+    <div class="food"><img src="../../email/food-drive-2026/food-milk.png" alt="">Shelf-stable milk</div>
+    <div class="food"><img src="../../email/food-drive-2026/food-snacks.png" alt="">Lunchbox snacks</div>
+    <div class="food"><img src="../../email/food-drive-2026/food-cocoa.png" alt="">Hot cocoa &amp; tea</div>
+  </div>
+  <p class="small">Sloppy joe sauce is on their list too, and any shelf-stable food helps. Unopened and in date, please. Nothing that needs a fridge or freezer, and no alcohol.</p>
+
+  <div class="duo">
+    <div class="door"><div class="k">Got a Scout flier on your door?</div><p>Then you can skip the trip. Leave your bag at the <b>end of your driveway by 7&nbsp;AM Sunday</b>, and Troop 3054 Scouts will pick it up.</p></div>
+    <div class="stat"><b>1,000+</b><span>neighbors served every month by the RCC</span></div>
+  </div>
+
+  <p class="join">Want your kid in on this? <b>Grades K to 5</b> can join Pack&nbsp;3054, and <b>ages 10 to 17</b> can join Troop&nbsp;3054.</p>
+
+  <footer class="foot">
+    <img class="qr" src="../qr.png" alt="QR code for troop3054.org/food-drive">
+    <div><div class="url">troop3054.org/food-drive</div>
+      <div class="who">Troop 3054 and Pack 3054, Scouting America,<br>with the Rotterdam Community Center<br>Questions? info@troop3054.org</div></div>
+    <img class="sa" src="../scouting-america.png" alt="Scouting America">
+    <span class="rule"></span>
+    <img class="partner" src="../rcc-logo.png" alt="Rotterdam Community Center">
+  </footer>
+</section>
+<section class="panel" aria-hidden="true"></section>
+<script>
+  // The second flier is a copy of the first. ?d= sets the district name, ?one shows a single flier.
+  const q = new URLSearchParams(location.search);
+  const panels = document.querySelectorAll('.panel');
+  panels[1].innerHTML = panels[0].innerHTML;
+  const d = q.get('d');
+  if (d) document.querySelectorAll('.dist').forEach(el => { el.textContent = d; });
+  if (q.has('one')) document.body.classList.add('one');
+</script>
+</body>
+</html>
