@@ -1775,6 +1775,115 @@ p {
   opacity: 0.8;
 }
 
+/* Footer: troop news by email (added by script.js above .footer-bottom) */
+.footer-news {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2.5rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid rgba(214, 206, 189, 0.2);
+}
+
+.footer-news-text {
+  flex: 1 1 18rem;
+  max-width: 34rem;
+}
+
+.footer-news h4 {
+  color: var(--color-text-light);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer-news p {
+  font-size: 0.9rem;
+  color: rgba(250, 246, 240, 0.75);
+}
+
+.footer-news a {
+  color: var(--color-secondary-light);
+  text-decoration: underline;
+  text-decoration-color: rgba(196, 181, 150, 0.5);
+}
+
+.footer-news-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  flex: 1 1 20rem;
+  max-width: 28rem;
+}
+
+.footer-news-form input[type="email"] {
+  flex: 1 1 13rem;
+  min-width: 0;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.footer-news-form button {
+  padding: 0.7rem 1.2rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-secondary);
+  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.footer-news-form button:hover,
+.footer-news-form button:focus-visible {
+  background: var(--color-secondary-light);
+}
+
+.footer-news-form button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.footer-news-form input:focus-visible,
+.footer-news-form button:focus-visible {
+  outline: 2px solid var(--color-secondary-light);
+  outline-offset: 2px;
+}
+
+.footer-news-msg {
+  flex-basis: 100%;
+  font-size: 0.85rem;
+}
+
+.footer-news-msg:empty {
+  display: none;
+}
+
+.footer-news .footer-news-fine {
+  flex-basis: 100%;
+  font-size: 0.78rem;
+  color: rgba(250, 246, 240, 0.55);
+}
+
+.footer-news-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
 /* ---------- 404 Page ---------- */
 .error-page {
   min-height: 100vh;

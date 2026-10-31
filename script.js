@@ -16,7 +16,68 @@
     initFadeAnimations();
     initContactForm();
     initSponsorForm();
+    initNewsSignup();
     setActiveNavLink();
+  }
+
+  /* ---------- Footer: troop news by email ---------- */
+  // News only, never a join path: anyone who wants to join is sent to the join
+  // page, which points to the official my.Scouting application. Sign-ups land on
+  // the mailing list in the member portal (Admin > Community).
+  function initNewsSignup() {
+    var bottom = document.querySelector('.site-footer .footer-bottom');
+    if (!bottom || document.querySelector('.footer-news')) return;
+    var box = document.createElement('div');
+    box.className = 'footer-news';
+    box.innerHTML =
+      '<div class="footer-news-text">' +
+        '<h4>Troop news by email</h4>' +
+        '<p>Events, service projects and troop news for families, alumni and neighbors. ' +
+        'Want your Scout to join? <a href="/join.html">Start here</a>.</p>' +
+      '</div>' +
+      '<form class="footer-news-form" novalidate>' +
+        '<label class="sr-only" for="news-email">Email address</label>' +
+        '<input id="news-email" name="email" type="email" autocomplete="email" placeholder="Your email address" required>' +
+        '<input class="footer-news-hp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+        '<button type="submit">Sign up</button>' +
+        '<p class="footer-news-msg" role="status" aria-live="polite"></p>' +
+        '<p class="footer-news-fine">We only use it to send troop news. <a href="/privacy.html#mailing-list">Privacy</a></p>' +
+      '</form>';
+    bottom.parentNode.insertBefore(box, bottom);
+
+    var form = box.querySelector('form');
+    var msg = box.querySelector('.footer-news-msg');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = form.email.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        msg.textContent = 'Please enter a valid email address.';
+        return;
+      }
+      var btn = form.querySelector('button');
+      btn.disabled = true;
+      msg.textContent = 'Signing you up...';
+      fetch('https://my.troop3054.org/api/news-signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, website: form.website.value })
+      })
+        .then(function (r) {
+          return r.json().then(function (d) { return { ok: r.ok, data: d }; });
+        })
+        .then(function (res) {
+          if (res.ok) {
+            form.reset();
+            msg.textContent = "You're on the list. Thanks!";
+          } else {
+            msg.textContent = (res.data && res.data.error) || 'Something went wrong. Please try again.';
+          }
+        })
+        .catch(function () {
+          msg.textContent = 'Something went wrong. Please try again, or email info@troop3054.org.';
+        })
+        .then(function () { btn.disabled = false; });
+    });
   }
 
   /* ---------- Navigation ---------- */
