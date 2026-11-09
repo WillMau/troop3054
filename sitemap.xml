@@ -49,6 +49,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.troop3054.org/merit-badges.html</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.troop3054.org/involved.html</loc>
     <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
