@@ -64,6 +64,7 @@
     /* Troop class card */
     .mb-class { max-width: 1100px; margin: 0 auto; background: var(--color-white); border-radius: var(--radius-md);
       box-shadow: var(--shadow-sm); display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); overflow: hidden; }
+    .mb-class + .mb-class { margin-top: 32px; }
     .mb-class-main { padding: 36px; display: flex; flex-direction: column; gap: 20px; }
     .mb-class-head { display: flex; gap: 20px; align-items: center; }
     .mb-class-head img { width: 104px; height: 104px; flex-shrink: 0; border-radius: 50%; }
@@ -226,8 +227,8 @@
     <section class="section mb-section" id="classes">
       <div class="container">
         <div class="section-header fade-in">
-          <h2>Troop badge classes</h2>
-          <p class="section-subtitle">Badges we teach to the whole troop at once, with the files Scouts need.</p>
+          <h2>Badge classes</h2>
+          <p class="section-subtitle">Classes our counselors run, with the files Scouts need.</p>
         </div>
 
         <article class="mb-class" id="cooking">
@@ -235,17 +236,17 @@
             <div class="mb-class-head">
               <img src="images/badges/cooking.webp" alt="Cooking merit badge" width="104" height="104">
               <div>
-                <p class="mb-kicker">Fall 2026 · Camp Wakpominee</p>
+                <p class="mb-kicker">Troop class · Meeting, home and campout</p>
                 <h3>Cooking</h3>
                 <span class="mb-pill"><svg width="13" height="13" aria-hidden="true" focusable="false"><use href="#gi-star"/></svg>Required for Eagle</span>
               </div>
             </div>
-            <p>Scouts learn the classroom requirements at a troop meeting, plan and cook at home, then cook with their crews at camp. Every crew plans its meals from the same baskets, and everyone it feeds counts toward a $15 budget, adults included.</p>
+            <p>Scouts learn the classroom requirements at a troop meeting, plan and cook at home, then cook with their crews on a campout. Every crew plans its meals from the same baskets on a set budget per person, and the adults they feed count too.</p>
             <dl class="mb-dates">
-              <div><dt>Mon, Nov 9</dt><dd>Badge Day at the troop meeting: health and safety, nutrition and cooking basics (requirements 1 to 3).</dd></div>
-              <div><dt>Mon, Nov 16</dt><dd>Homework due: the 5-day activity log and meal plan, requirement 7, and the camp and trail menus.</dd></div>
-              <div><dt>Before Nov 20</dt><dd>Home meal plan approved by the counselor, then four meals cooked at home.</dd></div>
-              <div><dt>Nov 20 to 22</dt><dd>Crew cooking at Camp Wakpominee, and trail meals on the Sunday hike.</dd></div>
+              <div><dt>At a meeting</dt><dd>Badge Day: health and safety, nutrition and cooking basics (requirements 1 to 3), and day 1 of the 5-day log.</dd></div>
+              <div><dt>At home</dt><dd>The 5-day log and meal plan, requirement 7, and a home meal plan the counselor approves before four meals get cooked.</dd></div>
+              <div><dt>Before camp</dt><dd>Camp and trail menus from the meal baskets. Each crew picks its menus and the counselor reviews them.</dd></div>
+              <div><dt>On the campout</dt><dd>Crew cooking, cleanup and Leave No Trace, plus trail meals on a hike.</dd></div>
             </dl>
           </div>
           <div class="mb-class-side">
@@ -263,7 +264,7 @@
               </a>
               <a class="mb-file" href="docs/Cooking-Merit-Badge-Slides.pdf" target="_blank" rel="noopener">
                 <span class="mb-file-icon" aria-hidden="true">PDF</span>
-                <span><strong>Badge Day slides</strong><span class="sub">The Nov 9 presentation, for anyone who missed it.</span></span>
+                <span><strong>Badge Day slides</strong><span class="sub">The Badge Day presentation, for anyone who missed it.</span></span>
                 <span class="meta">30 slides</span>
               </a>
             </div>
@@ -277,6 +278,47 @@
               <a class="mb-file" href="https://www.scouting.org/skills/merit-badges/digital-resource-guides/cooking/" target="_blank" rel="noopener noreferrer">
                 <span class="mb-file-icon link" aria-hidden="true">WEB</span>
                 <span><strong>Videos and tip sheets</strong><span class="sub">Scouting America’s resource guide, by requirement.</span></span>
+                <span class="meta">scouting.org</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="mb-class" id="artificial-intelligence">
+          <div class="mb-class-main">
+            <div class="mb-class-head">
+              <img src="images/badges/artificial-intelligence.webp" alt="Artificial Intelligence merit badge" width="104" height="104">
+              <div>
+                <p class="mb-kicker">Workshop · About 4 hours</p>
+                <h3>Artificial Intelligence</h3>
+              </div>
+            </div>
+            <p>A hands-on workshop led by a counselor who works in tech. Scouts play AI or Not?, talk through real ethics scenarios, learn to spot deepfakes, practice writing prompts and interview a professional about AI careers.</p>
+            <dl class="mb-dates">
+              <div><dt>Before</dt><dd>Research AI ethics (bias, privacy, and AI making decisions about people) to share in the workshop.</dd></div>
+              <div><dt>In the workshop</dt><dd>Requirements 1 to 6 and 8, with a break halfway.</dd></div>
+              <div><dt>After</dt><dd>Requirement 7, a project or a lesson you teach, if there wasn’t time for the teachback.</dd></div>
+            </dl>
+          </div>
+          <div class="mb-class-side">
+            <p class="mb-side-label">Files</p>
+            <div class="mb-files">
+              <a class="mb-file" href="docs/Artificial-Intelligence-Merit-Badge-Slides.pdf" target="_blank" rel="noopener">
+                <span class="mb-file-icon" aria-hidden="true">PDF</span>
+                <span><strong>Workshop slides</strong><span class="sub">The full workshop, with the AI or Not? and ethics games.</span></span>
+                <span class="meta">73 slides</span>
+              </a>
+            </div>
+            <p class="mb-side-label">From Scouting America</p>
+            <div class="mb-files">
+              <a class="mb-file" href="https://www.scouting.org/merit-badges/artificial-intelligence/" target="_blank" rel="noopener noreferrer">
+                <span class="mb-file-icon link" aria-hidden="true">WEB</span>
+                <span><strong>AI requirements</strong><span class="sub">The official requirements. This badge has no pamphlet.</span></span>
+                <span class="meta">scouting.org</span>
+              </a>
+              <a class="mb-file" href="https://filestore.scouting.org/filestore/Merit_Badge_ReqandRes/Digital-Resources-for-Artificial-Intelligence-Merit-Badge-Counselors.pdf" target="_blank" rel="noopener noreferrer">
+                <span class="mb-file-icon link" aria-hidden="true">PDF</span>
+                <span><strong>Digital resources</strong><span class="sub">Scouting America’s videos and activities, by requirement.</span></span>
                 <span class="meta">scouting.org</span>
               </a>
             </div>
