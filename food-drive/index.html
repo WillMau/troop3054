@@ -12,14 +12,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rotterdam Scouts Food Drive | Every November | Troop 3054</title>
-  <meta name="description" content="Every November, Rotterdam&#39;s Scouts collect food for the Rotterdam Community Center&#39;s pantries. See how to give, what&#39;s needed, and past results.">
+  <meta name="description" content="Every November, Scouts in Rotterdam, NY collect food for the Rotterdam Community Center&#39;s food pantries. How to give, what&#39;s most needed, and past results.">
   <link rel="canonical" href="https://www.troop3054.org/food-drive/">
 
   <meta name="geo.region" content="US-NY">
   <meta name="geo.placename" content="Rotterdam, NY">
 
   <meta property="og:title" content="Rotterdam Scouts Food Drive | Every November | Troop 3054">
-  <meta property="og:description" content="Every November, Rotterdam&#39;s Scouts collect food for the Rotterdam Community Center&#39;s pantries. See how to give, what&#39;s needed, and past results.">
+  <meta property="og:description" content="Every November, Scouts in Rotterdam, NY collect food for the Rotterdam Community Center&#39;s food pantries. How to give, what&#39;s most needed, and past results.">
   <meta property="og:image" content="https://www.troop3054.org/food-drive/food-drive-results.png">
   <meta property="og:image:width" content="1080">
   <meta property="og:image:height" content="1080">
@@ -27,7 +27,7 @@
   <meta property="og:url" content="https://www.troop3054.org/food-drive/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Rotterdam Scouts Food Drive | Every November | Troop 3054">
-  <meta name="twitter:description" content="Every November, Rotterdam&#39;s Scouts collect food for the Rotterdam Community Center&#39;s pantries. See how to give, what&#39;s needed, and past results.">
+  <meta name="twitter:description" content="Every November, Scouts in Rotterdam, NY collect food for the Rotterdam Community Center&#39;s food pantries. How to give, what&#39;s most needed, and past results.">
   <meta name="twitter:image" content="https://www.troop3054.org/food-drive/food-drive-results.png">
   <meta name="twitter:image:alt" content="Thank you, Rotterdam! 2,059 items to feed our neighbors in the 2026 Rotterdam Scouts Food Drive.">
   <meta property="og:type" content="website">
@@ -474,7 +474,7 @@
           const get = (k) => { const m = b.match(new RegExp('^' + k + '(?:;[^:\\r\\n]*)?:(.+)$', 'm')); return m ? unesc(m[1].trim()) : ''; };
           const s = get('DTSTART'); if (!s) return null;
           const e = get('DTEND');
-          return { summary: get('SUMMARY'), location: get('LOCATION'), start: parseDate(s), end: e ? parseDate(e) : null };
+          return { summary: get('SUMMARY'), location: get('LOCATION'), start: parseDate(s), end: e ? parseDate(e) : null, rawStart: s, rawEnd: e };
         }).filter((ev) => ev && /food drive/i.test(ev.summary) && !over(ev))
           .sort((a, b) => a.start.date - b.start.date);
         if (!drives.length) return;
@@ -487,6 +487,46 @@
           '<div><b>' + esc(hours) + '</b><span>' + esc(ev.location || 'Rotterdam Community Center, 705 Curry Rd') + '</span></div>';
         const lead = document.getElementById('fd-next-lead');
         if (lead) lead.textContent = 'Next drive: ' + d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+        // Event data for search engines, built from the same calendar entry, so
+        // Google can list next year's drive as an event without anyone editing
+        // this page. Feed times are New York local; add the right UTC offset.
+        const iso = (raw) => {
+          const day = raw.slice(0, 4) + '-' + raw.slice(4, 6) + '-' + raw.slice(6, 8);
+          if (raw.length === 8) return day;
+          const t = day + 'T' + raw.slice(9, 11) + ':' + raw.slice(11, 13) + ':00';
+          if (/Z$/.test(raw)) return t + 'Z';
+          const y = +raw.slice(0, 4), mo = +raw.slice(4, 6), dd = +raw.slice(6, 8);
+          const nthSunday = (mm, n) => 1 + ((7 - new Date(Date.UTC(y, mm - 1, 1)).getUTCDay()) % 7) + 7 * (n - 1);
+          const dst = (mo > 3 && mo < 11) || (mo === 3 && dd >= nthSunday(3, 2)) || (mo === 11 && dd < nthSunday(11, 1));
+          return t + (dst ? '-04:00' : '-05:00');
+        };
+        const rcc = !ev.location || /curry rd|community center/i.test(ev.location);
+        const data = {
+          '@context': 'https://schema.org',
+          '@type': 'Event',
+          name: ev.summary,
+          description: 'Drop off shelf-stable food at the Rotterdam Community Center in Rotterdam, NY. Scouts unload your car and sort everything for the RCC\'s food pantries. Homes that got our flier can leave a bag at the end of the driveway instead.',
+          url: 'https://www.troop3054.org/food-drive/',
+          startDate: iso(ev.rawStart),
+          eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+          eventStatus: 'https://schema.org/EventScheduled',
+          isAccessibleForFree: true,
+          offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: 'https://www.troop3054.org/food-drive/' },
+          location: rcc
+            ? { '@type': 'Place', name: 'Rotterdam Community Center', url: 'https://rotterdamcc.org/',
+                address: { '@type': 'PostalAddress', streetAddress: '705 Curry Rd', addressLocality: 'Rotterdam', addressRegion: 'NY', postalCode: '12306', addressCountry: 'US' } }
+            : { '@type': 'Place', name: ev.location, address: ev.location },
+          organizer: [
+            { '@type': 'Organization', name: 'Troop 3054 - Scouting America', url: 'https://www.troop3054.org/' },
+            { '@type': 'Organization', name: 'Pack 3054 - Scouting America', url: 'https://pack3054.org/' },
+          ],
+          performer: { '@type': 'PerformingGroup', name: 'Troop 3054 and Pack 3054 Scouts' },
+        };
+        if (ev.rawEnd) data.endDate = iso(ev.rawEnd);
+        const ld = document.createElement('script');
+        ld.type = 'application/ld+json';
+        ld.textContent = JSON.stringify(data);
+        document.head.appendChild(ld);
       })
       .catch(() => {});
   })();
