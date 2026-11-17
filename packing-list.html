@@ -431,6 +431,7 @@
       cursor: pointer;
     }
     .trip-match:hover { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+    .trip-credit { margin: 0.5rem 0 0; font-size: 0.78rem; color: #666; }
     .trip-soon { margin-bottom: 0.9rem; }
     .trip-go {
       width: 100%;
@@ -595,7 +596,7 @@
                   <optgroup label="Or pick a place">
                     <option value="wakpominee">Camp Wakpominee</option>
                     <option value="rotary">Camp Rotary</option>
-                    <option value="other">Somewhere else</option>
+                    <option value="other">Somewhere else (a camp, town or address)</option>
                   </optgroup>
                 </select>
               </label>
@@ -607,13 +608,14 @@
               </label>
             </div>
             <div class="trip-town" id="trip-town-box" hidden>
-              <label class="trip-field" for="trip-town">Nearest town
+              <label class="trip-field" for="trip-town">Camp, town or address
                 <span class="trip-town-row">
-                  <input type="text" id="trip-town" placeholder="Like Lake George" autocomplete="off">
+                  <input type="text" id="trip-town" placeholder="Like 185 Sly Pond Rd, Fort Ann NY" autocomplete="off">
                   <button type="button" class="pack-btn" id="trip-find">Find it</button>
                 </span>
               </label>
               <div class="trip-matches" id="trip-matches" role="status" aria-live="polite"></div>
+              <p class="trip-credit">Place search by <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>.</p>
             </div>
             <div class="trip-summary" id="trip-summary" role="status" aria-live="polite" hidden></div>
             <div class="trip-foot" id="trip-foot" hidden>
@@ -1315,7 +1317,7 @@
     const hasDates = validDay(trip.from) && validDay(trip.to);
     if (hasDates && trip.to <= trip.from) { showStandard(); showSummary('This list is for overnight trips. Pick a coming-home date after the day you leave.'); return; }
     if (hasDates && daysBetween(trip.from, trip.to) > 30) { showStandard(); showSummary('That’s more than a month. Check the dates.'); return; }
-    if (trip.lat == null) { showStandard(); showSummary($('trip-town-box').hidden ? '' : 'Type the nearest town, so we can check the weather there.'); return; }
+    if (trip.lat == null) { showStandard(); showSummary($('trip-town-box').hidden ? '' : 'Type the camp, town or address, so we can check the weather there.'); return; }
     if (!hasDates) { showStandard(); showSummary('Add the day you leave and the day you come home.'); return; }
     if (trip.to < today()) { showStandard(); showSummary('Those dates have passed. Pick the next trip.'); return; }
     showSummary('<strong>' + esc(trip.place) + '</strong><br>Checking the weather…');
@@ -1376,35 +1378,66 @@
   function presetFor(text) {
     return Object.keys(PLACES).find((k) => PLACES[k].match.test(text || '')) || null;
   }
-  const STATES = { NY: 'New York', VT: 'Vermont', MA: 'Massachusetts', CT: 'Connecticut', NH: 'New Hampshire', ME: 'Maine', PA: 'Pennsylvania', NJ: 'New Jersey' };
+  const NEARBY = ['New York', 'Vermont', 'Massachusetts', 'Connecticut', 'New Hampshire', 'Maine', 'Pennsylvania', 'New Jersey'];
 
+  /* Camps, towns and street addresses, from OpenStreetMap's search. It's only
+     asked when someone presses Find: their rules don't allow search-as-you-type. */
+  async function findPlaces(text) {
+    const res = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&accept-language=en&q=' + encodeURIComponent(text));
+    if (!res.ok) throw new Error('search');
+    const plain = (v) => String(v || '').replace(/^(Town|Village|City|Township|Borough) of /, '');
+    const seen = {};
+    return (await res.json()).map((r) => {
+      const ad = r.address || {};
+      const town = plain(ad.city || ad.town || ad.village || ad.hamlet || ad.municipality || ad.county);
+      const region = ad.country_code && ad.country_code !== 'us' ? ad.country : ad.state;
+      const street = ad.road ? (ad.house_number ? ad.house_number + ' ' : '') + ad.road : '';
+      const named = plain(r.name);
+      const parts = [named || street || town, town, region].filter((part, i, all) => part && all.indexOf(part) === i);
+      const area = [town, region].filter(Boolean).join(', ');
+      // A camp goes by its name; a street address goes by its town.
+      return { name: parts.join(', '), place: named && named !== town ? named : area || parts[0], lat: Number(r.lat), lon: Number(r.lon),
+        near: NEARBY.indexOf(region) === -1 ? 1 : 0 };
+    }).filter((x) => x.name && isFinite(x.lat) && isFinite(x.lon) && !seen[x.name] && (seen[x.name] = true))
+      .map((x, i) => [x, i]).sort((a, b) => a[0].near - b[0].near || a[1] - b[1]).map((pair) => pair[0]); // our corner of the map first, nothing left out
+  }
+
+  /* Towns only, from the weather service: the fallback when the search above is busy. */
   async function findTowns(name) {
     const res = await fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(name) + '&count=8&countryCode=US&language=en&format=json');
     const data = await res.json();
-    const near = Object.keys(STATES).map((k) => STATES[k]);
+    const rank = (st) => (NEARBY.indexOf(st) === -1 ? 99 : NEARBY.indexOf(st));
     return (data.results || []).map((r) => ({ name: r.name + (r.admin1 ? ', ' + r.admin1 : ''), state: r.admin1 || '', lat: r.latitude, lon: r.longitude }))
-      .sort((a, b) => (near.indexOf(a.state) === -1 ? 99 : near.indexOf(a.state)) - (near.indexOf(b.state) === -1 ? 99 : near.indexOf(b.state)));
+      .sort((x, y) => rank(x.state) - rank(y.state)).map((t) => ({ name: t.name, place: t.name, lat: t.lat, lon: t.lon }));
   }
 
-  function useTown(t) {
+  function usePlace(t) {
     trip.lat = t.lat; trip.lon = t.lon; trip.wxName = t.name;
-    if (trip.src === 'other') trip.place = t.name;
+    if (trip.src === 'other') trip.place = t.place;
     $('trip-matches').innerHTML = '';
     refresh();
   }
 
-  async function searchTown(auto) {
+  async function searchPlace() {
     const box = $('trip-matches');
-    const name = $('trip-town').value.trim();
-    if (name.length < 2) { box.textContent = 'Type a town, like Lake George.'; return; }
+    const text = $('trip-town').value.trim();
+    if (text.length < 3) { box.textContent = 'Type a camp, a town or an address.'; return; }
     box.textContent = 'Looking…';
-    let towns = [];
-    try { towns = await findTowns(name); } catch (e) { box.textContent = 'We couldn’t look that up just now. Try again in a minute.'; return; }
-    if (!towns.length) { box.textContent = 'No town by that name. Try the nearest bigger town.'; return; }
-    // From a troop trip's own address, a single match in the state it names is good enough.
-    if (auto && towns.filter((t) => t.state === auto).length === 1) { useTown(towns.find((t) => t.state === auto)); return; }
-    box.innerHTML = towns.map((t, i) => '<button type="button" class="trip-match" data-i="' + i + '">' + esc(t.name) + '</button>').join('');
-    box.querySelectorAll('.trip-match').forEach((b) => { b.onclick = () => useTown(towns[Number(b.dataset.i)]); });
+    let places = [];
+    try { places = await findPlaces(text); } catch (e) { places = []; }
+    if (!places.length) {
+      try { places = await findTowns(text); } catch (e) { box.textContent = 'We couldn’t look that up just now. Try again in a minute.'; return; }
+    }
+    if (!places.length) { box.textContent = 'Nothing by that name. Try the nearest town.'; return; }
+    // Several answers for one spot (a camp, its front gate, its street number) are one answer.
+    const here = places[0];
+    if (places.every((x) => Math.abs(x.lat - here.lat) < 0.05 && Math.abs(x.lon - here.lon) < 0.05)) {
+      const number = (text.match(/^\d+/) || [''])[0];
+      usePlace((number && places.find((x) => x.name.indexOf(number + ' ') === 0)) || here);
+      return;
+    }
+    box.innerHTML = places.map((t, i) => '<button type="button" class="trip-match" data-i="' + i + '">' + esc(t.name) + '</button>').join('');
+    box.querySelectorAll('.trip-match').forEach((btn) => { btn.onclick = () => usePlace(places[Number(btn.dataset.i)]); });
   }
 
   function pickWhere() {
@@ -1429,11 +1462,11 @@
         place: known ? PLACES[known].name : t.title, lat: known ? PLACES[known].lat : null, lon: known ? PLACES[known].lon : null };
       $('trip-from').value = t.from; $('trip-to').value = t.to;
       if (!known) {
-        // "Fort William Henry, Lake George, NY" -> look up Lake George in New York.
-        const m = t.location.match(/([^,]+),\s*([A-Z]{2})\b/);
+        // Look the trip's own place up; "TBD" and blanks wait for someone to type one.
+        const where = /^(tbd|tba)?$/i.test(t.location.trim()) ? '' : t.location;
         $('trip-town-box').hidden = false;
-        $('trip-town').value = m ? m[1].trim() : '';
-        if (m) { refresh(); searchTown(STATES[m[2]] || null); return; }
+        $('trip-town').value = where;
+        if (where) { refresh(); searchPlace(); return; }
       }
     }
     refresh();
@@ -1454,7 +1487,7 @@
       return;
     }
     sel.value = PLACES[trip.src] ? trip.src : presetFor(trip.place) || 'other';
-    if (sel.value === 'other') { $('trip-town-box').hidden = false; if (trip.wxName) $('trip-town').value = trip.wxName.split(',')[0]; }
+    if (sel.value === 'other') { $('trip-town-box').hidden = false; if (trip.wxName) $('trip-town').value = trip.wxName; }
   }
 
   /* A link that opens this trip's list: ?where=wakpominee&from=2026-11-20&to=2026-11-22 */
@@ -1501,8 +1534,8 @@
         refresh();
       };
     });
-    $('trip-find').onclick = () => searchTown(null);
-    $('trip-town').onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); searchTown(null); } };
+    $('trip-find').onclick = () => searchPlace();
+    $('trip-town').onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); searchPlace(); } };
     $('trip-clear').onclick = () => { $('trip-where').value = ''; pickWhere(); };
     $('trip-copy').onclick = async () => {
       const link = tripLink(), btn = $('trip-copy');
