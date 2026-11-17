@@ -367,10 +367,125 @@
     .pack-notes li { font-size: 0.92rem; line-height: 1.6; color: var(--color-text); margin-bottom: 0.35rem; }
     .pack-notes li strong { color: var(--color-primary); }
 
+    /* Trip picker: fits the list to a trip's length and weather */
+    .trip-card {
+      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 1.1rem 1.25rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .trip-card h2 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin: 0 0 0.25rem;
+    }
+    .trip-card h2::after { display: none; }
+    .trip-lead { margin: 0 0 0.9rem; font-size: 0.92rem; line-height: 1.5; color: #555; }
+    .trip-fields { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.75rem; }
+    .trip-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      min-width: 0;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.82rem;
+      color: var(--color-primary);
+    }
+    .trip-field select, .trip-field input {
+      width: 100%;
+      min-width: 0;
+      min-height: 44px;
+      padding: 0.5rem 0.65rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--color-text);
+      background: white;
+    }
+    .trip-field select:focus, .trip-field input:focus { outline: 2px solid var(--color-primary); outline-offset: 1px; }
+    @media (max-width: 640px) {
+      .trip-fields { grid-template-columns: 1fr 1fr; }
+      .trip-field-wide { grid-column: 1 / -1; }
+    }
+    .trip-town { margin-top: 0.75rem; }
+    .trip-town-row { display: flex; gap: 0.5rem; }
+    .trip-town-row input { flex: 1; }
+    .trip-town-row .pack-btn { white-space: nowrap; }
+    .trip-matches { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; font-size: 0.9rem; color: #555; }
+    .trip-match {
+      min-height: 40px;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      background: white;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--color-primary);
+      cursor: pointer;
+    }
+    .trip-match:hover { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+    .trip-soon { margin-bottom: 0.9rem; }
+    .trip-go {
+      width: 100%;
+      min-height: 48px;
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--color-primary);
+      border-radius: var(--radius-sm);
+      background: var(--color-primary);
+      color: white;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.92rem;
+      line-height: 1.35;
+      cursor: pointer;
+    }
+    .trip-summary {
+      margin-top: 0.9rem;
+      padding: 0.8rem 1rem;
+      background: #FAF7F0;
+      border: 1px solid var(--color-secondary-light);
+      border-left: 4px solid var(--color-green);
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--color-text);
+    }
+    .trip-summary strong { color: var(--color-primary); }
+    .trip-fine { display: block; margin-top: 0.35rem; font-size: 0.82rem; color: #666; }
+    .trip-foot { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+    [hidden] { display: none !important; }
+
+    /* Why the weather put an item on the list */
+    .pack-why {
+      display: inline-block;
+      margin-left: 0.3rem;
+      padding: 0.05rem 0.5rem;
+      border-radius: 999px;
+      background: #E6EEF7;
+      color: var(--color-primary);
+      font-family: var(--font-heading);
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      vertical-align: 1px;
+    }
+    .pack-why.why-heat { background: #FBE9E7; color: #9A2A1B; }
+    .pack-why.why-dark { background: #ECEAE4; color: #4A4A44; }
+    .pack-item.checked .pack-why { opacity: 0.55; }
+
     /* Print styles */
     @media print {
-      .site-nav, .site-footer, .hero, .cta-section, .pack-actions,
-      .pack-progress, .skip-link, .nav-overlay { display: none !important; }
+      .site-nav, .site-footer, .hero, .cta-section, .pack-actions, .trip-card, .pack-banner,
+      .pack-progress, .skip-link, .nav-overlay, .section-alt { display: none !important; }
       body { background: white; }
       .section { padding: 0 !important; }
       .pack-cat, .pack-notes { box-shadow: none; break-inside: avoid; border: 1px solid #999; }
@@ -378,8 +493,9 @@
       .pack-checkbox { border-color: #555 !important; }
       .pack-item.checked .pack-item-label { text-decoration: none; color: var(--color-text); }
       .pack-print-title { display: block !important; }
+      .pack-print-note:not(:empty) { display: block !important; font-size: 0.85rem; margin: 0 0 0.75rem; }
     }
-    .pack-print-title { display: none; }
+    .pack-print-title, .pack-print-note { display: none; }
   </style>
 </head>
 <body>
@@ -454,8 +570,8 @@
     <!-- Hero -->
     <section class="hero">
       <div class="container">
-        <h1 class="fade-in">Summer Camp Packing List</h1>
-        <p class="fade-in">Week-long resident camp. Tap each item as you pack — your checkmarks are saved right on your phone, so you can pack over a few days and pick up where you left off.</p>
+        <h1 class="fade-in" id="pack-h1">Summer Camp Packing List</h1>
+        <p class="fade-in" id="pack-sub">Week-long resident camp. Tap each item as you pack — your checkmarks are saved right on your phone, so you can pack over a few days and pick up where you left off.</p>
       </div>
     </section>
 
@@ -464,7 +580,47 @@
       <div class="container">
         <div class="packing-wrapper">
 
-          <h2 class="pack-print-title" style="color:var(--color-primary);">Summer Camp Packing Checklist — Troop 3054, Rotterdam NY</h2>
+          <h2 class="pack-print-title" id="pack-print-title" style="color:var(--color-primary);">Summer Camp Packing Checklist — Troop 3054, Rotterdam NY</h2>
+          <p class="pack-print-note" id="pack-print-note"></p>
+
+          <!-- Trip picker: pick a trip and the list fits its length and weather -->
+          <div class="trip-card" id="trip-card">
+            <h2>Packing for a different trip?</h2>
+            <p class="trip-lead">Pick the trip, and the list changes to fit how long you're gone and the weather there.</p>
+            <div class="trip-soon" id="trip-soon" hidden></div>
+            <div class="trip-fields">
+              <label class="trip-field trip-field-wide" for="trip-where">Where
+                <select id="trip-where">
+                  <option value="">Summer camp (the standard list)</option>
+                  <optgroup label="Or pick a place">
+                    <option value="wakpominee">Camp Wakpominee</option>
+                    <option value="rotary">Camp Rotary</option>
+                    <option value="other">Somewhere else</option>
+                  </optgroup>
+                </select>
+              </label>
+              <label class="trip-field" for="trip-from">Leaving
+                <input type="date" id="trip-from">
+              </label>
+              <label class="trip-field" for="trip-to">Coming home
+                <input type="date" id="trip-to">
+              </label>
+            </div>
+            <div class="trip-town" id="trip-town-box" hidden>
+              <label class="trip-field" for="trip-town">Nearest town
+                <span class="trip-town-row">
+                  <input type="text" id="trip-town" placeholder="Like Lake George" autocomplete="off">
+                  <button type="button" class="pack-btn" id="trip-find">Find it</button>
+                </span>
+              </label>
+              <div class="trip-matches" id="trip-matches" role="status" aria-live="polite"></div>
+            </div>
+            <div class="trip-summary" id="trip-summary" role="status" aria-live="polite" hidden></div>
+            <div class="trip-foot" id="trip-foot" hidden>
+              <button type="button" class="pack-btn" id="trip-copy">Copy a link to this list</button>
+              <button type="button" class="pack-btn" id="trip-clear">Back to the summer camp list</button>
+            </div>
+          </div>
 
           <!-- Scout name -->
           <div class="pack-intro">
@@ -494,7 +650,7 @@
             </button>
             <a class="pack-btn" href="Troop3054_Packing_List.pdf" download>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download original PDF
+              Summer camp list (PDF)
             </a>
             <button class="pack-btn danger" onclick="resetList()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
@@ -508,7 +664,7 @@
           <!-- Before you pack notes -->
           <div class="pack-notes">
             <h2>⚠️ Important Before You Pack</h2>
-            <ul>
+            <ul id="pack-notes-list">
               <li>Pack everything in <strong>one carry-in bag</strong> that fits inside the tent.</li>
               <li><strong>Label everything</strong> with the Scout's name and Troop 3054.</li>
               <li><strong>No food in tents</strong> — keep all snacks in the bear box at night.</li>
@@ -655,101 +811,195 @@
   <script src="script.js"></script>
 
   <script>
-  /* ===== Packing List Data ===== */
+  /* ===== Packing list =====
+     The standard list is the summer camp one, and it's what loads. Pick a trip
+     and the same catalog is filtered and reworded for how long you're gone and
+     the weather where you're going.
+
+     Each item:
+       b    how it reads on the standard list. A saved checkmark is keyed on
+            it, so don't reword b; give the item an l() instead.
+       k    a key, for items that aren't on the standard list.
+       l    function(c) -> wording for a trip. Left out: the trip uses b.
+       on   function(c) -> is it on this trip's list? Left out: yes.
+       why  function(c) -> the tag after an item the weather put there:
+            'cold', 'rain', 'snow', 'heat' or 'dark'.
+
+     c describes the trip: week (five nights or more, packed like summer
+     camp), nights, days, t (how cold: 0 warm, 1 cool, 2 cold, 3 freezing,
+     4 bitter), wet, snow, hot, shorts, sunny, buggy, dark, sunset.
+
+     THE RULES ARE HERE ON PURPOSE, in one place, so a leader can change them:
+     see TIERS, weatherFlags() and the catalog below. */
+
+  const wk = (c) => c.week;          // a week at summer camp
+  const co = (c) => !c.week;         // a weekend campout, in tents
+  const cold = (c) => (c.t >= 2 ? 'cold' : '');
+  const pairs = (n) => n + (n === 1 ? ' pair' : ' pairs');
+
   const PACKING_DATA = [
     { cat: "Sleeping", icon: "🛏️", items: [
-      "Sleeping bag",
-      "Sleeping pad (optional – cots provided)",
-      "Pillow",
-      "Earplugs"
+      { b: "Sleeping bag",
+        l: (c) => ["Sleeping bag (a summer-weight bag is fine)", "Sleeping bag rated 40°F or lower",
+          "Sleeping bag rated 30°F or lower", "Sleeping bag rated 20°F or lower",
+          "Sleeping bag rated 0°F or lower, or a 20°F bag with a blanket or liner inside"][c.t],
+        why: cold },
+      { b: "Sleeping pad (optional – cots provided)",
+        l: (c) => (c.week ? "Sleeping pad (optional – cots provided)"
+          : c.t >= 4 ? "Two sleeping pads, or one pad with a folded blanket under it"
+          : c.t >= 3 ? "Sleeping pad (it keeps the cold ground off your back)" : "Sleeping pad"),
+        why: (c) => (!c.week && c.t >= 3 ? 'cold' : '') },
+      { b: "Pillow" },
+      { b: "Earplugs" },
+      { k: "sleep-clothes", l: () => "Dry clothes just for sleeping (not what you wore all day)", on: (c) => c.t >= 2, why: cold },
+      { k: "tent", l: () => "Tent, if you’re bringing your own", on: co }
     ]},
     { cat: "Uniform & Clothing", icon: "👕", items: [
-      "Full Class A uniform (shirt, pants/shorts, neckerchief)",
-      "Troop activity (Class B) shirts – one per day",
-      "Shorts – one pair per day",
-      "Underwear – enough for the full week",
-      "Socks – 9+ pairs (extras for wet days)",
-      "Long-sleeve shirt (sun, bugs, cooler nights)",
-      "Sun hat or cap",
-      "1 pair of pants",
-      "Pajamas",
-      "Sweater or sweatshirt (cool at night)",
-      "Windbreaker or jacket",
-      "Raincoat or poncho",
-      "Swimsuit (2 pairs if taking Swimming MB)"
+      { b: "Full Class A uniform (shirt, pants/shorts, neckerchief)",
+        l: (c) => (c.week ? "Full Class A uniform (shirt, pants/shorts, neckerchief)"
+          : "The uniform the event calls for (Class A or Class B: check the event in the troop app)") },
+      { b: "Troop activity (Class B) shirts – one per day",
+        l: (c) => (c.week ? "Troop activity (Class B) shirts – " + c.days + ", one per day" : "Shirts – " + c.days + ", one per day") },
+      { b: "Shorts – one pair per day",
+        l: (c) => "Shorts – " + (c.week ? pairs(c.days) + ", one per day" : pairs(Math.max(1, Math.min(c.nights, 4)))),
+        on: (c) => c.shorts },
+      { b: "Underwear – enough for the full week", l: (c) => "Underwear – " + pairs(c.days + 1) },
+      { b: "Socks – 9+ pairs (extras for wet days)",
+        l: (c) => "Socks – " + pairs(c.days + 1 + (c.wet || c.t >= 2 ? 1 : 0))
+          + (c.t >= 3 ? ", wool or synthetic (extras, because wet socks are cold socks)" : " (extras for wet days)"),
+        why: (c) => (c.t >= 3 ? 'cold' : c.wet ? 'rain' : '') },
+      { b: "Long-sleeve shirt (sun, bugs, cooler nights)", on: (c) => c.t <= 1 },
+      { b: "Sun hat or cap", on: (c) => c.sunny },
+      { b: "1 pair of pants",
+        l: (c) => (c.t === 0 ? "1 pair of pants" : c.t === 1 ? "Long pants – 2 pairs"
+          : "Long pants – 2 pairs (not jeans if you can help it: wet denim stays cold)"),
+        why: cold },
+      { b: "Pajamas", on: (c) => c.t <= 1 },
+      { b: "Sweater or sweatshirt (cool at night)",
+        l: (c) => (c.t >= 2 ? "Fleece or wool sweater (your warm middle layer)" : "Sweater or sweatshirt (cool at night)"),
+        why: cold },
+      { b: "Windbreaker or jacket",
+        l: (c) => (c.t >= 3 ? "Winter coat" : c.t === 2 ? "Warm jacket" : "Windbreaker or jacket"),
+        why: cold },
+      { b: "Raincoat or poncho",
+        l: (c) => (c.wet ? "Rain jacket and rain pants" : "Raincoat or poncho"),
+        why: (c) => (c.wet ? 'rain' : '') },
+      { b: "Swimsuit (2 pairs if taking Swimming MB)", on: (c) => c.week && c.t <= 1 },
+      { k: "warm-hat", l: () => "Warm hat", on: (c) => c.t >= 2, why: cold },
+      { k: "gloves", l: (c) => (c.t >= 4 ? "Gloves or mittens, and a spare pair" : "Gloves or mittens"), on: (c) => c.t >= 2, why: cold },
+      { k: "long-underwear", l: () => "Long underwear, top and bottom (not cotton)", on: (c) => c.t >= 3, why: cold },
+      { k: "snow-pants", l: () => "Snow pants or waterproof pants", on: (c) => c.snow || c.t >= 4, why: (c) => (c.snow ? 'snow' : 'cold') },
+      { k: "neck", l: () => "Scarf, neck gaiter or balaclava", on: (c) => c.t >= 4, why: cold }
     ]},
     { cat: "Footwear", icon: "👟", items: [
-      "Sneakers/boots (enclosed-toe required at all times)",
-      "Extra pair of shoes (if first pair gets wet)",
-      "Shower shoes / flip-flops (for showers & waterfront)"
+      { b: "Sneakers/boots (enclosed-toe required at all times)",
+        l: (c) => (c.snow || c.t >= 3 ? "Waterproof boots, insulated if you have them (closed-toe shoes at all times)"
+          : c.t === 2 || c.wet ? "Hiking boots or sturdy shoes (closed-toe at all times)"
+          : "Sneakers/boots (enclosed-toe required at all times)"),
+        why: (c) => (c.snow ? 'snow' : c.t >= 3 ? 'cold' : '') },
+      { b: "Extra pair of shoes (if first pair gets wet)" },
+      { b: "Shower shoes / flip-flops (for showers & waterfront)", on: wk }
     ]},
     { cat: "Toiletries & Hygiene", icon: "🧼", items: [
-      "Toothbrush, toothpaste, comb, mirror, soap, shampoo, deodorant",
-      "Washcloth & hand towel",
-      "2 towels (one for swimming, one for showering)",
-      "Sunscreen",
-      "Lip balm",
-      "Insect repellent",
-      "Chafing cream (prevents chafing)",
-      "Kleenex or handkerchief",
-      "Hand sanitizer"
+      { b: "Toothbrush, toothpaste, comb, mirror, soap, shampoo, deodorant",
+        l: (c) => (c.week ? "Toothbrush, toothpaste, comb, mirror, soap, shampoo, deodorant" : "Toothbrush, toothpaste, soap and deodorant") },
+      { b: "Washcloth & hand towel", l: (c) => (c.week ? "Washcloth & hand towel" : "Small towel") },
+      { b: "2 towels (one for swimming, one for showering)", on: wk },
+      { b: "Sunscreen", on: (c) => c.sunny },
+      { b: "Lip balm" },
+      { b: "Insect repellent", on: (c) => c.buggy },
+      { b: "Chafing cream (prevents chafing)", on: wk },
+      { b: "Kleenex or handkerchief" },
+      { b: "Hand sanitizer" },
+      { k: "hand-warmers", l: () => "Hand warmers (optional)", on: (c) => c.t >= 3, why: cold }
     ]},
     { cat: "Around Camp", icon: "🏕️", items: [
-      "Day pack for daily use (not a drawstring bag)",
-      "Refillable water bottle",
-      "Flashlight & extra batteries",
-      "Camp chair",
-      "Camp mug and/or cup",
-      "Watch or alarm clock",
-      "Scout Handbook (in a zip-lock bag)",
-      "Pen/pencil and paper",
-      "Compass (optional)",
-      "Snacks",
-      "Whistle (for safety)",
-      "Mesh dirty-clothes bag (labeled)",
-      "Zip-lock / plastic bags (for wet gear)"
+      { b: "Day pack for daily use (not a drawstring bag)" },
+      { b: "Refillable water bottle",
+        l: (c) => (c.hot ? "2 refillable water bottles" : "Refillable water bottle"),
+        why: (c) => (c.hot ? 'heat' : '') },
+      { b: "Flashlight & extra batteries",
+        l: (c) => (c.dark ? "Headlamp or flashlight, with extra batteries (the sun sets about " + c.sunset + ")" : "Flashlight & extra batteries"),
+        why: (c) => (c.dark ? 'dark' : '') },
+      { b: "Camp chair", l: (c) => (c.week ? "Camp chair" : "Camp chair (optional)") },
+      { b: "Camp mug and/or cup", on: wk },
+      { k: "mess-kit", l: () => "Mess kit: plate or bowl, cup, fork and spoon", on: co },
+      { b: "Watch or alarm clock", l: (c) => (c.week ? "Watch or alarm clock" : "Watch") },
+      { b: "Scout Handbook (in a zip-lock bag)" },
+      { b: "Pen/pencil and paper" },
+      { b: "Compass (optional)", l: (c) => (c.week ? "Compass (optional)" : "Compass") },
+      { b: "Snacks", on: wk },
+      { b: "Whistle (for safety)" },
+      { b: "Mesh dirty-clothes bag (labeled)", l: (c) => (c.week ? "Mesh dirty-clothes bag (labeled)" : "Bag for dirty clothes") },
+      { b: "Zip-lock / plastic bags (for wet gear)" },
+      { k: "pack-liner", l: () => "Trash bag to line your pack (keeps your sleeping bag and clothes dry)",
+        on: (c) => c.wet || c.snow, why: (c) => (c.wet ? 'rain' : 'snow') }
     ]},
     { cat: "Merit Badge Items", icon: "📋", items: [
-      "Completed prerequisite worksheets",
-      "Any items required for your specific merit badges"
+      { b: "Completed prerequisite worksheets", on: wk },
+      { b: "Any items required for your specific merit badges", on: wk }
     ]},
     { cat: "Money", icon: "💵", items: [
-      "Trading Post money – $20–$40 suggested",
-      "$10 extra for the troop photo (optional)"
+      { b: "Trading Post money – $20–$40 suggested", on: wk },
+      { b: "$10 extra for the troop photo (optional)", on: wk }
     ]},
     { cat: "Knife & Fire", icon: "🔥", items: [
-      "Pocket knife + valid Totin' Chip card",
-      "Matches (waterproof) + Fireman Chit card"
+      { b: "Pocket knife + valid Totin' Chip card" },
+      { b: "Matches (waterproof) + Fireman Chit card" }
     ]},
     { cat: "Optional", icon: "✨", items: [
-      "Fishing pole",
-      "Sunglasses",
-      "Bug net",
-      "Cards / board games",
-      "Stamped envelopes & paper to write home"
+      { b: "Fishing pole", on: wk },
+      { b: "Sunglasses", on: (c) => c.week || c.sunny || c.snow },
+      { b: "Bug net", on: wk },
+      { b: "Cards / board games" },
+      { b: "Stamped envelopes & paper to write home", on: wk }
     ]},
     { cat: "Health & Meds", icon: "💊", items: [
-      "All meds (Rx & OTC) in original packaging, in a labeled zip-lock bag (full name + Troop 3054)",
-      "Prescription meds: keep dose instructions on packaging",
-      "Health Forms A, B & C turned in to Scoutmaster",
-      "Meds turned in to camp Health Officer at check-in",
-      "Personal first aid kit"
+      { b: "All meds (Rx & OTC) in original packaging, in a labeled zip-lock bag (full name + Troop 3054)" },
+      { b: "Prescription meds: keep dose instructions on packaging" },
+      { b: "Health Forms A, B & C turned in to Scoutmaster",
+        l: (c) => (c.week ? "Health Forms A, B & C turned in to Scoutmaster" : "Health form up to date (Parts A, B and C)") },
+      { b: "Meds turned in to camp Health Officer at check-in", on: wk },
+      { b: "Personal first aid kit" }
     ]},
     { cat: "Departure Day Checklist", icon: "🚌", items: [
-      "Water bottle filled",
-      "Lunch packed (if needed)",
-      "All medications turned in",
-      "Wearing Class B uniform",
-      "Medical forms confirmed"
+      { b: "Water bottle filled" },
+      { b: "Lunch packed (if needed)", on: wk },
+      { b: "All medications turned in", on: wk },
+      { b: "Wearing Class B uniform", l: (c) => (c.week ? "Wearing Class B uniform" : "Wearing the uniform the event calls for") },
+      { b: "Medical forms confirmed", on: wk },
+      { k: "headlamp-handy", l: () => "Headlamp where you can reach it (it gets dark early)", on: (c) => !c.week && c.dark, why: () => 'dark' }
     ]}
   ];
 
+  /* How cold "cold" is. The list packs for PACK_COLDER degrees below the
+     forecast low, because forecasts miss. Below 32 follows what the troop
+     tells families for a freezing weekend: a 20°F bag, warm layers, hat,
+     gloves, long underwear, a headlamp and extra socks. */
+  const PACK_COLDER = 5;
+  const TIERS = [55, 40, 32, 20]; // pack-for low at or above: warm, cool, cold, freezing; under 20: bitter
+  const tierFor = (packLow) => { const i = TIERS.findIndex((f) => packLow >= f); return i === -1 ? 4 : i; };
+
+  const WHY = { cold: 'for the cold', rain: 'rain', snow: 'snow', heat: 'heat', dark: 'dark early' };
+
+  /* Places the weather is looked up for. Coordinates are the camps themselves. */
+  const PLACES = {
+    wakpominee: { name: 'Camp Wakpominee', lat: 43.4566, lon: -73.5891, match: /wakpominee|sly pond/i },
+    rotary: { name: 'Camp Rotary', lat: 42.7084, lon: -73.5277, match: /rotary|davitt/i }
+  };
+  const FEED = 'https://my.troop3054.org/calendar.ics';
+  const FORECAST_DAYS = 15; // how far ahead the forecast reaches, counting from today
+
   const STORE_KEY = 'troop54-packing-v1';
   const NAME_KEY = 'troop54-packing-name';
+  const TRIP_KEY = 'troop54-packing-trip';
 
   /* slug for stable per-item IDs (survives reordering/edits to other items) */
   function slug(s) {
     return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
   }
 
   function loadState() {
@@ -761,28 +1011,59 @@
   }
 
   let state = loadState();
+  let trip = null;     // { src, title, place, lat, lon, from, to, plan } once a trip is picked
+  let ctx = null;      // the trip as the catalog sees it (see the top of this script); null = the standard list
+  let shown = [];      // what's on screen: [{ cat, icon, items: [{ id, label, why }] }]
+  let feedTrips = [];  // overnight troop trips from the calendar
+  let asked = 0;       // drops a slow weather answer when a newer one has been asked for
 
-  function itemId(catIdx, item) {
-    return slug(PACKING_DATA[catIdx].cat) + '__' + slug(item);
+  /* ---------- dates ---------- */
+  const pad2 = (n) => String(n).padStart(2, '0');
+  const ymd = (d) => d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  const asDate = (s) => { const p = s.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); };
+  const addDays = (s, n) => { const d = asDate(s); d.setDate(d.getDate() + n); return ymd(d); };
+  const daysBetween = (a, b) => Math.round((asDate(b) - asDate(a)) / 86400000);
+  const validDay = (s) => /^\d{4}-\d{2}-\d{2}$/.test(s || '') && !isNaN(asDate(s));
+  const today = () => ymd(new Date());
+  const dayText = (s) => asDate(s).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  const rangeText = (a, b) => dayText(a) + ' to ' + dayText(b);
+  function clock(hhmm) { // "16:25" -> "4:25 PM"
+    const p = hhmm.split(':').map(Number);
+    return (p[0] % 12 || 12) + ':' + pad2(p[1]) + (p[0] < 12 ? ' AM' : ' PM');
+  }
+
+  /* ---------- the list ---------- */
+  function buildList() {
+    shown = [];
+    PACKING_DATA.forEach((cat) => {
+      const items = [];
+      cat.items.forEach((it) => {
+        if (!ctx) { if (it.b) items.push({ id: slug(cat.cat) + '__' + slug(it.b), label: it.b, why: '' }); return; }
+        if (it.on && !it.on(ctx)) return;
+        items.push({ id: slug(cat.cat) + '__' + slug(it.b || it.k), label: it.l ? it.l(ctx) : it.b, why: it.why ? it.why(ctx) : '' });
+      });
+      if (items.length) shown.push({ cat: cat.cat, icon: cat.icon, items: items });
+    });
   }
 
   const CHECK_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
   function renderCategories() {
+    buildList();
     const container = document.getElementById('pack-categories');
     let html = '';
-    PACKING_DATA.forEach((cat, ci) => {
+    shown.forEach((cat, ci) => {
       html += '<div class="pack-cat">';
       html += '<div class="pack-cat-head"><span class="cat-icon" aria-hidden="true">' + cat.icon + '</span>';
-      html += '<h2>' + cat.cat + '</h2>';
+      html += '<h2>' + esc(cat.cat) + '</h2>';
       html += '<span class="pack-cat-count" id="count-' + ci + '"></span></div>';
       html += '<div class="pack-items">';
-      cat.items.forEach(item => {
-        const id = itemId(ci, item);
-        const checked = state[id] ? ' checked' : '';
-        html += '<div class="pack-item' + checked + '" data-id="' + id + '" role="checkbox" tabindex="0" aria-checked="' + (state[id] ? 'true' : 'false') + '">';
+      cat.items.forEach((item) => {
+        const checked = state[item.id] ? ' checked' : '';
+        html += '<div class="pack-item' + checked + '" data-id="' + item.id + '" role="checkbox" tabindex="0" aria-checked="' + (state[item.id] ? 'true' : 'false') + '">';
         html += '<span class="pack-checkbox">' + CHECK_SVG + '</span>';
-        html += '<span class="pack-item-label">' + item + '</span></div>';
+        html += '<span class="pack-item-label">' + esc(item.label)
+          + (item.why ? ' <span class="pack-why why-' + item.why + '">' + WHY[item.why] + '</span>' : '') + '</span></div>';
       });
       html += '</div></div>';
     });
@@ -809,11 +1090,11 @@
 
   function updateProgress() {
     let total = 0, done = 0;
-    PACKING_DATA.forEach((cat, ci) => {
+    shown.forEach((cat, ci) => {
       let cDone = 0;
       cat.items.forEach(item => {
         total++;
-        if (state[itemId(ci, item)]) { done++; cDone++; }
+        if (state[item.id]) { done++; cDone++; }
       });
       const countEl = document.getElementById('count-' + ci);
       if (countEl) countEl.textContent = cDone + '/' + cat.items.length;
@@ -845,8 +1126,398 @@
     });
   }
 
-  renderCategories();
+  /* ---------- weather (Open-Meteo: no account, and it only gets a place and dates) ---------- */
+  const DAILY = 'temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,sunset';
+  async function openMeteo(host, lat, lon, from, to, extra) {
+    const url = 'https://' + host + '?latitude=' + lat + '&longitude=' + lon + '&daily=' + DAILY + (extra || '')
+      + '&temperature_unit=fahrenheit&precipitation_unit=inch&timezone=auto&start_date=' + from + '&end_date=' + to;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!res.ok || data.error || !data.daily || !data.daily.time || !data.daily.time.length) throw new Error(data.reason || 'No weather');
+    return data.daily;
+  }
+  const nums = (a) => (a || []).filter((v) => typeof v === 'number');
+  const mean = (a) => a.reduce((s, v) => s + v, 0) / a.length;
+  function earliestSunset(d) {
+    const times = (d.sunset || []).map((s) => String(s).slice(11, 16)).filter((s) => /^\d\d:\d\d$/.test(s)).sort();
+    return times[0] || null;
+  }
+
+  /* The weather for a trip: the forecast when the whole trip is inside it,
+     otherwise what those dates were like over the last five years. */
+  async function getWeather(lat, lon, from, to) {
+    const now = today();
+    if (to < now) return { mode: 'past' };
+    if (to <= addDays(now, FORECAST_DAYS)) {
+      try {
+        const d = await openMeteo('api.open-meteo.com/v1/forecast', lat, lon, from < now ? now : from, to, ',precipitation_probability_max');
+        const lows = nums(d.temperature_2m_min), highs = nums(d.temperature_2m_max);
+        if (lows.length && highs.length) {
+          const wetDays = [], snowDays = [];
+          d.time.forEach((day, i) => {
+            const chance = (d.precipitation_probability_max || [])[i] || 0;
+            if ((d.snowfall_sum || [])[i] >= 0.1) snowDays.push(day);
+            else if (chance >= 50 || (d.precipitation_sum || [])[i] >= 0.25) wetDays.push(day);
+          });
+          return {
+            mode: 'forecast', low: Math.round(Math.min.apply(null, lows)), high: Math.round(Math.max.apply(null, highs)),
+            wetDays: wetDays, snowDays: snowDays,
+            chance: Math.max.apply(null, nums(d.precipitation_probability_max).concat([0])),
+            sunset: earliestSunset(d), checked: new Date()
+          };
+        }
+      } catch (e) { /* fall through to what these dates are usually like */ }
+    }
+    // The same dates in the five most recent years that are fully in the past.
+    const years = [];
+    for (let back = 0; years.length < 5 && back < 9; back++) {
+      const shift = (s) => { const d = asDate(s); d.setFullYear(d.getFullYear() - back); return ymd(d); };
+      if (shift(to) < addDays(now, -6)) years.push([shift(from), shift(to)]);
+    }
+    const got = (await Promise.all(years.map((y) => openMeteo('archive-api.open-meteo.com/v1/archive', lat, lon, y[0], y[1]).catch(() => null)))).filter(Boolean);
+    if (got.length < 2) throw new Error('No weather');
+    const coldest = got.map((d) => Math.min.apply(null, nums(d.temperature_2m_min))).filter(isFinite);
+    const warmest = got.map((d) => Math.max.apply(null, nums(d.temperature_2m_max))).filter(isFinite);
+    if (!coldest.length || !warmest.length) throw new Error('No weather');
+    let days = 0, wet = 0, snowYears = 0;
+    got.forEach((d) => {
+      nums(d.precipitation_sum).forEach((p) => { days++; if (p >= 0.1) wet++; });
+      if (nums(d.snowfall_sum).some((s) => s >= 0.1)) snowYears++;
+    });
+    return {
+      mode: 'typical', years: got.length, low: Math.round(mean(coldest)), coldest: Math.round(Math.min.apply(null, coldest)),
+      high: Math.round(mean(warmest)), wetShare: days ? wet / days : 0, snowYears: snowYears, sunset: earliestSunset(got[0])
+    };
+  }
+
+  /* Turns the trip and its weather into what the catalog reads. */
+  function weatherFlags(t, w) {
+    const nights = daysBetween(t.from, t.to);
+    const month = asDate(t.from).getMonth() + 1;
+    const c = { nights: nights, days: nights + 1, week: nights >= 5, sunset: null, dark: false, wet: false, snow: false, hot: false };
+    let packLow, high;
+    if (w && w.mode === 'forecast') {
+      packLow = w.low - PACK_COLDER; high = w.high; c.margin = PACK_COLDER;
+      c.wet = w.wetDays.length > 0; c.snow = w.snowDays.length > 0;
+    } else if (w && w.mode === 'typical') {
+      packLow = Math.round((w.low + w.coldest) / 2); high = w.high;
+      c.wet = w.wetShare >= 0.4; c.snow = w.snowYears >= 2;
+    } else {
+      // No weather to go on: go by the time of year around Rotterdam.
+      packLow = [10, 10, 25, 34, 45, 56, 60, 58, 48, 36, 26, 14][month - 1];
+      high = [31, 34, 44, 58, 70, 78, 82, 80, 72, 60, 47, 36][month - 1];
+    }
+    c.packLow = packLow;
+    c.t = tierFor(packLow);
+    c.hot = high >= 85;
+    c.shorts = high >= 65;
+    c.sunny = high >= 70 || (month >= 5 && month <= 9);
+    c.buggy = month >= 5 && month <= 9 && c.t <= 2;
+    if (w && w.sunset) { c.sunset = clock(w.sunset); c.dark = w.sunset < '18:00'; }
+    return c;
+  }
+
+  /* ---------- the trip card ---------- */
+  const $ = (id) => document.getElementById(id);
+  const STD = {};
+
+  function plural(n, word) { return n + ' ' + word + (n === 1 ? '' : 's'); }
+  function dayNames(list) { // ["2026-11-21"] -> "Saturday"
+    return list.map((d) => asDate(d).toLocaleDateString('en-US', { weekday: 'long' })).join(' and ');
+  }
+
+  function weatherLine(w) {
+    if (!w) return 'We couldn’t get the weather just now, so this list goes by the time of year around here. Check a forecast before you pack.';
+    if (w.mode === 'forecast') {
+      const sky = w.snowDays.length ? 'Snow is likely ' + dayNames(w.snowDays) + '.'
+        : w.wetDays.length ? 'Rain is likely ' + dayNames(w.wetDays) + '.'
+        : w.chance >= 30 ? 'A chance of rain.' : 'No rain expected.';
+      return 'Forecast: lows near ' + w.low + '°F, highs near ' + w.high + '°F. ' + sky
+        + (w.sunset && w.sunset < '18:00' ? ' The sun sets about ' + clock(w.sunset) + '.' : '');
+    }
+    return 'It’s too far out for a forecast (they reach about two weeks). In the last ' + plural(w.years, 'year')
+      + ', these dates had lows near ' + w.low + '°F (as cold as ' + w.coldest + '°F) and highs near ' + w.high + '°F.'
+      + (w.snowYears >= 2 ? ' It snowed in ' + w.snowYears + ' of them.' : w.wetShare >= 0.4 ? ' It rained on a lot of those days.' : '');
+  }
+  function fineLine(w) {
+    if (!w) return '';
+    if (w.mode === 'forecast') {
+      return 'Checked '
+        + w.checked.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
+        + '. Forecasts change, so look again the day before you leave.';
+    }
+    return 'Come back within two weeks of the trip and this turns into the real forecast.';
+  }
+
+  // What the list is packed for, in a sentence.
+  function packingFor() {
+    return 'This list packs for nights down to about ' + ctx.packLow + '°F' + (ctx.week ? '.' : ', sleeping in a tent.')
+      + (ctx.margin ? ' That’s ' + ctx.margin + ' degrees under the forecast, in case it’s off.' : '');
+  }
+
+  function showSummary(html) {
+    const box = $('trip-summary');
+    box.hidden = !html;
+    box.innerHTML = html || '';
+  }
+
+  /* Standard list: put the page back the way it loads. */
+  function showStandard() {
+    ctx = null;
+    $('pack-h1').textContent = STD.h1;
+    $('pack-sub').textContent = STD.sub;
+    $('pack-print-title').textContent = STD.print;
+    $('pack-print-note').textContent = '';
+    $('pack-notes-list').innerHTML = STD.notes;
+    $('trip-foot').hidden = true;
+    renderCategories();
+  }
+
+  /* A trip's list, once the weather is in (w is null when it couldn't be had). */
+  function showTrip(w) {
+    ctx = weatherFlags(trip, w);
+    const when = rangeText(trip.from, trip.to) + ' · ' + plural(ctx.nights, 'night');
+    $('pack-h1').textContent = trip.place + ' Packing List';
+    $('pack-sub').textContent = when + '. Tap each item as you pack. Your checkmarks are saved on this phone.';
+    $('pack-print-title').textContent = trip.place + ' packing list: ' + when + ' · Troop 3054';
+    $('pack-print-note').textContent = weatherLine(w) + ' ' + packingFor();
+    const notes = ctx.week ? STD.notes : [
+      'Pack everything in <strong>one bag you can carry yourself</strong>.',
+      '<strong>Label everything</strong> with the Scout’s name and Troop 3054.',
+      '<strong>No food in tents.</strong>',
+      '<strong>Leave at home:</strong> video games, electronics, sheath knives.'
+    ].concat(ctx.t >= 3 ? [
+      '<strong>Cotton stays wet and gets cold.</strong> Go with wool, fleece or synthetics next to your skin.',
+      '<strong>Not sure your gear is warm enough?</strong> Ask a leader before the trip.'
+    ] : []).concat(trip.plan ? ['<strong>From the Scouts’ plan:</strong> ' + esc(trip.plan)] : []).map((n) => '<li>' + n + '</li>').join('');
+    $('pack-notes-list').innerHTML = notes;
+    showSummary('<strong>' + esc(trip.place) + ' · ' + when + '</strong><br>'
+      + (trip.wxName && trip.wxName !== trip.place ? 'Weather for ' + esc(trip.wxName) + '. ' : '')
+      + weatherLine(w)
+      + ' ' + packingFor()
+      + '<span class="trip-fine">' + fineLine(w) + (w ? ' Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo.com</a>.' : '') + '</span>');
+    $('trip-foot').hidden = false;
+    renderCategories();
+  }
+
+  function saveTrip() {
+    try {
+      if (trip && trip.lat != null && validDay(trip.from) && validDay(trip.to)) localStorage.setItem(TRIP_KEY, JSON.stringify(trip));
+      else localStorage.removeItem(TRIP_KEY);
+    } catch (e) {}
+  }
+
+  /* Something about the trip changed: work out what can be shown. */
+  async function refresh() {
+    const mine = ++asked;
+    saveTrip();
+    if (!trip) { showSummary(''); showStandard(); return; }
+    const hasDates = validDay(trip.from) && validDay(trip.to);
+    if (hasDates && trip.to <= trip.from) { showStandard(); showSummary('This list is for overnight trips. Pick a coming-home date after the day you leave.'); return; }
+    if (hasDates && daysBetween(trip.from, trip.to) > 30) { showStandard(); showSummary('That’s more than a month. Check the dates.'); return; }
+    if (trip.lat == null) { showStandard(); showSummary($('trip-town-box').hidden ? '' : 'Type the nearest town, so we can check the weather there.'); return; }
+    if (!hasDates) { showStandard(); showSummary('Add the day you leave and the day you come home.'); return; }
+    if (trip.to < today()) { showStandard(); showSummary('Those dates have passed. Pick the next trip.'); return; }
+    showSummary('<strong>' + esc(trip.place) + '</strong><br>Checking the weather…');
+    let w = null;
+    try { w = await getWeather(trip.lat, trip.lon, trip.from, trip.to); } catch (e) { w = null; }
+    if (mine !== asked) return;
+    showTrip(w && w.mode !== 'past' ? w : null);
+  }
+
+  /* ---------- troop trips from the calendar ---------- */
+  function parseFeed(text) {
+    const out = [];
+    const unfolded = text.replace(/\r\n/g, '\n').replace(/\n[ \t]/g, '');
+    unfolded.split('BEGIN:VEVENT').slice(1).forEach((block) => {
+      const get = (name) => {
+        const m = block.match(new RegExp('^' + name + '((?:;[^:\\n]*)?):(.*)$', 'm'));
+        return m ? { params: m[1], value: m[2].trim() } : null;
+      };
+      const text1 = (name) => { const v = get(name); return v ? v.value.replace(/\\n/gi, ' · ').replace(/\\([,;\\])/g, '$1').trim() : ''; };
+      const start = get('DTSTART'), end = get('DTEND');
+      if (!start || !/CAMPOUT/i.test(text1('CATEGORIES'))) return;
+      const day = (v) => v.value.slice(0, 4) + '-' + v.value.slice(4, 6) + '-' + v.value.slice(6, 8);
+      const from = day(start);
+      let to = end ? day(end) : from;
+      // An all-day end, or one at midnight, is the morning after the last day.
+      if (end && (/VALUE=DATE/i.test(end.params) || /T000000/.test(end.value)) && to > from) to = addDays(to, -1);
+      if (!validDay(from) || !validDay(to) || to <= from) return; // overnight trips only
+      const uid = text1('UID').replace(/[^\w.@-]/g, '');
+      out.push({ uid: uid, title: text1('SUMMARY'), location: text1('LOCATION'), plan: text1('DESCRIPTION'), from: from, to: to });
+    });
+    return out.filter((t) => t.to >= today()).sort((a, b) => (a.from < b.from ? -1 : 1)).slice(0, 6);
+  }
+
+  function addFeedTrips() {
+    if (!feedTrips.length) return;
+    const sel = $('trip-where');
+    const group = document.createElement('optgroup');
+    group.label = 'Troop trips coming up';
+    feedTrips.forEach((t) => {
+      const o = document.createElement('option');
+      o.value = 'ev:' + t.uid;
+      o.textContent = t.title + ' · ' + rangeText(t.from, t.to);
+      group.appendChild(o);
+    });
+    sel.insertBefore(group, sel.children[1]);
+    // A trip in the next two weeks gets a button of its own, when nothing's picked yet.
+    const next = feedTrips[0];
+    if (!trip && daysBetween(today(), next.from) <= 14) {
+      const soon = $('trip-soon');
+      soon.innerHTML = '<button type="button" class="trip-go">Going on ' + esc(next.title) + ', ' + esc(rangeText(next.from, next.to)) + '? Show that list</button>';
+      soon.hidden = false;
+      soon.firstChild.onclick = () => { sel.value = 'ev:' + next.uid; pickWhere(); soon.hidden = true; };
+    }
+    syncSelect();
+  }
+
+  /* ---------- picking a place ---------- */
+  function presetFor(text) {
+    return Object.keys(PLACES).find((k) => PLACES[k].match.test(text || '')) || null;
+  }
+  const STATES = { NY: 'New York', VT: 'Vermont', MA: 'Massachusetts', CT: 'Connecticut', NH: 'New Hampshire', ME: 'Maine', PA: 'Pennsylvania', NJ: 'New Jersey' };
+
+  async function findTowns(name) {
+    const res = await fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(name) + '&count=8&countryCode=US&language=en&format=json');
+    const data = await res.json();
+    const near = Object.keys(STATES).map((k) => STATES[k]);
+    return (data.results || []).map((r) => ({ name: r.name + (r.admin1 ? ', ' + r.admin1 : ''), state: r.admin1 || '', lat: r.latitude, lon: r.longitude }))
+      .sort((a, b) => (near.indexOf(a.state) === -1 ? 99 : near.indexOf(a.state)) - (near.indexOf(b.state) === -1 ? 99 : near.indexOf(b.state)));
+  }
+
+  function useTown(t) {
+    trip.lat = t.lat; trip.lon = t.lon; trip.wxName = t.name;
+    if (trip.src === 'other') trip.place = t.name;
+    $('trip-matches').innerHTML = '';
+    refresh();
+  }
+
+  async function searchTown(auto) {
+    const box = $('trip-matches');
+    const name = $('trip-town').value.trim();
+    if (name.length < 2) { box.textContent = 'Type a town, like Lake George.'; return; }
+    box.textContent = 'Looking…';
+    let towns = [];
+    try { towns = await findTowns(name); } catch (e) { box.textContent = 'We couldn’t look that up just now. Try again in a minute.'; return; }
+    if (!towns.length) { box.textContent = 'No town by that name. Try the nearest bigger town.'; return; }
+    // From a troop trip's own address, a single match in the state it names is good enough.
+    if (auto && towns.filter((t) => t.state === auto).length === 1) { useTown(towns.find((t) => t.state === auto)); return; }
+    box.innerHTML = towns.map((t, i) => '<button type="button" class="trip-match" data-i="' + i + '">' + esc(t.name) + '</button>').join('');
+    box.querySelectorAll('.trip-match').forEach((b) => { b.onclick = () => useTown(towns[Number(b.dataset.i)]); });
+  }
+
+  function pickWhere() {
+    const v = $('trip-where').value;
+    const dates = { from: $('trip-from').value, to: $('trip-to').value };
+    $('trip-town-box').hidden = true;
+    $('trip-matches').innerHTML = '';
+    $('trip-soon').hidden = true;
+    if (!v) { trip = null; $('trip-from').value = ''; $('trip-to').value = ''; refresh(); return; }
+    if (PLACES[v]) {
+      trip = { src: v, place: PLACES[v].name, lat: PLACES[v].lat, lon: PLACES[v].lon, from: dates.from, to: dates.to };
+    } else if (v === 'other') {
+      trip = { src: 'other', place: 'Your trip', lat: null, lon: null, from: dates.from, to: dates.to };
+      $('trip-town-box').hidden = false;
+      $('trip-town').value = '';
+      $('trip-town').focus();
+    } else {
+      const t = feedTrips.find((x) => 'ev:' + x.uid === v);
+      if (!t) return;
+      const known = presetFor(t.location + ' ' + t.title);
+      trip = { src: v, title: t.title, from: t.from, to: t.to, plan: t.plan,
+        place: known ? PLACES[known].name : t.title, lat: known ? PLACES[known].lat : null, lon: known ? PLACES[known].lon : null };
+      $('trip-from').value = t.from; $('trip-to').value = t.to;
+      if (!known) {
+        // "Fort William Henry, Lake George, NY" -> look up Lake George in New York.
+        const m = t.location.match(/([^,]+),\s*([A-Z]{2})\b/);
+        $('trip-town-box').hidden = false;
+        $('trip-town').value = m ? m[1].trim() : '';
+        if (m) { refresh(); searchTown(STATES[m[2]] || null); return; }
+      }
+    }
+    refresh();
+  }
+
+  /* The select shows what the trip is, after a reload or a shared link. */
+  function syncSelect() {
+    const sel = $('trip-where');
+    if (!trip) { sel.value = ''; return; }
+    $('trip-from').value = trip.from || ''; $('trip-to').value = trip.to || '';
+    const fromFeed = feedTrips.find((t) => 'ev:' + t.uid === trip.src || (trip.title && t.title === trip.title && t.from === trip.from)
+      || (PLACES[trip.src] && presetFor(t.location + ' ' + t.title) === trip.src && t.from === trip.from && t.to === trip.to));
+    if (fromFeed) {
+      const hadPlan = trip.plan;
+      trip.src = 'ev:' + fromFeed.uid; trip.title = fromFeed.title; trip.plan = fromFeed.plan;
+      sel.value = trip.src;
+      if (fromFeed.plan && !hadPlan && ctx) refresh(); // the plan arrived with the calendar: show it
+      return;
+    }
+    sel.value = PLACES[trip.src] ? trip.src : presetFor(trip.place) || 'other';
+    if (sel.value === 'other') { $('trip-town-box').hidden = false; if (trip.wxName) $('trip-town').value = trip.wxName.split(',')[0]; }
+  }
+
+  /* A link that opens this trip's list: ?where=wakpominee&from=2026-11-20&to=2026-11-22 */
+  function tripLink() {
+    const q = new URLSearchParams();
+    const preset = PLACES[trip.src] ? trip.src : presetFor(trip.place);
+    if (preset) q.set('where', preset);
+    else { q.set('lat', trip.lat); q.set('lon', trip.lon); q.set('place', trip.place); if (trip.wxName) q.set('wx', trip.wxName); }
+    q.set('from', trip.from); q.set('to', trip.to);
+    return location.origin + location.pathname + '?' + q.toString();
+  }
+  function tripFromLink() {
+    const q = new URLSearchParams(location.search);
+    const from = q.get('from'), to = q.get('to');
+    if (!validDay(from) || !validDay(to)) return null;
+    const where = q.get('where');
+    if (PLACES[where]) return { src: where, place: PLACES[where].name, lat: PLACES[where].lat, lon: PLACES[where].lon, from: from, to: to };
+    const lat = Number(q.get('lat')), lon = Number(q.get('lon'));
+    if (!q.get('lat') || !q.get('lon') || !(Math.abs(lat) <= 90) || !(Math.abs(lon) <= 180)) return null;
+    const place = (q.get('place') || 'Your trip').slice(0, 80);
+    return { src: 'other', place: place, wxName: (q.get('wx') || place).slice(0, 80), lat: lat, lon: lon, from: from, to: to };
+  }
+
+  function initTrip() {
+    STD.h1 = $('pack-h1').textContent;
+    STD.sub = $('pack-sub').textContent;
+    STD.print = $('pack-print-title').textContent;
+    STD.notes = $('pack-notes-list').innerHTML;
+
+    trip = tripFromLink();
+    if (!trip) {
+      try { trip = JSON.parse(localStorage.getItem(TRIP_KEY)); } catch (e) { trip = null; }
+      // A saved trip is forgotten once it's over.
+      if (!trip || trip.lat == null || !validDay(trip.from) || !validDay(trip.to) || trip.to < today()) trip = null;
+    }
+
+    $('trip-where').onchange = pickWhere;
+    ['trip-from', 'trip-to'].forEach((id) => {
+      $(id).onchange = () => {
+        if (!trip) return;
+        trip.from = $('trip-from').value; trip.to = $('trip-to').value;
+        // Changing the dates of a troop trip makes it a trip of your own to the same place.
+        if (/^ev:/.test(trip.src)) { trip.src = presetFor(trip.place) || 'other'; trip.title = ''; trip.plan = ''; syncSelect(); }
+        refresh();
+      };
+    });
+    $('trip-find').onclick = () => searchTown(null);
+    $('trip-town').onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); searchTown(null); } };
+    $('trip-clear').onclick = () => { $('trip-where').value = ''; pickWhere(); };
+    $('trip-copy').onclick = async () => {
+      const link = tripLink(), btn = $('trip-copy');
+      try { await navigator.clipboard.writeText(link); btn.textContent = 'Link copied'; }
+      catch (e) { prompt('Copy this link:', link); }
+      setTimeout(() => { btn.textContent = 'Copy a link to this list'; }, 2500);
+    };
+
+    syncSelect();
+    refresh();
+    fetch(FEED + '?t=' + Date.now()).then((r) => r.text()).then((text) => { feedTrips = parseFeed(text); addFeedTrips(); }).catch(() => {});
+  }
+
   initName();
+  initTrip();
   </script>
 
 </body>
