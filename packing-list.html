@@ -959,8 +959,13 @@
     { cat: "Health & Meds", icon: "💊", items: [
       { b: "All meds (Rx & OTC) in original packaging, in a labeled zip-lock bag (full name + Troop 3054)" },
       { b: "Prescription meds: keep dose instructions on packaging" },
+      // Parts A and B cover every trip. Part C, the physical, is for 5 days or more;
+      // Scouting America's own line is "longer than 72 hours", which a 4-day trip can cross.
       { b: "Health Forms A, B & C turned in to Scoutmaster",
-        l: (c) => (c.week ? "Health Forms A, B & C turned in to Scoutmaster" : "Health form up to date (Parts A, B and C)") },
+        l: (c) => (c.week ? "Health Forms A, B & C turned in to Scoutmaster"
+          : c.days >= 5 ? "Health form up to date (Parts A, B and C)"
+          : c.days === 4 ? "Health form up to date (Parts A and B, plus Part C if the trip runs longer than 72 hours)"
+          : "Health form up to date (Parts A and B)") },
       { b: "Meds turned in to camp Health Officer at check-in", on: wk },
       { b: "Personal first aid kit" }
     ]},
