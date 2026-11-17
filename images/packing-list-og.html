@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Scout Packing List - share image source</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* 1200 x 630: the picture that shows when packing-list.html is shared (og:image).
+     To remake it: open this file in a browser window sized 1200 x 630 and take a
+     screenshot, or run headless Edge with --screenshot --window-size=1200,630,
+     then save it as images/packing-list-og.jpg. The numbers are an example. */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body { position: relative; background: radial-gradient(circle at 86% 8%, #1d4f9a 0%, #003f87 44%, #002a5c 100%); color: #fff; font-family: 'Montserrat', sans-serif; }
+  .left { position: absolute; left: 64px; top: 56px; width: 560px; }
+  .eyebrow { display: inline-block; border: 2px solid #c4b596; border-radius: 40px; padding: 7px 20px; font-weight: 700; font-size: 17px; letter-spacing: 4px; color: #e3d5b2; }
+  h1 { font-weight: 800; font-size: 66px; line-height: 1.04; margin-top: 26px; letter-spacing: -1px; }
+  h1 span { color: #f2c94c; }
+  .sub { margin-top: 22px; font: 600 25px/1.4 'Open Sans', sans-serif; color: #f4efe3; }
+  .foot { position: absolute; left: 64px; bottom: 44px; display: flex; align-items: center; gap: 16px; }
+  .foot img { width: 62px; height: 62px; }
+  .foot .url { font-weight: 800; font-size: 25px; }
+  .foot .who { font: 600 16px/1.3 'Open Sans', sans-serif; letter-spacing: 1.5px; color: #e3d5b2; text-transform: uppercase; margin-top: 2px; }
+
+  .card { position: absolute; right: 56px; top: 50px; width: 470px; height: 530px; background: #f8f5ee; border-radius: 22px; color: #232528; padding: 24px 24px 0; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); overflow: hidden; }
+  .place { font-weight: 800; font-size: 22px; color: #003f87; }
+  .when { font: 600 15px/1.3 'Open Sans', sans-serif; color: #6d7168; margin-top: 2px; }
+  .days { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+  .day { background: #fff; border: 1px solid #d6cebd; border-radius: 10px; padding: 9px 4px 8px; text-align: center; }
+  .day .dow { font-weight: 800; font-size: 13px; letter-spacing: 1px; color: #003f87; }
+  .day .icon { font-size: 34px; line-height: 1.25; }
+  .day .temps { font-weight: 800; font-size: 19px; }
+  .day .temps i { font-style: normal; color: #003f87; margin-left: 6px; }
+  .day .note { font: 600 12px/1.3 'Open Sans', sans-serif; color: #6d7168; }
+  .pack { display: flex; align-items: center; gap: 12px; margin-top: 12px; background: #fff; border: 1px solid #d6cebd; border-radius: 10px; padding: 9px 12px; font: 600 15px/1.35 'Open Sans', sans-serif; }
+  .pack b { flex-shrink: 0; background: #003f87; color: #fff; border-radius: 8px; padding: 7px 11px; font: 900 21px/1 'Montserrat', sans-serif; }
+  .list { margin-top: 12px; background: #fff; border: 1px solid #d6cebd; border-radius: 12px 12px 0 0; overflow: hidden; }
+  .list .head { background: #2e5d34; color: #fff; font-weight: 800; font-size: 14px; letter-spacing: 1px; padding: 9px 14px; }
+  .row { display: flex; align-items: center; gap: 11px; padding: 10px 14px; border-top: 1px solid #efeae0; font: 600 16px/1.3 'Open Sans', sans-serif; }
+  .box { flex-shrink: 0; width: 22px; height: 22px; border: 2px solid #ad9d7b; border-radius: 5px; background: #fff; display: flex; align-items: center; justify-content: center; }
+  .box.on { background: #2e5d34; border-color: #2e5d34; }
+  .box.on::after { content: ''; width: 10px; height: 5px; border-left: 3px solid #fff; border-bottom: 3px solid #fff; transform: rotate(-45deg) translateY(-2px); }
+  .why { margin-left: 2px; background: #e6eef7; color: #003f87; border-radius: 20px; padding: 2px 9px; font: 800 10px/1.5 'Montserrat', sans-serif; letter-spacing: 0.5px; white-space: nowrap; }
+</style>
+</head>
+<body>
+  <div class="left">
+    <div class="eyebrow">FREE FOR ANY TROOP</div>
+    <h1>The Scout packing list that <span>fits your trip</span></h1>
+    <p class="sub">Pick a camp or type an address, add your dates, and it checks the forecast for you.</p>
+  </div>
+  <div class="foot">
+    <img src="troop-logo-512.png" alt="">
+    <div>
+      <div class="url">troop3054.org/packing-list</div>
+      <div class="who">Troop 3054 · Rotterdam, NY</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="place">Camp Wakpominee</div>
+    <div class="when">Fri, Nov 20 to Sun, Nov 22 · 2 nights</div>
+    <div class="days">
+      <div class="day"><div class="dow">FRI</div><div class="icon">⛅</div><div class="temps">59°<i>36°</i></div><div class="note">Dry</div></div>
+      <div class="day"><div class="dow">SAT</div><div class="icon">☁️</div><div class="temps">54°<i>36°</i></div><div class="note">Dry</div></div>
+      <div class="day"><div class="dow">SUN</div><div class="icon">🌧️</div><div class="temps">53°<i>41°</i></div><div class="note">60% rain</div></div>
+    </div>
+    <div class="pack"><b>31°F</b><span>The list packs for nights down to 31°F, in a tent.</span></div>
+    <div class="list">
+      <div class="head">SLEEPING &amp; CLOTHING</div>
+      <div class="row"><span class="box on"></span><span>Sleeping bag rated 20°F or lower</span><span class="why">FOR THE COLD</span></div>
+      <div class="row"><span class="box on"></span><span>Warm hat and gloves</span><span class="why">FOR THE COLD</span></div>
+      <div class="row"><span class="box"></span><span>Rain jacket and rain pants</span><span class="why">RAIN</span></div>
+      <div class="row"><span class="box"></span><span>Socks – 5 pairs, wool or synthetic</span></div>
+    </div>
+  </div>
+</body>
+</html>
