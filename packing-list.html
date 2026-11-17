@@ -459,6 +459,58 @@
       color: var(--color-text);
     }
     .trip-summary strong { color: var(--color-primary); }
+
+    /* The forecast: one tile a day, then the temperature the list packs for */
+    .wx-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.15rem 0.6rem; }
+    .wx-head strong { font-family: var(--font-heading); font-size: 1rem; }
+    .wx-head span, .wx-where { font-size: 0.86rem; color: #555; }
+    .wx-days { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 0.5rem; margin: 0.75rem 0 0.6rem; }
+    @media (min-width: 700px) { .wx-days { grid-template-columns: repeat(auto-fill, minmax(104px, 132px)); } }
+    .wx-day {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.55rem 0.25rem 0.5rem;
+      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      line-height: 1.3;
+    }
+    .wx-dow { font-family: var(--font-heading); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--color-primary); }
+    .wx-date { font-size: 0.72rem; color: #777; }
+    .wx-icon { font-size: 1.7rem; line-height: 1.25; margin: 0.15rem 0 0.1rem; }
+    .wx-temps { font-family: var(--font-heading); font-size: 0.95rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .wx-temps b { font-weight: 700; color: var(--color-text); }
+    .wx-temps i { font-style: normal; font-weight: 600; color: var(--color-primary); margin-left: 0.3rem; }
+    .wx-note { font-size: 0.72rem; color: #666; }
+    .wx-day.wx-wet .wx-note { color: var(--color-primary); font-weight: 600; }
+    .wx-big { font-family: var(--font-heading); font-weight: 800; font-size: 1.45rem; line-height: 1.2; color: var(--color-primary); font-variant-numeric: tabular-nums; }
+    .wx-line { margin: 0 0 0.6rem; font-size: 0.88rem; line-height: 1.5; }
+    .wx-pack {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 0.75rem;
+      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+    .wx-pack-temp {
+      flex-shrink: 0;
+      min-width: 66px;
+      padding: 0.45rem 0.55rem;
+      border-radius: var(--radius-sm);
+      background: var(--color-primary);
+      color: white;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.1rem;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
     .trip-fine { display: block; margin-top: 0.35rem; font-size: 0.82rem; color: #666; }
     .trip-foot { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
     [hidden] { display: none !important; }
@@ -1157,17 +1209,19 @@
     if (to < now) return { mode: 'past' };
     if (to <= addDays(now, FORECAST_DAYS)) {
       try {
-        const d = await openMeteo('api.open-meteo.com/v1/forecast', lat, lon, from < now ? now : from, to, ',precipitation_probability_max');
+        const d = await openMeteo('api.open-meteo.com/v1/forecast', lat, lon, from < now ? now : from, to, ',precipitation_probability_max,weather_code');
         const lows = nums(d.temperature_2m_min), highs = nums(d.temperature_2m_max);
         if (lows.length && highs.length) {
-          const wetDays = [], snowDays = [];
+          const wetDays = [], snowDays = [], each = [];
           d.time.forEach((day, i) => {
             const chance = (d.precipitation_probability_max || [])[i] || 0;
-            if ((d.snowfall_sum || [])[i] >= 0.1) snowDays.push(day);
-            else if (chance >= 50 || (d.precipitation_sum || [])[i] >= 0.25) wetDays.push(day);
+            const snowy = (d.snowfall_sum || [])[i] >= 0.1;
+            const rainy = !snowy && (chance >= 50 || (d.precipitation_sum || [])[i] >= 0.25);
+            if (snowy) snowDays.push(day); else if (rainy) wetDays.push(day);
+            each.push({ day: day, hi: d.temperature_2m_max[i], lo: d.temperature_2m_min[i], chance: chance, snowy: snowy, rainy: rainy, code: (d.weather_code || [])[i] });
           });
           return {
-            mode: 'forecast', low: Math.round(Math.min.apply(null, lows)), high: Math.round(Math.max.apply(null, highs)),
+            mode: 'forecast', each: each, low: Math.round(Math.min.apply(null, lows)), high: Math.round(Math.max.apply(null, highs)),
             wetDays: wetDays, snowDays: snowDays,
             chance: Math.max.apply(null, nums(d.precipitation_probability_max).concat([0])),
             sunset: earliestSunset(d), checked: new Date()
@@ -1262,6 +1316,40 @@
       + (ctx.margin ? ' That’s ' + ctx.margin + ' degrees under the forecast, in case it’s off.' : '');
   }
 
+  /* What the sky is doing, from the forecast's weather code (WMO numbers). */
+  const SKY = [[0, '☀️', 'Sunny'], [2, '⛅', 'Partly cloudy'], [3, '☁️', 'Cloudy'], [48, '☁️', 'Fog'], [57, '🌦️', 'Drizzle'],
+    [67, '🌧️', 'Rain'], [77, '🌨️', 'Snow'], [82, '🌧️', 'Showers'], [86, '🌨️', 'Snow'], [99, '⛈️', 'Storms']];
+  const skyFor = (d) => (d.snowy ? SKY[6] : typeof d.code === 'number' ? (SKY.find((k) => d.code <= k[0]) || SKY[2]) : d.rainy ? SKY[5] : SKY[1]);
+  const deg = (n) => Math.round(n) + '°';
+
+  /* The weather as tiles: a day each for a forecast, three numbers for past years. */
+  function weatherHtml(w) {
+    if (!w) return '<p class="wx-line">' + weatherLine(w) + '</p>';
+    if (w.mode === 'forecast') {
+      const tiles = w.each.map((d) => {
+        const sky = skyFor(d);
+        const note = d.snowy ? 'Snow' : d.chance >= 15 ? d.chance + '% rain' : d.code >= 51 ? sky[2] : 'Dry';
+        const date = asDate(d.day);
+        const says = date.toLocaleDateString('en-US', { weekday: 'long' }) + ': ' + sky[2] + ', high ' + deg(d.hi) + ', low ' + deg(d.lo) + ', ' + note.toLowerCase();
+        return '<div class="wx-day' + (d.snowy || d.rainy ? ' wx-wet' : '') + '" role="img" aria-label="' + esc(says) + '">'
+          + '<span class="wx-dow">' + date.toLocaleDateString('en-US', { weekday: 'short' }) + '</span>'
+          + '<span class="wx-date">' + date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + '</span>'
+          + '<span class="wx-icon" aria-hidden="true">' + sky[1] + '</span>'
+          + '<span class="wx-temps"><b>' + deg(d.hi) + '</b><i>' + deg(d.lo) + '</i></span>'
+          + '<span class="wx-note">' + note + '</span></div>';
+      }).join('');
+      const sky = w.snowDays.length ? 'Snow is likely ' + dayNames(w.snowDays) + '.'
+        : w.wetDays.length ? 'Rain is likely ' + dayNames(w.wetDays) + '.'
+        : w.chance >= 30 ? 'A chance of rain.' : 'No rain expected.';
+      return '<div class="wx-days">' + tiles + '</div><p class="wx-line">Highs and lows for each day. ' + sky
+        + (w.sunset && w.sunset < '18:00' ? ' The sun sets about ' + clock(w.sunset) + '.' : '') + '</p>';
+    }
+    const tile = (label, n) => '<div class="wx-day"><span class="wx-dow">' + label + '</span><span class="wx-big">' + n + '°</span></div>';
+    return '<p class="wx-line" style="margin-top:0.6rem">It’s too far out for a forecast (they reach about two weeks), so this is what these dates were like in the last '
+      + plural(w.years, 'year') + '.' + (w.snowYears >= 2 ? ' It snowed in ' + w.snowYears + ' of them.' : w.wetShare >= 0.4 ? ' It rained on a lot of those days.' : '') + '</p>'
+      + '<div class="wx-days" style="margin-top:0">' + tile('Usual low', w.low) + tile('Coldest', w.coldest) + tile('Usual high', w.high) + '</div>';
+  }
+
   function showSummary(html) {
     const box = $('trip-summary');
     box.hidden = !html;
@@ -1298,10 +1386,10 @@
       '<strong>Not sure your gear is warm enough?</strong> Ask a leader before the trip.'
     ] : []).concat(trip.plan ? ['<strong>From the Scouts’ plan:</strong> ' + esc(trip.plan)] : []).map((n) => '<li>' + n + '</li>').join('');
     $('pack-notes-list').innerHTML = notes;
-    showSummary('<strong>' + esc(trip.place) + ' · ' + when + '</strong><br>'
-      + (trip.wxName && trip.wxName !== trip.place ? 'Weather for ' + esc(trip.wxName) + '. ' : '')
-      + weatherLine(w)
-      + ' ' + packingFor()
+    showSummary('<div class="wx-head"><strong>' + esc(trip.place) + '</strong><span>' + when + '</span></div>'
+      + (trip.wxName && trip.wxName !== trip.place ? '<div class="wx-where">Weather for ' + esc(trip.wxName) + '</div>' : '')
+      + weatherHtml(w)
+      + '<div class="wx-pack"><span class="wx-pack-temp">' + ctx.packLow + '°F</span><span>' + packingFor() + '</span></div>'
       + '<span class="trip-fine">' + fineLine(w) + (w ? ' Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo.com</a>.' : '') + '</span>');
     $('trip-foot').hidden = false;
     renderCategories();
@@ -1325,7 +1413,7 @@
     if (trip.lat == null) { showStandard(); showSummary($('trip-town-box').hidden ? '' : 'Type the camp, town or address, so we can check the weather there.'); return; }
     if (!hasDates) { showStandard(); showSummary('Add the day you leave and the day you come home.'); return; }
     if (trip.to < today()) { showStandard(); showSummary('Those dates have passed. Pick the next trip.'); return; }
-    showSummary('<strong>' + esc(trip.place) + '</strong><br>Checking the weather…');
+    showSummary('<div class="wx-head"><strong>' + esc(trip.place) + '</strong><span>Checking the weather…</span></div>');
     let w = null;
     try { w = await getWeather(trip.lat, trip.lon, trip.from, trip.to); } catch (e) { w = null; }
     if (mine !== asked) return;
